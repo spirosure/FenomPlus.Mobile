@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{3DF159BC-09D0-4468-B6D2-081367D13E1C}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>FenomPlus.SDK.Abstractions</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Exceptions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\BleMonitorException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\BleNotAvailableException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\MissingBondedDeviceException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IFeature.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMonitoredProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IMonitoredSettableProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISettableProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IFenomHubSystem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IFenomHubSystemDiscovery.cs" />
+  </ItemGroup>
+</Project>
