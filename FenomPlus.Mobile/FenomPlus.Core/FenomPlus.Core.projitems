@@ -22,5 +22,47 @@
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
     <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
     <Folder Include="$(MSBuildThisFileDirectory)TinyIoC\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Interfaces\Ble\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Database\Repository\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Database\Repository\Interfaces\IGenericRepository.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Repository\Interfaces\ICrashlogsRepository.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Repository\CrashLogRepository.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Repository\GenericRepository.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Adapters\AdapterBase.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Adapters\CrashLogAdapter.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\BaseEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\IBrowserEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\ILauncherEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\IMainThreadEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\INetworkEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\ConnectionTypeEnum.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\IPermissionsEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\PermissionsEnum.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\PermissionStatusEnum.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\IPreferencesEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Essentials\ISettingsEssentials.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\IAppServices.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\Ble\IBleHubProviderService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\Ble\IBleHubService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\IBrandingService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\ICacheService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\ICrashReportingService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\IDatabaseAccessService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Interfaces\IDatabaseService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Helpers\AutoMapper.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Helpers\JsonHelper.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TinyIoC\TinyMessenger.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TinyIoC\TinyIoC.cs" />
+    <None Include="$(MSBuildThisFileDirectory)TinyIoC\IOC.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Models\Crashlog.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Models\ColorResources.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Models\Debug.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Models\StringResourcesModel.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Services\AppServices.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Services\BaseService.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Utils\StringValue.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Database\Tables\CrashlogsTb.cs" />
   </ItemGroup>
 </Project>

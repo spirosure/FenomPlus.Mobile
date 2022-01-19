@@ -1,21 +1,32 @@
-﻿using FenomPlus.Sandbox.Services;
-using FenomPlus.Sandbox.Views;
-using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
+using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.SDK.Abstractions;
+using Xamarin.Essentials;
+using Microsoft.Extensions.Logging;
 
 namespace FenomPlus.Sandbox
 {
     public partial class App : Application
     {
 
+        public static ILoggerFactory loggerFactory { get; set; }
+        public static IBleDevice BleDevice { get; set; }
+
         public App()
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            App.loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Debug)
+                    .AddFilter("FenomPlus", LogLevel.Debug);
+            });
             MainPage = new AppShell();
         }
+
+        public static IFenomHubSystemDiscovery FenomHubSystemDiscovery { get; private set; }
+
+        public static bool IsAndroid { get => DeviceInfo.Platform == DevicePlatform.Android; }
 
         protected override void OnStart()
         {

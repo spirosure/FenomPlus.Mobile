@@ -106,9 +106,12 @@ namespace FenomPlus.SDK.Core
                     ((IBleDevice bleDevice) =>
                     {
                         // TODO: do filter here
-                        if ((bleDevice != null) && (!string.IsNullOrEmpty(bleDevice.Name)) && (bleDevice.Name.StartsWith("FE")))
+                        if ((bleDevice != null) && (!string.IsNullOrEmpty(bleDevice.Name)))
                         {
-                            deviceFoundCallback?.Invoke(bleDevice);
+                            if (bleDevice.Name.StartsWith("LOCK"))
+                            {
+                                deviceFoundCallback?.Invoke(bleDevice);
+                            }
                         }
                     }),
                     ((IEnumerable<IBleDevice> bleDevices) =>

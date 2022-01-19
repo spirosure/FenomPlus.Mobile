@@ -16,5 +16,11 @@
     <None Remove="Microsoft.Extensions.Logging" />
     <None Remove="Polly" />
     <None Remove="Plugin.BLE" />
+    <None Remove="Helpers\" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+  <Import Project="..\..\FenomPlus.SDK\FenomPlus.SDK.Abstractions\FenomPlus.SDK.Abstractions.projitems" Label="Shared" Condition="Exists('..\..\FenomPlus.SDK\FenomPlus.SDK.Abstractions\FenomPlus.SDK.Abstractions.projitems')" />
+  <Import Project="..\..\FenomPlus.SDK\FenomPlus.SDK.Core\FenomPlus.SDK.Core.projitems" Label="Shared" Condition="Exists('..\..\FenomPlus.SDK\FenomPlus.SDK.Core\FenomPlus.SDK.Core.projitems')" />
 </Project>
