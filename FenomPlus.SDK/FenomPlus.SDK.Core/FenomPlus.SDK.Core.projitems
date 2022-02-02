@@ -15,6 +15,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
     <Folder Include="$(MSBuildThisFileDirectory)Ble\Interface\" />
     <Folder Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Command\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncHelper.cs" />
@@ -34,5 +35,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Features\CharacteristicBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LoggingManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\GattCharacteristic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\BaseFeature.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\FeatureStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandQueue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandPacket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BasePacket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\DeviceCommandsEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\AppCommandsEnum.cs" />
   </ItemGroup>
 </Project>

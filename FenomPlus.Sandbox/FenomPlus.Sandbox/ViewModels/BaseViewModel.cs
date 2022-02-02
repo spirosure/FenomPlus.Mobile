@@ -1,16 +1,16 @@
-﻿using FenomPlus.Sandbox.Models;
-using FenomPlus.Sandbox.Services;
+﻿using FenomPlus.SDK.Abstractions;
+using FenomPlus.SDK.Core.Ble.Interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
 
 namespace FenomPlus.Sandbox.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IBleDevice BleDevice => App.BleDevice;
+        public IFenomHubSystemDiscovery FenomHub = App.FenomHubSystemDiscovery;
 
         bool isBusy = false;
         public bool IsBusy

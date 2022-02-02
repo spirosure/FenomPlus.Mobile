@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FenomPlus.Sandbox.Views.BleDevicePage"
+    Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout Spacing="0" Padding="0" Orientation="Vertical" VerticalOptions="FillAndExpand">
+
+        <StackLayout Spacing="20" Padding="15" Orientation="Horizontal">
+            <Label Text="Name: " FontSize="Large" />
+            <Label Text="{Binding Name}" FontSize="Large"/>
+        </StackLayout>
+
+        <StackLayout Spacing="5" Padding="15" Orientation="Horizontal">
+            <Button Margin="0,5,0,0" Text="Connect"
+                        Command="{Binding ConnectCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        IsEnabled="{Binding ConnectEnabled}"
+                        />
+            <Button Margin="0,5,0,0" Text="DisConnect"
+                        Command="{Binding DisconnectCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        IsEnabled="{Binding DisconnectEnabled}"
+                        />
+            <Button Margin="0,5,0,0" Text="{Binding ToggleLedName}"
+                        Command="{Binding ToggleLedCommand}"    
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        IsEnabled="{Binding ToggleLedEnabled}"
+                        />
+            <Button Margin="0,5,0,0" Text="Button"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White"
+                        IsEnabled="{Binding ButtonPressedEnabled}"
+                        />
+        </StackLayout>
+        <StackLayout Orientation="Vertical" Padding="0,0,0,0" Spacing="0" VerticalOptions="FillAndExpand">
+                <ListView ItemsSource="{Binding Items}"
+                          HorizontalOptions="StartAndExpand"
+                          BackgroundColor="#eeeeee"
+                          HasUnevenRows="True"
+                          >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="50" Padding="4">
+                                    <Label Text="{Binding Description}" FontSize="Medium" HorizontalOptions="StartAndExpand"  TextColor="Black" />
+                                    <Label Text="{Binding Uuid}" FontSize="Medium"  HorizontalOptions="StartAndExpand" TextColor="Black" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+    </StackLayout>
+</ContentPage>

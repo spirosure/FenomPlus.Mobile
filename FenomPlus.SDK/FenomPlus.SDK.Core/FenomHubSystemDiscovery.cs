@@ -108,7 +108,7 @@ namespace FenomPlus.SDK.Core
                         // TODO: do filter here
                         if ((bleDevice != null) && (!string.IsNullOrEmpty(bleDevice.Name)))
                         {
-                            if (bleDevice.Name.StartsWith("LOCK"))
+                            //if (bleDevice.Name.StartsWith("LOCK"))
                             {
                                 deviceFoundCallback?.Invoke(bleDevice);
                             }

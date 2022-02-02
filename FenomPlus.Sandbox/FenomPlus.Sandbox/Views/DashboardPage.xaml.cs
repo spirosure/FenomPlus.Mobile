@@ -7,15 +7,15 @@ using FenomPlus.SDK.Core.Ble.Interface;
 
 namespace FenomPlus.Sandbox.Views
 {
-    public partial class AboutPage : ContentPage
+    public partial class DashboardPage : ContentPage
     {
-        AboutViewModel _viewModel;
+        DashboardViewModel _viewModel;
 
-        public AboutPage()
+        public DashboardPage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new AboutViewModel();
+            BindingContext = _viewModel = new DashboardViewModel();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace FenomPlus.Sandbox.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _viewModel.OnAppearing();
+            //_viewModel.StartScan();
         }
 
         /// <summary>
@@ -35,8 +35,10 @@ namespace FenomPlus.Sandbox.Views
         public async void ListView_ItemTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             App.BleDevice = ((DeviceFound)e.Item).Device;
-            //await Shell.Current.GoToAsync(nameof(BleDevicePage));
+            await Shell.Current.GoToAsync(nameof(BleDevicePage));
             ((ListView)sender).SelectedItem = null;
+            _viewModel.StopScan();
         }
+
     }
 }

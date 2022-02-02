@@ -3,6 +3,7 @@ using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.SDK.Abstractions;
 using Xamarin.Essentials;
 using Microsoft.Extensions.Logging;
+using FenomPlus.SDK.Core;
 
 namespace FenomPlus.Sandbox
 {
@@ -24,7 +25,18 @@ namespace FenomPlus.Sandbox
             MainPage = new AppShell();
         }
 
-        public static IFenomHubSystemDiscovery FenomHubSystemDiscovery { get; private set; }
+        private static IFenomHubSystemDiscovery fenomHubSystemDiscovery;
+        public static IFenomHubSystemDiscovery FenomHubSystemDiscovery {
+            get
+            {
+                if (fenomHubSystemDiscovery == null)
+                {
+                    fenomHubSystemDiscovery = new FenomHubSystemDiscovery();
+                    fenomHubSystemDiscovery.SetLoggerFactory(loggerFactory);
+                }
+                return fenomHubSystemDiscovery;
+            }
+        }
 
         public static bool IsAndroid { get => DeviceInfo.Platform == DevicePlatform.Android; }
 
