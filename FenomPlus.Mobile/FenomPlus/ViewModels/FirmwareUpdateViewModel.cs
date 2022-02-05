@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FenomPlus.ViewModels
 {
-    public class FirmwareUpdateViewModel
+    public class FirmwareUpdateViewModel : BaseViewModel
     {
         public FirmwareUpdateViewModel()
         {

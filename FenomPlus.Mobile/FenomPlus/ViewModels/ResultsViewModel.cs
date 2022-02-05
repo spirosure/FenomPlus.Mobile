@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FenomPlus.ViewModels
 {
-    public class ResultsViewModel
+    public class ResultsViewModel : BaseViewModel
     {
         public ResultsViewModel()
         {

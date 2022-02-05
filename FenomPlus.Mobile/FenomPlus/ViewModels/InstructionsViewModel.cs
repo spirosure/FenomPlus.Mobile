@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FenomPlus.ViewModels
 {
-    public class InstructionsViewModel
+    public class InstructionsViewModel : BaseViewModel
     {
         public InstructionsViewModel()
         {

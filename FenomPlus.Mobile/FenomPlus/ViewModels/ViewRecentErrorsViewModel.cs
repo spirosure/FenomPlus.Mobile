@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FenomPlus.ViewModels
 {
-    public class ViewRecentErrorsViewModel
+    public class ViewRecentErrorsViewModel : BaseViewModel
     {
         public ViewRecentErrorsViewModel()
         {
