@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FenomPlus.SDK.Core.Utils;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Exceptions;
+using FenomPlus.SDK.Core.Models.Command;
 
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
@@ -199,5 +200,34 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
         }
 
+        public Task<bool> EnsureConnected()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdatedRssi()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IGattCharacteristic> GetCharacterasticsAync(Guid gattCharacteristicUuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IGattCharacteristic> GetCharacterasticsAync(string gattCharacteristicUuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Guid Subscribe(IBleDevice subscriber, Action<IBleDevice, byte[], CommandPacket> callBack = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnSubscribe(Guid token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.iOS", "FenomPlus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FenomPlus", "FenomPlus.Mobile\FenomPlus\FenomPlus.csproj", "{34E5F295-9EB3-4028-92EA-DCAEEEC02DDF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FenomPlus.Core", "FenomPlus.Mobile\FenomPlus.Core\FenomPlus.Core.shproj", "{D827BF82-4A2B-4C4B-855E-F6797A6192BB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.SDK.Android", "FenomPlus.SDK\FenomPlus.SDK.Android\FenomPlus.SDK.Android.csproj", "{AE7055A9-334A-40A1-B8F6-8C2FC54A358C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.SDK.iOS", "FenomPlus.SDK\FenomPlus.SDK.iOS\FenomPlus.SDK.iOS.csproj", "{EEB5C3DD-0681-4889-891B-4EBB06FA79D4}"
