@@ -12,6 +12,8 @@ namespace FenomPlus.Sandbox
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(BleDevicePage), typeof(BleDevicePage));
+            Routing.RegisterRoute(nameof(BreathManeuverFeedbackPage), typeof(BreathManeuverFeedbackPage));
+            
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

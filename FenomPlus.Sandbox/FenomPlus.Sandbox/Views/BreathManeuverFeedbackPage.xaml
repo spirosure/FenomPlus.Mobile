@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:FenomPlus.SDK.Core.UI"
+    x:Class="FenomPlus.Sandbox.Views.BreathManeuverFeedbackPage">
+    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+       <controls:BreathGuage
+           GuageData="{Binding GuageData}"
+           Value="{Binding GuageValue}"
+           Text="{Binding GuageText}"
+           HeightRequest="1000"
+           WidthRequest="1000"
+           HorizontalOptions="StartAndExpand"
+           VerticalOptions="StartAndExpand"
+                             />
+        <Slider Minimum="0" Maximum="6" Value="{Binding SliderValue}"  HorizontalOptions="StartAndExpand" WidthRequest="1000" BackgroundColor="gray" />
+    </StackLayout>
+</ContentPage>
