@@ -1,0 +1,28 @@
+﻿<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:FenomPlus.Sandbox.Views"
+       xmlns:controls="clr-namespace:FenomPlus.Sandbox.Controls"
+       x:Class="FenomPlus.Sandbox.Views.MainPage"
+       BackgroundColor="#4895D9">
+    <Shell.FlyoutHeader>
+        <controls:HeaderContentView />
+    </Shell.FlyoutHeader>
+
+    <ShellContent Title="Scan Ble"
+                  Icon="one.png"
+                  ContentTemplate="{DataTemplate pages:ScanBlePage}" />
+    <ShellContent Title="Standard Test"
+                  Icon="one.png"
+                  ContentTemplate="{DataTemplate pages:StandardTestPage}" />
+    <ShellContent Icon="one.png"
+                  Title="Gauge"
+                  ContentTemplate="{DataTemplate pages:GaugePage}" />
+    <ShellContent Title="Stop Exhaling"
+                  ContentTemplate="{DataTemplate pages:StopExhalingPage }" />
+    <ShellContent Title="Preparing Standard Result"
+                  Icon="one.png"
+                  ContentTemplate="{DataTemplate pages:PreparingStandardTestResultPage}" />
+    <ShellContent Title="Standard Test Result"
+                  Icon="one.png"
+                  ContentTemplate="{DataTemplate pages:StandardTestResultPage }" />
+</Shell>

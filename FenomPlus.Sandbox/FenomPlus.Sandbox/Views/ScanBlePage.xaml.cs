@@ -7,15 +7,15 @@ using FenomPlus.SDK.Core.Ble.Interface;
 
 namespace FenomPlus.Sandbox.Views
 {
-    public partial class DashboardPage : ContentPage
+    public partial class ScanBlePage : ContentPage
     {
-        DashboardViewModel _viewModel;
+        ScanBleViewModel _viewModel;
 
-        public DashboardPage()
+        public ScanBlePage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new DashboardViewModel();
+            BindingContext = _viewModel = new ScanBleViewModel();
         }
 
         /// <summary>

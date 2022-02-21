@@ -24,11 +24,20 @@ namespace FenomPlus.SDK.Core.UI
         public static readonly BindableProperty GuageDataProperty =
             BindableProperty.Create(nameof(GuageData), typeof(float), typeof(BreathGuage));
 
-        public static readonly BindableProperty ValueProperty =
-            BindableProperty.Create(nameof(Value), typeof(string), typeof(BreathGuage));
+        public static readonly BindableProperty GuageValueProperty =
+            BindableProperty.Create(nameof(GuageValue), typeof(string), typeof(BreathGuage));
 
-        public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(BreathGuage));
+        public static readonly BindableProperty GuageTextProperty =
+            BindableProperty.Create(nameof(GuageText), typeof(string), typeof(BreathGuage));
+
+        public static readonly BindableProperty GuageSizeProperty =
+            BindableProperty.Create(nameof(GuageSize), typeof(double), typeof(BreathGuage));
+
+        public double GuageSize
+        {
+            get => (double)GetValue(GuageSizeProperty);
+            set => SetValue(GuageSizeProperty, value);
+        }
 
         public float GuageData
         {
@@ -36,16 +45,16 @@ namespace FenomPlus.SDK.Core.UI
             set => SetValue(GuageDataProperty, value);
         }
 
-        public string Value
+        public string GuageValue
         {
-            get => (string)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
+            get => (string)GetValue(GuageValueProperty);
+            set => SetValue(GuageValueProperty, value);
         }
 
-        public string Text
+        public string GuageText
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string)GetValue(GuageTextProperty);
+            set => SetValue(GuageTextProperty, value);
         }
 
         SKColor hardShadowColor = new SKColor(0, 0, 0, 50);
@@ -59,10 +68,15 @@ namespace FenomPlus.SDK.Core.UI
         SKPaint warningArcPaint;
         SKPaint safeArcPaint;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public BreathGuage()
         {
-            WidthRequest = 700;
-            HeightRequest = 700;
+            WidthRequest = 1000;
+            HeightRequest = WidthRequest;
+            MinimumWidthRequest = WidthRequest;
+            MinimumHeightRequest = WidthRequest;
 
             backgroundCirclePaint = new SKPaint()
             {
@@ -111,10 +125,14 @@ namespace FenomPlus.SDK.Core.UI
             };
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
             base.OnPaintSurface(e);
-
+            
             SKImageInfo info = e.Info;
             SKSurface surface = e.Surface;
             SKCanvas canvas = surface.Canvas;
@@ -126,6 +144,8 @@ namespace FenomPlus.SDK.Core.UI
 
             canvas.Translate(width / 2, height / 2);
             canvas.Scale(Math.Min(width / 210f, height / 520f));
+            //canvas.Translate(width, height);
+            //canvas.Scale(7f);
             SKPoint center = new SKPoint(0, 0);
 
             SKRect bounds = new SKRect(-100, -100, 100, 100);
@@ -162,7 +182,7 @@ namespace FenomPlus.SDK.Core.UI
 
             SKPaint textPaint = guagestickPaint;
 
-            string UnitsText = Text ?? "";
+            string UnitsText = GuageText ?? "";
             float ValueFontSize = 20;
 
             float textWidth = textPaint.MeasureText(UnitsText);
@@ -178,7 +198,7 @@ namespace FenomPlus.SDK.Core.UI
             canvas.DrawText(UnitsText, xText, yText, textPaint);
 
             // Draw the Value on the display
-            var valueText = (!string.IsNullOrEmpty(Value)) ? Value.ToString() : ""; //You can set F1 or F2 if you need float values
+            var valueText = (!string.IsNullOrEmpty(GuageValue)) ? GuageValue.ToString() : ""; //You can set F1 or F2 if you need float values
             float valueTextWidth = textPaint.MeasureText(valueText);
             textPaint.TextSize = ValueFontSize;
 
@@ -192,6 +212,11 @@ namespace FenomPlus.SDK.Core.UI
             canvas.Restore();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="value"></param>
         void DrawNeedle(SKCanvas canvas, float value)
         {
 
@@ -231,13 +256,17 @@ namespace FenomPlus.SDK.Core.UI
             canvas.Restore();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
 
             if (propertyName == GuageDataProperty.PropertyName
-                || propertyName == TextProperty.PropertyName
-                || propertyName == ValueProperty.PropertyName)
+                || propertyName == GuageTextProperty.PropertyName
+                || propertyName == GuageValueProperty.PropertyName)
             {
                 InvalidateSurface();
             }

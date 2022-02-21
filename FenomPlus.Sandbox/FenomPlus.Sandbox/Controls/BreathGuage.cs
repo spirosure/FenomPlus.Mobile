@@ -1,26 +1,21 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Xamarin.Forms;
 
-namespace FenomPlus.Sandbox.Views
+namespace FenomPlus.Sandbox.Controls
 {
-    // ------------------------------------------------------------------------------------------------------------------------
-    // Breath Flow(lpm)     On the Gauge(degree)    Colour on the UI        Comments	
-    // 0 to 1	            0 to 22.5	            White(Blank)
-    // 1 to 2.6	            22.5 to 90	            Red zone                16 parts of 4.21875 degree each Far Below Range<2.4
-    // 2.6 to 2.7	        90 to 112.5	            Red zone                1 part of 22.5 degree Below Range (<2.7)
-    // 2.7 to 2.8	        112.5 to 135.0	        Yellow Zone             1 part of 22.5 degree within Range(low)
-    // 2.8 to 3.2	        135.0 to 225.0	        Green Zone              4 parts of 22.5 degree each within range(Optimal)
-    // 3.2 to 3.3	        225 to 247.5	        Yellow Zone             1 part of 22.5 degree within range(high)
-    // 3.3 to 3.4	        247.5 to 270	        Red zone                1 part of 22.5 degree Above Range(>3.3)
-    // 3.4 to 5	            270 to 337.5	        Red zone                16 parts of 4.21875 degree each Far Above Range(>3.6)
-    // 5 to 6	            337.5 to 360	        White(Blank)
-    // ------------------------------------------------------------------------------------------------------------------------
-
     public class BreathGuage : SKCanvasView
     {
+        public static readonly BindableProperty SizeProperty =
+            BindableProperty.Create(nameof(Size), typeof(float), typeof(BreathGuage));
+
+        public static readonly BindableProperty GuageSizeProperty =
+            BindableProperty.Create(nameof(GuageSize), typeof(float), typeof(BreathGuage));
+        
         public static readonly BindableProperty GuageDataProperty =
             BindableProperty.Create(nameof(GuageData), typeof(float), typeof(BreathGuage));
 
@@ -29,6 +24,18 @@ namespace FenomPlus.Sandbox.Views
 
         public static readonly BindableProperty TextProperty =
             BindableProperty.Create(nameof(Text), typeof(string), typeof(BreathGuage));
+
+        public float Size
+        {
+            get => (float)GetValue(SizeProperty);
+            set => SetValue(SizeProperty, value);
+        }
+
+        public float GuageSize
+        {
+            get => (float)GetValue(GuageSizeProperty);
+            set => SetValue(GuageSizeProperty, value);
+        }
 
         public float GuageData
         {
@@ -48,6 +55,7 @@ namespace FenomPlus.Sandbox.Views
             set => SetValue(TextProperty, value);
         }
 
+
         SKColor hardShadowColor = new SKColor(0, 0, 0, 50);
 
         float guageStrokeThickness = 20;
@@ -61,9 +69,6 @@ namespace FenomPlus.Sandbox.Views
 
         public BreathGuage()
         {
-            WidthRequest = 700;
-            HeightRequest = 700;
-
             backgroundCirclePaint = new SKPaint()
             {
                 Style = SKPaintStyle.Fill,
@@ -114,6 +119,10 @@ namespace FenomPlus.Sandbox.Views
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
             base.OnPaintSurface(e);
+            if (GuageSize > 0)
+            {
+                WidthRequest = HeightRequest = GuageSize;
+            }
 
             SKImageInfo info = e.Info;
             SKSurface surface = e.Surface;
@@ -125,7 +134,7 @@ namespace FenomPlus.Sandbox.Views
             int height = e.Info.Height;
 
             canvas.Translate(width / 2, height / 2);
-            canvas.Scale(Math.Min(width / 210f, height / 520f));
+            canvas.Scale(Math.Min(width / 105, height / 260f));
             SKPoint center = new SKPoint(0, 0);
 
             SKRect bounds = new SKRect(-100, -100, 100, 100);
@@ -162,7 +171,7 @@ namespace FenomPlus.Sandbox.Views
 
             SKPaint textPaint = guagestickPaint;
 
-            string UnitsText = Text??"";
+            string UnitsText = Text;
             float ValueFontSize = 20;
 
             float textWidth = textPaint.MeasureText(UnitsText);
@@ -178,7 +187,7 @@ namespace FenomPlus.Sandbox.Views
             canvas.DrawText(UnitsText, xText, yText, textPaint);
 
             // Draw the Value on the display
-            var valueText = (!string.IsNullOrEmpty(Value)) ? Value.ToString() : ""; //You can set F1 or F2 if you need float values
+            var valueText = Value.ToString(); //You can set F1 or F2 if you need float values
             float valueTextWidth = textPaint.MeasureText(valueText);
             textPaint.TextSize = ValueFontSize;
 
@@ -245,4 +254,3 @@ namespace FenomPlus.Sandbox.Views
 
     }
 }
-

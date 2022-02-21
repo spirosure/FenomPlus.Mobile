@@ -24,11 +24,11 @@ namespace FenomPlus.Sandbox.ViewModels
         }
     }
 
-    public class DashboardViewModel : BaseViewModel
+    public class ScanBleViewModel : BaseViewModel
     {
         public RangeObservableCollection<DeviceFound> Items { get; set; }
 
-        public DashboardViewModel()
+        public ScanBleViewModel()
         {
             Title = "Scan";
             Items = new RangeObservableCollection<DeviceFound>();

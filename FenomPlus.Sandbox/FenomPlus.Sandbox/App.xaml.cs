@@ -4,6 +4,7 @@ using FenomPlus.SDK.Abstractions;
 using Xamarin.Essentials;
 using Microsoft.Extensions.Logging;
 using FenomPlus.SDK.Core;
+using FenomPlus.Sandbox.Views;
 
 namespace FenomPlus.Sandbox
 {
@@ -22,7 +23,7 @@ namespace FenomPlus.Sandbox
                 builder.SetMinimumLevel(LogLevel.Debug)
                     .AddFilter("FenomPlus", LogLevel.Debug);
             });
-            MainPage = new AppShell();
+            MainPage = new MainPage();
         }
 
         private static IFenomHubSystemDiscovery fenomHubSystemDiscovery;
