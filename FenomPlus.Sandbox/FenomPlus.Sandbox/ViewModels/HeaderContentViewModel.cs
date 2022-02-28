@@ -2,7 +2,7 @@
 
 namespace FenomPlus.Sandbox.ViewModels
 {
-    public class HeaderContentViewModel
+    public class HeaderContentViewModel : BaseViewModel
     {
         public HeaderContentViewModel()
         {

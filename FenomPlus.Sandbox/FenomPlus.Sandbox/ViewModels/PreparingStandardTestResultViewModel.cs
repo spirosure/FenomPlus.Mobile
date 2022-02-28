@@ -1,19 +1,70 @@
 ﻿using System;
-
+using FenomPlus.Sandbox.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.Sandbox.ViewModels
 {
-    public class PreparingStandardTestResultViewModel : ContentPage
+    public class PreparingStandardTestResultViewModel : BaseViewModel
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public PreparingStandardTestResultViewModel()
         {
-            Content = new StackLayout
+            
+        }
+
+        private bool Stop;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OnAppearing()
+        {
+            Stop = false;
+            Seconds = 25;
+            Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
+        }
+
+        public void OnDisappearing()
+        {
+            Stop = true;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private bool TimerCallback()
+        {
+            Seconds--;
+            if (Seconds <= 0)
             {
-                Children = {
-                    new Label { Text = "Hello ContentPage" }
-                }
-            };
+                // ok time to goto next page here
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (Stop == false)
+                    {
+                        _ = Shell.Current.GoToAsync(nameof(StandardTestResultPage));
+                    }
+                });
+            }
+            return Seconds > 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int seconds;
+        public int Seconds
+        {
+            get => seconds;
+            set
+            {
+                seconds = value;
+                OnPropertyChanged("Seconds");
+            }
         }
     }
 }

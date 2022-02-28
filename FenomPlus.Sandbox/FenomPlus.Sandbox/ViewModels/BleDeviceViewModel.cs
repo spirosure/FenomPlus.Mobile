@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using FenomPlus.SDK.Core.Ble.Interface;
 using Xamarin.Forms;
@@ -36,6 +37,7 @@ namespace FenomPlus.Sandbox.ViewModels
                     EnableButtons();
                     foreach (IGattCharacteristic characteristic in BleDevice.GattCharacteristics) {
                         Items.Add(characteristic);
+                        Console.Write(characteristic.Uuid.ToString());
                     }
                     if(BleDevice.Name.ToUpper().StartsWith("BLINKY  "))
                     {
@@ -202,6 +204,15 @@ namespace FenomPlus.Sandbox.ViewModels
                 OnPropertyChanged("ToggleLedName");
             }
         }
-        
+
+
+        public void OnAppearing()
+        {
+        }
+
+        public void OnDisappearing()
+        {
+        }
+
     }
 }

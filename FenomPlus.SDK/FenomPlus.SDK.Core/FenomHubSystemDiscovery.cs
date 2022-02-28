@@ -101,14 +101,12 @@ namespace FenomPlus.SDK.Core
                     return null;
                 }
 
-                //var deviceList = AsyncHelper.RunSync(() =>
                 _bleRadio.Scan(scanTime.TotalMilliseconds,
                     ((IBleDevice bleDevice) =>
                     {
-                        // TODO: do filter here
                         if ((bleDevice != null) && (!string.IsNullOrEmpty(bleDevice.Name)))
                         {
-                            //if (bleDevice.Name.StartsWith("LOCK"))
+                            if (bleDevice.Name.ToUpper().StartsWith("FENOM"))
                             {
                                 deviceFoundCallback?.Invoke(bleDevice);
                             }
@@ -116,7 +114,6 @@ namespace FenomPlus.SDK.Core
                     }),
                     ((IEnumerable<IBleDevice> bleDevices) =>
                     {
-                        // TODO: do filter here
                         scanCompletedCallback?.Invoke(bleDevices);
                     }),
                     (() =>
@@ -124,7 +121,6 @@ namespace FenomPlus.SDK.Core
 
                     })
                 );
-                //);
 
                 return null;
             }

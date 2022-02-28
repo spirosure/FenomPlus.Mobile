@@ -1,21 +1,17 @@
-﻿using System;
-using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 using FenomPlus.Sandbox.ViewModels;
-using FenomPlus.SDK.Core.Ble.Interface;
 
 namespace FenomPlus.Sandbox.Views
 {
     public partial class ScanBlePage : ContentPage
     {
-        ScanBleViewModel _viewModel;
+        private ScanBleViewModel model;
 
         public ScanBlePage()
         {
             InitializeComponent();
 
-            BindingContext = _viewModel = new ScanBleViewModel();
+            BindingContext = model = new ScanBleViewModel();
         }
 
         /// <summary>
@@ -24,7 +20,16 @@ namespace FenomPlus.Sandbox.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            //_viewModel.StartScan();
+            model.OnAppearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            model.OnDisappearing();
         }
 
         /// <summary>
@@ -34,11 +39,16 @@ namespace FenomPlus.Sandbox.Views
         /// <param name="e"></param>
         public async void ListView_ItemTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
+            await App.DisconnectDevice();
             App.BleDevice = ((DeviceFound)e.Item).Device;
-            await Shell.Current.GoToAsync(nameof(BleDevicePage));
             ((ListView)sender).SelectedItem = null;
-            _viewModel.StopScan();
+            await Shell.Current.GoToAsync(nameof(BleDevicePage));
+            /*
+            if (await App.BleDevice.ConnectAsync()) {
+                model.StopScan();
+                await Shell.Current.GoToAsync(nameof(StandardTestPage));
+            }
+            */
         }
-
     }
 }

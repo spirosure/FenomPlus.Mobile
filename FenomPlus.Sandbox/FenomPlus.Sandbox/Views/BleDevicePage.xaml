@@ -4,19 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Sandbox.Views.BleDevicePage"
     Title="{Binding Title}">
+    <Shell.TitleView>
+        <Label Text="Fenom Plus"
+               FontAttributes="Bold"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center" />
+    </Shell.TitleView>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <StackLayout Spacing="0" Padding="0" Orientation="Vertical" VerticalOptions="FillAndExpand">
+    <StackLayout Spacing="0" Padding="0" Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
 
-        <StackLayout Spacing="20" Padding="15" Orientation="Horizontal">
+        <StackLayout Spacing="20" Padding="15" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Label Text="Name: " FontSize="Large" />
             <Label Text="{Binding Name}" FontSize="Large"/>
         </StackLayout>
 
-        <StackLayout Spacing="5" Padding="15" Orientation="Horizontal">
+        <StackLayout Spacing="5" Padding="15" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
             <Button Margin="0,5,0,0" Text="Connect"
                         Command="{Binding ConnectCommand}"
                         BackgroundColor="{StaticResource Primary}"
@@ -41,9 +48,9 @@
                         IsEnabled="{Binding ButtonPressedEnabled}"
                         />
         </StackLayout>
-        <StackLayout Orientation="Vertical" Padding="0,0,0,0" Spacing="0" VerticalOptions="FillAndExpand">
+        <StackLayout Orientation="Vertical" Padding="0,0,0,0" Spacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <ListView ItemsSource="{Binding Items}"
-                          HorizontalOptions="StartAndExpand"
+                          HorizontalOptions="FillAndExpand"
                           BackgroundColor="#eeeeee"
                           HasUnevenRows="True"
                           >

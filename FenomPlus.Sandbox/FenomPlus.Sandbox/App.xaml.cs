@@ -5,12 +5,14 @@ using Xamarin.Essentials;
 using Microsoft.Extensions.Logging;
 using FenomPlus.SDK.Core;
 using FenomPlus.Sandbox.Views;
+using System.Threading.Tasks;
 
 namespace FenomPlus.Sandbox
 {
     public partial class App : Application
     {
-
+        public static int ScanSeconds = 30;
+        public static bool ContinueScan = false;
         public static ILoggerFactory loggerFactory { get; set; }
         public static IBleDevice BleDevice { get; set; }
 
@@ -23,6 +25,17 @@ namespace FenomPlus.Sandbox
                 builder.SetMinimumLevel(LogLevel.Debug)
                     .AddFilter("FenomPlus", LogLevel.Debug);
             });
+
+            Routing.RegisterRoute("BleDevicePage", typeof(BleDevicePage));
+            Routing.RegisterRoute("GaugePage", typeof(GaugePage));
+            Routing.RegisterRoute("MainPage", typeof(GaugePage));
+            Routing.RegisterRoute("PreparingStandardTestResultPage", typeof(PreparingStandardTestResultPage));
+            Routing.RegisterRoute("ScanBlePage", typeof(ScanBlePage));
+            Routing.RegisterRoute("StandardTestPage", typeof(StandardTestPage));
+            Routing.RegisterRoute("StandardTestResultPage", typeof(StandardTestResultPage));
+            Routing.RegisterRoute("StopExhalingPage", typeof(StopExhalingPage));
+
+
             MainPage = new MainPage();
         }
 
@@ -36,6 +49,19 @@ namespace FenomPlus.Sandbox
                     fenomHubSystemDiscovery.SetLoggerFactory(loggerFactory);
                 }
                 return fenomHubSystemDiscovery;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static async Task DisconnectDevice()
+        {
+            // disconnect device first
+            if ((App.BleDevice != null) && (App.BleDevice.Connected))
+            {
+                await App.BleDevice.DisconnectAsync();
             }
         }
 

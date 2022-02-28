@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using FenomPlus.Sandbox.Helpers;
 using FenomPlus.SDK.Core.Ble.Interface;
@@ -46,6 +47,7 @@ namespace FenomPlus.Sandbox.ViewModels
         public void StopScan()
         {
             FenomHub.StopScan();
+            _ = App.DisconnectDevice();
         }
 
         /// <summary>
@@ -53,9 +55,14 @@ namespace FenomPlus.Sandbox.ViewModels
         /// </summary>
         public void StartScan(bool continueScan = false)
         {
+            // if scanning then stop the scan
+            StopScan();
             Enabled = false;
-            if(!continueScan) Items.Clear();
-            FenomHub.Scan(new TimeSpan(0, 0, 0, 5), (IBleDevice bleDevice) =>
+            if (!continueScan)
+            {
+                Items.Clear();
+            }
+            FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), (IBleDevice bleDevice) =>
             {
                 if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name))
                 {
@@ -80,7 +87,11 @@ namespace FenomPlus.Sandbox.ViewModels
             }, (IEnumerable<IBleDevice> bleDevices) =>
             {
                 Enabled = true;
-                if(continueScan) StartScan();
+                if (continueScan)
+                {
+                    StartScan(continueScan);
+                } else {
+                }
             });
         }
 
@@ -98,6 +109,14 @@ namespace FenomPlus.Sandbox.ViewModels
                 enabled = value;
                 OnPropertyChanged("Enabled");
             }
+        }
+
+        public void OnAppearing()
+        {
+        }
+
+        public void OnDisappearing()
+        {
         }
     }
 }

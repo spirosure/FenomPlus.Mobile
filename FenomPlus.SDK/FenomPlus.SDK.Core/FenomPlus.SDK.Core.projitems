@@ -17,6 +17,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\Command\" />
     <Folder Include="$(MSBuildThisFileDirectory)UI\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\Characteristic\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncHelper.cs" />
@@ -45,5 +46,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Command\DeviceCommandsEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Command\AppCommandsEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\DeviceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\EnvironmentalInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathManeuver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\StatuCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
   </ItemGroup>
 </Project>
