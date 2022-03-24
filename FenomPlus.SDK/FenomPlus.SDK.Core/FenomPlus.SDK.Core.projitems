@@ -53,5 +53,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\StatuCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTestEnum.cs" />
   </ItemGroup>
 </Project>

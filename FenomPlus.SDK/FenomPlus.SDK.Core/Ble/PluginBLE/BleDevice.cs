@@ -8,6 +8,7 @@ using FenomPlus.SDK.Core.Utils;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Exceptions;
 using FenomPlus.SDK.Core.Models.Command;
+using FenomPlus.SDK.Core.Models.Characteristic;
 
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
@@ -46,6 +47,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         public bool Connected => Device.State == DeviceState.Connected;
 
         public IEnumerable<IGattCharacteristic> GattCharacteristics { get; } = new SynchronizedList<IGattCharacteristic>();
+        public IEnumerable<IService> GattServices { get; } = new SynchronizedList<IService>();
 
         public Guid Uuid => Device.Id;
 
@@ -55,23 +57,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns>bool for success or failure</returns>
         public async Task<bool> ConnectAsync()
         {
-            /*
-            var isAndroid = DeviceInfo.Platform == DevicePlatform.Android;
-            if (isAndroid)
-            {
-                if (!MainThread.IsMainThread)
-                {
-                    return await MainThread.InvokeOnMainThreadAsync(async () => await ConnectAsync());
-                }
-            }
-            else
-            {
-                if (MainThread.IsMainThread)
-                {
-                    return await Task.Run(async () => await ConnectAsync()).ConfigureAwait(false);
-                }
-            }
-            */
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "ConnectAsync");
@@ -166,8 +151,9 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "GetCharacterasticsAync");
 
-                if (!(GattCharacteristics is SynchronizedList<IGattCharacteristic>
-                    gattCharacteristics))
+                var gattCharacteristics = GattCharacteristics as SynchronizedList<IGattCharacteristic>;
+
+                if (gattCharacteristics == null)
                 {
                     _logger.LogWarning("BleDevice.GetCharacteristicsAsync() - list is null");
                     return null;
@@ -175,10 +161,16 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
 
                 gattCharacteristics.Clear();
 
+                
+                var gattService = GattServices as SynchronizedList<IService>;
+
                 var services = await Device.GetServicesAsync();
 
                 foreach (var service in services)
                 {
+                    // add service here
+                    gattService.Add(service);
+
                     var characteristics = await service.GetCharacteristicsAsync();
 
                     foreach (var characteristic in characteristics)
@@ -229,5 +221,90 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         {
             throw new NotImplementedException();
         }
+
+        private byte breathFlow;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uuid"></param>
+        /// <returns></returns>
+        public async Task<IGattCharacteristic> FindCharacteristic(string uuid)
+        {
+            Guid guid = new Guid(uuid);
+            IGattCharacteristic gatt = null;
+
+            // have we read it yet ?
+            //var gattService = GattServices as SynchronizedList<IService>;
+            //IService service = gattService[gattService.Count - 1];
+            //gatt = await service.GetCharacteristicAsync(guid);
+
+            var gattCharacteristics = GattCharacteristics as SynchronizedList<IGattCharacteristic>;
+            if(gattCharacteristics.Count <= 0)
+            {
+                _ = GetCharacterasticsAync();
+                gattCharacteristics = GattCharacteristics as SynchronizedList<IGattCharacteristic>;
+            }
+            foreach (IGattCharacteristic item in gattCharacteristics)
+            {
+                if (!item.Uuid.Equals(guid)) continue;
+                gatt = item;
+                break;
+            }
+
+            return gatt;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum = BreathTestEnum.Start10Second)
+        {
+            breathFlow = 0;
+            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
+            byte[] data = new byte[1];
+            data[0] = (byte)breathTestEnum;
+            await Characteristic.WriteAsync(data);
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> StopMesurementFeature()
+        {
+            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
+            byte[] data = new byte[1];
+            data[0] = (byte)BreathTestEnum.Stop;
+            await Characteristic.WriteAsync(data);
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<float> ReadMesurementFeature()
+        {
+            return 25.0f;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<BreathManeuver> ReadBreathManeuverFeature()
+        {
+            BreathManeuver breathManeuver = null;
+            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathManeuverCharacteristic);
+            var data = await Characteristic.ReadAsync();
+            if ((data != null) && (data.Length == 10)) {
+                breathManeuver = BreathManeuver.Create(data);
+            }
+            return breathManeuver;
+        }
+
     }
 }

@@ -45,7 +45,7 @@
                     Margin="5"
                     Clicked="TakeStandardTest_Clicked"
                     />
-            <Button Text="Tutorial"
+            <Button Text="Live Data"
                     CornerRadius="32"
                     TextColor="#333"
                     BackgroundColor="#fff"
@@ -54,7 +54,7 @@
                     Padding="20,5,20,5"
                     HorizontalOptions="Center"
                     Margin="5"
-                    Clicked="Tutorial_Clicked"
+                    Clicked="LiveData_Clicked"
                     />
             <Button Text="Cancel"
                     Padding="4"

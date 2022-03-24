@@ -1,16 +1,18 @@
-﻿using FenomPlus.Sandbox.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using FenomPlus.Sandbox.ViewModels;
 using Xamarin.Forms;
 
 namespace FenomPlus.Sandbox.Views
 {
-    public partial class GaugePage : ContentPage
+    public partial class LiveDataPage : ContentPage
     {
-        private GaugeViewModel model;
+        private LiveDataViewModel model;
 
-        public GaugePage()
+        public LiveDataPage()
         {
             InitializeComponent();
-            BindingContext = model = new GaugeViewModel();
+            BindingContext = model = new LiveDataViewModel();
         }
 
         /// <summary>

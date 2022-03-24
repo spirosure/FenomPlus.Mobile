@@ -10,9 +10,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Polly" Version="7.2.3" />
-    <PackageReference Include="Plugin.BLE" Version="2.2.0-pre2" />
     <PackageReference Include="Microcharts.Forms" Version="1.0.0-preview1" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="2.88.0-preview.187" />
+    <PackageReference Include="Plugin.BLE" Version="2.2.0-pre2" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Extensions.Logging" />

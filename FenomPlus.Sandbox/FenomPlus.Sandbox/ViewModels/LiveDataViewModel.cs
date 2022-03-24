@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Sandbox.ViewModels
 {
-    public class GaugeViewModel : BaseViewModel
+    public class LiveDataViewModel : BaseViewModel
     {
-        public GaugeViewModel()
+        public LiveDataViewModel()
         {
         }
 
@@ -19,68 +19,33 @@ namespace FenomPlus.Sandbox.ViewModels
         public void OnAppearing()
         {
             Stop = false;
-            TestSeconds = 10 * 4;
+            Temperature = "0";
+            Pressure = "0";
+            NOScore = 0;
             GuageData = 0;
-            GuageSeconds = 10*4;
+            GuageSeconds = 10 * 4;
             GuageStatus = "Exhale Harder";
 
             // TODO: start mesurement to ble
             //Device.BeginInvokeOnMainThread(async () => {
-                _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
-                // var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
-            //});   
+            _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
 
             // start timer
             Device.StartTimer(TimeSpan.FromMilliseconds(250), () =>
             {
-                TestSeconds--;
-                if (TestSeconds <= 0)
-                {
-                    // ok time to goto next page here
-                    if (!Stop)
-                    {
-                        // TODO: read value from ble ppb?
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            //App.TestResult = App.BleDevice.ReadMesurementFeature().Result;
-
-                            // TODO: send stop to ble here
-                            _ = App.BleDevice.StopMesurementFeature();
-
-                            // stop exhale here
-                            await Shell.Current.GoToAsync(nameof(StopExhalingPage));
-                        });
-
-                    }
-                }
                 Device.BeginInvokeOnMainThread(async () => {
-                    // TODO: read from ble charestic
-                    if ((Stop == false) && (App.BleDevice != null) && (App.BleDevice.Connected))
-                    {
+                    if((Stop==false) && (App.BleDevice != null) && (App.BleDevice.Connected)) { 
                         var breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
                         if (breathManeuver != null)
                         {
-                            App.TestResult = breathManeuver.NOScore;
+                            Temperature = breathManeuver.Temperature.ToString();
+                            Pressure = (breathManeuver.Pressure*10).ToString();
+                            NOScore = breathManeuver.NOScore;
                             GuageData = (float)(((float)breathManeuver.BreathFlow) / 10);
-
-                            if (GuageData < 2.8f)
-                            {
-                                GuageStatus = "Exhale Harder";
-                            }
-                            else if (GuageData > 3.2f)
-                            {
-                                GuageStatus = "Exhale Softer";
-                            }
-                            else
-                            {
-                                GuageStatus = "Good Job!";
-                            }
                         }
                     }
                 });
-                // return contiune of below the time
-                GuageSeconds = TestSeconds / 4;
-                return (TestSeconds > 0) && (Stop == false);
+                return (Stop==false);
             });
         }
 
@@ -145,6 +110,41 @@ namespace FenomPlus.Sandbox.ViewModels
                 OnPropertyChanged("GuageStatus");
             }
         }
+
+        private string temperature;
+        public string Temperature
+        {
+            get => "Temperature: " + temperature;
+            set
+            {
+                temperature = value;
+                OnPropertyChanged("Temperature");
+            }
+        }
+
+        private string pressure;
+        public string Pressure
+        {
+            get => "Pressure: " + pressure;
+            set
+            {
+                pressure = value;
+                OnPropertyChanged("Pressure");
+            }
+        }
+
+        private float nOScore;
+        public float NOScore
+        {
+            get => nOScore;
+            set
+            {
+                nOScore = value;
+                OnPropertyChanged("NOScore");
+            }
+        }
         
+            
+            
     }
 }

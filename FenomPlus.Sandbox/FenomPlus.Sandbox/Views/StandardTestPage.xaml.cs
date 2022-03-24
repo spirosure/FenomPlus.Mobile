@@ -18,9 +18,9 @@ namespace FenomPlus.Sandbox.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void Tutorial_Clicked(System.Object sender, System.EventArgs e)
+        public void LiveData_Clicked(System.Object sender, System.EventArgs e)
         {
-            Shell.Current.Navigation.PopToRootAsync();
+            Shell.Current.GoToAsync(nameof(LiveDataPage));
         }
 
         /// <summary>

@@ -11,7 +11,8 @@ namespace FenomPlus.Sandbox
 {
     public partial class App : Application
     {
-        public static int ScanSeconds = 30;
+        public static float TestResult { get; set; }
+        public static int ScanSeconds = 15;
         public static bool ContinueScan = false;
         public static ILoggerFactory loggerFactory { get; set; }
         public static IBleDevice BleDevice { get; set; }
@@ -27,8 +28,9 @@ namespace FenomPlus.Sandbox
             });
 
             Routing.RegisterRoute("BleDevicePage", typeof(BleDevicePage));
+            Routing.RegisterRoute("LiveDataPage", typeof(LiveDataPage));
             Routing.RegisterRoute("GaugePage", typeof(GaugePage));
-            Routing.RegisterRoute("MainPage", typeof(GaugePage));
+            Routing.RegisterRoute("MainPage", typeof(MainPage));
             Routing.RegisterRoute("PreparingStandardTestResultPage", typeof(PreparingStandardTestResultPage));
             Routing.RegisterRoute("ScanBlePage", typeof(ScanBlePage));
             Routing.RegisterRoute("StandardTestPage", typeof(StandardTestPage));

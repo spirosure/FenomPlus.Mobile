@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FenomPlus.SDK.Core.Features;
+using FenomPlus.SDK.Core.Models.Characteristic;
 using FenomPlus.SDK.Core.Models.Command;
 
 namespace FenomPlus.SDK.Core.Ble.Interface
@@ -33,5 +34,9 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         void UnSubscribe(Guid token);
 
         // add features for device here
+        Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum);
+        Task<bool> StopMesurementFeature();
+        Task<float> ReadMesurementFeature();
+        Task<BreathManeuver> ReadBreathManeuverFeature();
     }
 }

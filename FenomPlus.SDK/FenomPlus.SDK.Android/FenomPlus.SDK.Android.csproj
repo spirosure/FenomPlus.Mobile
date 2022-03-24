@@ -16,7 +16,7 @@
     <Deterministic>True</Deterministic>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidUseAapt2>true</AndroidUseAapt2>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -60,9 +60,6 @@
     <PackageReference Include="Polly">
       <Version>7.2.3</Version>
     </PackageReference>
-    <PackageReference Include="Plugin.BLE">
-      <Version>2.2.0-pre2</Version>
-    </PackageReference>
     <PackageReference Include="SkiaSharp.Views.Forms">
       <Version>2.88.0-preview.187</Version>
     </PackageReference>
@@ -75,6 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\xamarin-bluetooth-le\Source\Plugin.BLE.Android\Plugin.BLE.Android.csproj">
+      <Project>{80C10C11-6FCB-4038-B029-A700039E8F99}</Project>
+      <Name>Plugin.BLE.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\xamarin-bluetooth-le\Source\Plugin.BLE.Abstractions\Plugin.BLE.Abstractions.csproj">
+      <Project>{30BBA3F3-DEE6-4A86-81F0-C4A817FEE4D8}</Project>
+      <Name>Plugin.BLE.Abstractions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\FenomPlus.SDK.Core\FenomPlus.SDK.Core.projitems" Label="Shared" Condition="Exists('..\FenomPlus.SDK.Core\FenomPlus.SDK.Core.projitems')" />
   <Import Project="..\FenomPlus.SDK.Abstractions\FenomPlus.SDK.Abstractions.projitems" Label="Shared" Condition="Exists('..\FenomPlus.SDK.Abstractions\FenomPlus.SDK.Abstractions.projitems')" />

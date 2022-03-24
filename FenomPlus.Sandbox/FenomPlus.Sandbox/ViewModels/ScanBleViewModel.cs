@@ -47,7 +47,7 @@ namespace FenomPlus.Sandbox.ViewModels
         public void StopScan()
         {
             FenomHub.StopScan();
-            _ = App.DisconnectDevice();
+            //_ = App.DisconnectDevice();
         }
 
         /// <summary>
@@ -113,6 +113,7 @@ namespace FenomPlus.Sandbox.ViewModels
 
         public void OnAppearing()
         {
+            App.BleDevice?.DisconnectAsync();
         }
 
         public void OnDisappearing()

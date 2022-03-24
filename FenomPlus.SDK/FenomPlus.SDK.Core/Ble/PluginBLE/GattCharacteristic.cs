@@ -180,7 +180,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 {
                     throw new Exception("Characteristic cannot be read");
                 }
-
                 var policy = Policy
                     .Handle<Plugin.BLE.Abstractions.Exceptions.CharacteristicReadException>()
                     .WaitAndRetry(3, retryAttempt => TimeSpan.FromMilliseconds(100),
@@ -189,7 +188,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                             // log failed read in here
                         });
 
-                return await policy.Execute(() => Characteristic.ReadAsync());
+                return await policy.Execute(async () => await Characteristic.ReadAsync());
             }
             catch (Exception ex)
             {

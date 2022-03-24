@@ -39,16 +39,17 @@ namespace FenomPlus.Sandbox.Views
         /// <param name="e"></param>
         public async void ListView_ItemTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            await App.DisconnectDevice();
-            App.BleDevice = ((DeviceFound)e.Item).Device;
-            ((ListView)sender).SelectedItem = null;
-            await Shell.Current.GoToAsync(nameof(BleDevicePage));
-            /*
-            if (await App.BleDevice.ConnectAsync()) {
-                model.StopScan();
-                await Shell.Current.GoToAsync(nameof(StandardTestPage));
-            }
-            */
+            Device.BeginInvokeOnMainThread(async() =>
+            {
+                await App.DisconnectDevice();
+                App.BleDevice = ((DeviceFound)e.Item).Device;
+                ((ListView)sender).SelectedItem = null;
+                if (await App.BleDevice.ConnectAsync())
+                {
+                    model.StopScan();
+                    await Shell.Current.GoToAsync(nameof(StandardTestPage));
+                }
+            });
         }
     }
 }
