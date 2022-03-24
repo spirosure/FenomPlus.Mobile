@@ -34,9 +34,10 @@ namespace FenomPlus.Sandbox.ViewModels
             Title = "Scan";
             Items = new RangeObservableCollection<DeviceFound>();
             Enabled = true;
-
+            //PlaySounds.PlaySound(SoundsEnum.mid_low_05sec, 10);
             ScanCommand = new Command(() =>
             {
+            //    PlaySounds.PlaySound(SoundsEnum.mid_low_05sec,100);
                 StartScan();
             });
         }

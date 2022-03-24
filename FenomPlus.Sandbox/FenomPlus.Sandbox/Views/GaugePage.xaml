@@ -6,11 +6,11 @@
     xmlns:view="clr-namespace:FenomPlus.Sandbox.Controls"
     >
     <Shell.TitleView>
-        <Label Text="Fenom Plus"
-               FontAttributes="Bold"
-               TextColor="White"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center" />
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
     </Shell.TitleView>
 
     <ContentPage.Content>

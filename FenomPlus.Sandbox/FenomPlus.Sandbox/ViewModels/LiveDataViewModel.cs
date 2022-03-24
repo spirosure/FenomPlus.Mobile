@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Sandbox.Helpers;
 using FenomPlus.Sandbox.Views;
 using FenomPlus.SDK.Core.Models.Characteristic;
 using Xamarin.Forms;
@@ -23,7 +24,7 @@ namespace FenomPlus.Sandbox.ViewModels
             Pressure = "0";
             NOScore = 0;
             GuageData = 0;
-            GuageSeconds = 10 * 4;
+            GuageSeconds = 10 * (1000/App.ReadBreathData);
             GuageStatus = "Exhale Harder";
 
             // TODO: start mesurement to ble
@@ -31,7 +32,7 @@ namespace FenomPlus.Sandbox.ViewModels
             _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
 
             // start timer
-            Device.StartTimer(TimeSpan.FromMilliseconds(250), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
             {
                 Device.BeginInvokeOnMainThread(async () => {
                     if((Stop==false) && (App.BleDevice != null) && (App.BleDevice.Connected)) { 
@@ -52,6 +53,7 @@ namespace FenomPlus.Sandbox.ViewModels
         public void OnDisappearing()
         {
             Stop = true;
+            PlaySounds.StopAll();
         }
 
         /// <summary>
@@ -97,6 +99,7 @@ namespace FenomPlus.Sandbox.ViewModels
             {
                 guageData = value;
                 OnPropertyChanged("GuageData");
+                PlaySounds.PlaySound(GuageData);
             }
         }
 

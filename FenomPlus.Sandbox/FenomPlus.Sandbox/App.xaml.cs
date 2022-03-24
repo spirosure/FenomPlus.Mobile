@@ -13,6 +13,7 @@ namespace FenomPlus.Sandbox
     {
         public static float TestResult { get; set; }
         public static int ScanSeconds = 15;
+        public static int ReadBreathData = 200;
         public static bool ContinueScan = false;
         public static ILoggerFactory loggerFactory { get; set; }
         public static IBleDevice BleDevice { get; set; }

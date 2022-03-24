@@ -4,21 +4,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Sandbox.Views.StandardTestPage">
     <Shell.TitleView>
-        <Label Text="Fenom Plus"
-               FontAttributes="Bold"
-               TextColor="White"
-               HorizontalTextAlignment="Center"
-               VerticalTextAlignment="Center" />
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
     </Shell.TitleView>
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand"
                      HorizontalOptions="CenterAndExpand">
 
-            <BoxView BackgroundColor="AliceBlue"
-                     WidthRequest="120"
-                     HeightRequest="80"
-                     HorizontalOptions="Center"
-                     />
+            <Image Source="StandardBreathe"
+                   Aspect="AspectFill"
+                   HeightRequest="60"
+                   WidthRequest="94"
+                   HorizontalOptions="Center"
+            />
 
             <Label Text="Standard Test"
                    FontSize="30"

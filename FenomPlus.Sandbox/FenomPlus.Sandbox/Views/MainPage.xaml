@@ -8,21 +8,21 @@
         <controls:HeaderContentView />
     </Shell.FlyoutHeader>
 
-    <ShellContent Title="Scan Ble"
+    <ShellContent Title="Home"
                   Icon="one.png"
-                  ContentTemplate="{DataTemplate pages:ScanBlePage}" />
-    <ShellContent Title="Standard Test"
+                  ContentTemplate="{DataTemplate pages:ScanBlePage}" IsVisible="true" />
+    <ShellContent Title="Standard test Page"
                   Icon="one.png"
-                  ContentTemplate="{DataTemplate pages:StandardTestPage}" />
+                  ContentTemplate="{DataTemplate pages:StandardTestPage}" IsVisible="false" />
     <ShellContent Icon="one.png"
                   Title="Gauge"
-                  ContentTemplate="{DataTemplate pages:GaugePage}" />
+                  ContentTemplate="{DataTemplate pages:GaugePage}" IsVisible="false" />
     <ShellContent Title="Stop Exhaling"
-                  ContentTemplate="{DataTemplate pages:StopExhalingPage }" />
+                  ContentTemplate="{DataTemplate pages:StopExhalingPage }" IsVisible="false" />
     <ShellContent Title="Preparing Standard Result"
                   Icon="one.png"
-                  ContentTemplate="{DataTemplate pages:PreparingStandardTestResultPage}" />
+                  ContentTemplate="{DataTemplate pages:PreparingStandardTestResultPage}" IsVisible="false" />
     <ShellContent Title="Standard Test Result"
                   Icon="one.png"
-                  ContentTemplate="{DataTemplate pages:StandardTestResultPage }" />
+                  ContentTemplate="{DataTemplate pages:StandardTestResultPage }" IsVisible="false" />
 </Shell>

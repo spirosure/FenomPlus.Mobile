@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Sandbox.Helpers;
 using FenomPlus.Sandbox.Views;
 using FenomPlus.SDK.Core.Models.Characteristic;
 using Xamarin.Forms;
@@ -19,19 +20,19 @@ namespace FenomPlus.Sandbox.ViewModels
         public void OnAppearing()
         {
             Stop = false;
-            TestSeconds = 10 * 4;
+            TestSeconds = 10 * (1000 / App.ReadBreathData);
             GuageData = 0;
-            GuageSeconds = 10*4;
+            GuageSeconds = 10 * (1000 / App.ReadBreathData);
             GuageStatus = "Exhale Harder";
 
             // TODO: start mesurement to ble
             //Device.BeginInvokeOnMainThread(async () => {
-                _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
+            _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
                 // var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
             //});   
 
             // start timer
-            Device.StartTimer(TimeSpan.FromMilliseconds(250), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
             {
                 TestSeconds--;
                 if (TestSeconds <= 0)
@@ -79,7 +80,7 @@ namespace FenomPlus.Sandbox.ViewModels
                     }
                 });
                 // return contiune of below the time
-                GuageSeconds = TestSeconds / 4;
+                GuageSeconds = TestSeconds / (1000 / App.ReadBreathData);
                 return (TestSeconds > 0) && (Stop == false);
             });
         }
@@ -87,6 +88,7 @@ namespace FenomPlus.Sandbox.ViewModels
         public void OnDisappearing()
         {
             Stop = true;
+            PlaySounds.StopAll();
         }
 
         /// <summary>
@@ -132,6 +134,7 @@ namespace FenomPlus.Sandbox.ViewModels
             {
                 guageData = value;
                 OnPropertyChanged("GuageData");
+                PlaySounds.PlaySound(GuageData);
             }
         }
 
