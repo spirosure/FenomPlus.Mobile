@@ -45,7 +45,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Command\DeviceCommandsEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Command\AppCommandsEnum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\DeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\EnvironmentalInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTest.cs" />
@@ -54,5 +53,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTestEnum.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />
   </ItemGroup>
 </Project>

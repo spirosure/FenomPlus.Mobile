@@ -1,15 +1,17 @@
-﻿using FenomPlus.Models;
-using FenomPlus.Services;
+﻿using FenomPlus.SDK.Abstractions;
+using FenomPlus.SDK.Core.Ble.Interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public IBleDevice BleDevice => App.BleDevice;
+        public IFenomHubSystemDiscovery FenomHub = App.FenomHubSystemDiscovery;
+
         bool isBusy = false;
         public bool IsBusy
         {

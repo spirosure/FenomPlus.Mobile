@@ -59,7 +59,7 @@
                     />
             <Button Text="Cancel"
                     Padding="4"
-                    TextColor="LightBlue    "
+                    TextColor="LightBlue"
                     BackgroundColor="Transparent"
                     HorizontalOptions="Center"
                     Margin="5"

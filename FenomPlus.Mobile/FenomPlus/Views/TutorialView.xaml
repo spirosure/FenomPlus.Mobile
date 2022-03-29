@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FenomPlus.Views.TutorialView"
+    Style="{StaticResource MainView}"
+    >
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+            <Image Source="TitleIcon"
+                   Aspect="AspectFit"
+                   Margin="0, 16"
+                   HorizontalOptions="Center" />
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid RowDefinitions="auto, *, auto" Padding="0, 16">
+            <Label Style="{StaticResource Header}" Grid.Row="0" x:Name="header" />
+            <CarouselView x:Name="carousel" Loop="False" IsSwipeEnabled="False" Grid.Row="1">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*, *"
+                              Padding="16, 0">
+                            <Label FontSize="32"
+                                   Grid.Column="0"
+                                   Text="{Binding Info}"
+                                   VerticalTextAlignment="top"
+                                   x:Name="info" />
+                            <Image x:Name="image"
+                                   Grid.Column="1"
+                                   Source="{Binding Illustration}"
+                                   Aspect="AspectFit" />
+                        </Grid>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+            <Grid Grid.Row="2"
+                  RowSpacing="0">
+                <Button Text="Next"
+                        Grid.Row="0"
+                        Style="{StaticResource defaultButton}"
+                        Clicked="OnNext" />
+                <Button Text="Exit Tutorial"
+                        Grid.Row="1"
+                        Style="{StaticResource transparentButton}"
+                        Clicked="OnCancelled" />
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

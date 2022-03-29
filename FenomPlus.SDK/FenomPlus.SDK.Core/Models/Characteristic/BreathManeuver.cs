@@ -37,7 +37,7 @@ namespace FenomPlus.SDK.Core.Models.Characteristic
         public BreathManeuver Decode(byte[] data)
         {
             Data = data;
-            if((data != null) && (data.Length == 10))
+            if((data != null) && (data.Length >= 10))
             {
                 TestNumber          = (short)((int)(((int)Data[0])*256 + (int)Data[1]));
                 TimeRemaining       = Data[2];

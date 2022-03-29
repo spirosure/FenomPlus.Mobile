@@ -25,4 +25,7 @@
     <ShellContent Title="Standard Test Result"
                   Icon="one.png"
                   ContentTemplate="{DataTemplate pages:StandardTestResultPage }" IsVisible="false" />
+    <ShellContent Title="Tutorial"
+                  ContentTemplate="{DataTemplate pages:TutorialView}"
+                  Route="start" IsVisible="true"/>
 </Shell>

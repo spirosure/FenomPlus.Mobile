@@ -300,7 +300,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             BreathManeuver breathManeuver = null;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathManeuverCharacteristic);
             var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length == 10)) {
+            if ((data != null) && (data.Length >= 10)) {
                 breathManeuver = BreathManeuver.Create(data);
             }
             return breathManeuver;

@@ -33,10 +33,10 @@ namespace FenomPlus.Sandbox
             Routing.RegisterRoute("GaugePage", typeof(GaugePage));
             Routing.RegisterRoute("MainPage", typeof(MainPage));
             Routing.RegisterRoute("PreparingStandardTestResultPage", typeof(PreparingStandardTestResultPage));
-            Routing.RegisterRoute("ScanBlePage", typeof(ScanBlePage));
             Routing.RegisterRoute("StandardTestPage", typeof(StandardTestPage));
             Routing.RegisterRoute("StandardTestResultPage", typeof(StandardTestResultPage));
             Routing.RegisterRoute("StopExhalingPage", typeof(StopExhalingPage));
+            Routing.RegisterRoute("TutorialView", typeof(TutorialView));
 
 
             MainPage = new MainPage();
