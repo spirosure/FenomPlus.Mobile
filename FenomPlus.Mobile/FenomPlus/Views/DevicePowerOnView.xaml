@@ -2,8 +2,22 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="FenomPlus.Views.DevicePowerOnView">
+    x:Class="FenomPlus.Views.DevicePowerOnView"
+    Title="{Binding Title}">
+    <Shell.TitleView>
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
+    </Shell.TitleView>
     <ContentPage.Content>
-        
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="Center">
+                <Label Text="{Binding Message}"
+                   Style="{StaticResource Header}"
+                   VerticalTextAlignment="Center"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

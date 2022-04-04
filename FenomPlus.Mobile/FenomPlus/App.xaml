@@ -2,31 +2,63 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FenomPlus.App">
-    <!--
-        Define global resources and styles here, that apply to all pages in your app.
-    -->
     <Application.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Style TargetType="Button">
-                <Setter Property="TextColor" Value="White"></Setter>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#332196F3" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-        </ResourceDictionary>        
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#333" />
+        </Style>
+        <Style x:Key="Header" TargetType="Label">
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="Subheader" TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="Important" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="64" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="Description" TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalTextAlignment" Value="Start" />
+        </Style>
+        <Style x:Key="Notice" TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontAttributes" Value="Italic" />
+        </Style>
+        <Style x:Key="EmCaption" TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="MainView" TargetType="ContentPage">
+            <Setter Property="BackgroundImageSource" Value="Background.png" />
+        </Style>
+        <Style x:Key="TableHeader" TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="TableContent" TargetType="Label">
+        </Style>
+        <Style x:Key="defaultButton" TargetType="Button">
+            <Setter Property="CornerRadius" Value="32" />
+            <Setter Property="TextColor" Value="#333" />
+            <Setter Property="BackgroundColor" Value="#fff" />
+            <Setter Property="BorderColor" Value="#eee" />
+            <Setter Property="BorderWidth" Value="3" />
+            <Setter Property="Padding" Value="20,5,20,5" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="5" />  
+        </Style>
+        <Style x:Key="transparentButton" TargetType="Button">
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="TextColor" Value="DodgerBlue" />
+        </Style>
     </Application.Resources>
 </Application>

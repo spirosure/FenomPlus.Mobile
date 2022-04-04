@@ -8,12 +8,43 @@
         <controls:HeaderContentView />
     </Shell.FlyoutHeader>
 
-    <ShellContent Title="Device Screen"
+        <ShellContent Title="Start Screen"
                   ContentTemplate="{DataTemplate pages:DevicePowerOnView}"
-                  Route="start" IsVisible="false"/>
+                  Route="start"
+                  IsVisible="true"/>
+    
+        <ShellContent Title="ChooseTestView"
+                  ContentTemplate="{DataTemplate pages:ChooseTestView}"
+                  Route="ChooseTestView"
+                  IsVisible="true"/>
+    
+    <ShellContent Icon="CheckbookIcon"
+                  Title="Quality Control"
+                  ContentTemplate="{DataTemplate pages:QualityControlView}" 
+                  Route="QualityControlView"
+                  IsVisible="true"/>
+
+    <ShellContent Icon="PastResultIcon"
+                  Title="View Past Results"
+                  ContentTemplate="{DataTemplate pages:ViewPastResultsView}" 
+                  Route="ViewPastResultsView"
+                  IsVisible="true"/>
+
+    <ShellContent Title="View Recent Errors"
+                  Icon="RecentErrorIcon"
+                  ContentTemplate="{DataTemplate pages:ViewRecentErrorsView}"
+                  Route="ViewRecentErrorsView"
+                  IsVisible="true"/>
+
+    <ShellContent Title="Unpair Bluetooth"
+                  Icon="BluetoothIcon"
+                  ContentTemplate="{DataTemplate pages:UnPairView}"
+                  Route="UnPairView"
+                  IsVisible="true"/>
 
     <ShellContent Title="Tutorial"
                   ContentTemplate="{DataTemplate pages:TutorialView}"
-                  Route="start" IsVisible="true"/>
-    
+                  Route="start"
+                  IsVisible="false"/>
+
 </Shell>

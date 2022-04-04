@@ -19,7 +19,10 @@ namespace FenomPlus.ViewModels
         public void StopScan()
         {
             FenomHub.StopScan();
-            App.BleDevice?.DisconnectAsync();
+            if ((App.BleDevice != null) && (App.BleDevice.Connected == false))
+            {
+                App.BleDevice?.DisconnectAsync();
+            }
         }
 
         /// <summary>
@@ -31,13 +34,20 @@ namespace FenomPlus.ViewModels
             App.BleDevice = null;
             Seconds = App.ScanSeconds;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
-            FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), (IBleDevice bleDevice) =>
+            FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), async (IBleDevice bleDevice) =>
             {
                 if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name) && (App.BleDevice == null))
                 {
                     App.BleDevice = bleDevice;
                     FenomHub.StopScan();
-                    App.BleDevice.ConnectAsync();
+                    if(await App.BleDevice.ConnectAsync() == true)
+                    {
+                        Stop = true;
+                        Device.BeginInvokeOnMainThread(async () =>
+                        {
+                            await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
+                        });
+                    }
                 }
             }, (IEnumerable<IBleDevice> bleDevices) =>
             {
@@ -52,19 +62,24 @@ namespace FenomPlus.ViewModels
         private bool TimerCallback()
         {
             Seconds--;
-            if (Stop == true) seconds = 0;
-            // conenct  here
+            /*
+            if(Seconds > 0) Seconds--;
             if ((App.BleDevice != null) && (App.BleDevice.Connected))
             {
                 // ok time to wait for connection and goto next page
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-
-
-
+                    await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
                 });
+                return false;
             }
-            return (Seconds > 0);
+            */
+            if (Seconds <= 0)
+            {
+                StopScan();
+                StartScan();
+            }
+            return ((Seconds >= 0) && (Stop == false));
         }
 
         /// <summary>
@@ -112,7 +127,7 @@ namespace FenomPlus.ViewModels
         public void OnDisappearing()
         {
             Stop = true;
-            StopScan();            
+            StopScan();
         }
     }
 }

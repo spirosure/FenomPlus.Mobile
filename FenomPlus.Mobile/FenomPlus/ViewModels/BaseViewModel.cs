@@ -50,5 +50,19 @@ namespace FenomPlus.ViewModels
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        virtual public void OnAppearing()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        virtual public void OnDisappearing()
+        {
+        }
     }
 }

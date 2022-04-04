@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FenomPlus.Views.TestResultsView">
+    <Shell.TitleView>
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="CenterAndExpand"
+                     VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding TestType}"
+                   FontSize="45"
+                   TextColor="#333333"
+                   HorizontalTextAlignment="Center"
+                   />
+            <Label Text="Test Results"
+                   FontSize="36"
+                   TextColor="#333333"
+                   HorizontalTextAlignment="Center"
+                   Padding="0,0,0,0"
+                   />
+            <Label Text="{Binding TestResult}"
+                   FontSize="100"
+                   TextColor="#333333"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   />
+            <Label Text="ppb"
+                   FontSize="14"
+                   TextColor="#333333"
+                   HorizontalTextAlignment="Center"
+                   Padding="0,0,0,150"
+                   />
+            <Button Text="Finish"
+                    CornerRadius="32"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="200"
+                    HeightRequest="40"
+                    TextColor="Black"
+                    FontSize="16"
+                    Padding="0"
+                    BackgroundColor="#eee"
+                    Pressed="Finish_Pressed"
+                    />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

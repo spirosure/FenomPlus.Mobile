@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FenomPlus.Views.ChooseTestView"
+    Style="{StaticResource MainView}">
+    <Shell.TitleView>
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="#333" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView>
+                <StackLayout Padding="32, 16">
+                    <Label Text="Ready for test"
+                           Grid.ColumnSpan="2"
+                           FontAttributes="Bold"
+                           Style="{StaticResource Header}" />
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
+                        <Frame HeightRequest="140"
+                                Padding="20"
+                                WidthRequest="200"
+                                HorizontalOptions="Start"
+                                VerticalOptions="StartAndExpand">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnStandartTest"/>
+                            </Frame.GestureRecognizers>
+                            <StackLayout VerticalOptions="CenterAndExpand">
+                                <Image Aspect="AspectFit" Source="StandardBreathe" HeightRequest="50" />
+                                <Label Text="Standard" FontSize="18" HorizontalTextAlignment="Center" />
+                                <Label Text="10 seconds" FontSize="14" HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </Frame>
+                        <Frame WidthRequest="5" BorderColor="Transparent" ></Frame>
+                        <Frame HeightRequest="140"
+                               Padding="20"
+                               WidthRequest="200"
+                               HorizontalOptions="Start"
+                               VerticalOptions="StartAndExpand">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnShortTest" />
+                            </Frame.GestureRecognizers>
+                            <StackLayout VerticalOptions="CenterAndExpand">
+                                <Image Aspect="AspectFit" Source="ShortBreathe" HeightRequest="50" />
+                                <Label Text="Short" FontSize="18" HorizontalTextAlignment="Center" />
+                                <Label Text="6 seconds" FontSize="14" HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

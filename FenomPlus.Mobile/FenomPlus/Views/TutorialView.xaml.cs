@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using FenomPlus.Models;
+using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
     public partial class TutorialView : ContentPage
     {
+        private TutorialViewModel model;
+
         ObservableCollection<Tutorial> Tutorials { get; set; }
 
         public TutorialView()
         {
             InitializeComponent();
+            BindingContext = model = new TutorialViewModel();
             InitializeCollection();
         }
 
@@ -107,8 +111,10 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnCancelled(object sender, EventArgs e)
         {
-            GotoPostion(0);
-//            await Shell.Current.GoToAsync(new ShellNavigationState(".."), false);
+            //GotoPostion(0);
+            //await Shell.Current.GoToAsync(new ShellNavigationState(".."), false);
+            //await Shell.Current.Navigation.PopAsync();
+            await Shell.Current.GoToAsync(new ShellNavigationState("///ChooseTestView"), false);
         }
     }
 }
