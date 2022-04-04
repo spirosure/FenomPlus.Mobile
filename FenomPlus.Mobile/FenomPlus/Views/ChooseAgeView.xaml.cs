@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using FenomPlus.ViewModels;
+﻿using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class BleDevicePairingView : BaseContentPage<BleDevicePairingViewModel>
-    {        
-        public BleDevicePairingView()
+    public partial class ChooseAgeView : BaseContentPage
+    {
+        private ChooseAgeViewModel model;
+
+        public ChooseAgeView()
         {
             InitializeComponent();
-            BindingContext = model = new BleDevicePairingViewModel();
+            BindingContext = model = new ChooseAgeViewModel();
         }
 
         /// <summary>

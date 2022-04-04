@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class ShortTestView : ContentPage
+    public partial class ShortTestView : BaseContentPage
     {
+        private ShortTestViewModel model;
+
         public ShortTestView()
         {
             InitializeComponent();
+            BindingContext = model = new ShortTestViewModel();
         }
 
         /// <summary>

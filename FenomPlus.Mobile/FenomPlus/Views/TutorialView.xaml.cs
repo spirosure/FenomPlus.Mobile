@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class TutorialView : ContentPage
+    public partial class TutorialView : BaseContentPage
     {
         private TutorialViewModel model;
 

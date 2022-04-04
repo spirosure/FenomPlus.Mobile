@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class BreathManeuverFeedbackView : ContentPage
+    public partial class BreathManeuverFeedbackView : BaseContentPage
     {
         private BreathManeuverFeedbackViewModel model;
 

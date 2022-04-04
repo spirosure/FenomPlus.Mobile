@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class StartTestView : ContentPage
+    public partial class StartTestView : BaseContentPage
     {
         private StartTestViewModel model;
 

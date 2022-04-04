@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class ChooseTestView : ContentPage
+    public partial class ChooseTestView : BaseContentPage
     {
         private ChooseTestViewModel model;
 

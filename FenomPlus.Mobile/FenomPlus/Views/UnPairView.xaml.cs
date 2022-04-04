@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class UnPairView : ContentPage
+    public partial class UnPairView : BaseContentPage
     {
         private UnPairViewModel model;
 

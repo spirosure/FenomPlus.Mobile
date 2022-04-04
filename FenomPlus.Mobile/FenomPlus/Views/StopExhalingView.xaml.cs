@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class StopExhalingView : ContentPage
+    public partial class StopExhalingView : BaseContentPage
     {
         private StopExhalingViewModel model;
 

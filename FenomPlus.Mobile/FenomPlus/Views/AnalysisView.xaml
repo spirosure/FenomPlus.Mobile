@@ -2,8 +2,19 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="FenomPlus.Views.AnalysisView">
+    x:Class="FenomPlus.Views.AnalysisView"
+    Title="{Binding Title}">
+    <Shell.TitleView>
+        <Image Source="TitleIcon"
+               Aspect="AspectFit"
+               Margin="0, 16"
+               HorizontalOptions="StartAndExpand"
+        />
+    </Shell.TitleView>
     <ContentPage.Content>
-        
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

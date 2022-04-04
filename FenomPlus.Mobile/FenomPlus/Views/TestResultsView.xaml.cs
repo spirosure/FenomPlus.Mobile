@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class TestResultsView : ContentPage
+    public partial class TestResultsView : BaseContentPage
     {
         private TestResultsViewModel model;
 

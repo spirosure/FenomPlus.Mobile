@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class DevicePowerOnView : ContentPage
+    public partial class DevicePowerOnView : BaseContentPage
     {
         private DevicePowerOnViewModel model;
 

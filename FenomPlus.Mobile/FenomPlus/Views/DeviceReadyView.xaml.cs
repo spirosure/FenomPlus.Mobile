@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class DeviceReadyView : ContentPage
+    public partial class DeviceReadyView : BaseContentPage
     {
         private DeviceReadyViewModel model;
 

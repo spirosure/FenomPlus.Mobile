@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class StartScreenView : ContentPage
+    public partial class StartScreenView : BaseContentPage
     {
         private StartScreenViewModel model;
 
