@@ -1,9 +1,10 @@
 ﻿using System;
+
 namespace FenomPlus.ViewModels
 {
-    public class SettingsViewModel : BaseViewModel
+    public class TutorialSuccessViewModel : BaseViewModel
     {
-        public SettingsViewModel()
+        public TutorialSuccessViewModel()
         {
         }
 
@@ -13,7 +14,6 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
-
         }
 
         /// <summary>

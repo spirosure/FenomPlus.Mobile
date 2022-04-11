@@ -46,8 +46,10 @@ namespace FenomPlus
             Routing.RegisterRoute("StartTestView", typeof(StartTestView));
             Routing.RegisterRoute("StopExhalingView", typeof(StopExhalingView));
             Routing.RegisterRoute("TestErrorView", typeof(TestErrorView));
+            Routing.RegisterRoute("TestFailedView", typeof(TestFailedView));            
             Routing.RegisterRoute("TestResultsView", typeof(TestResultsView));
             Routing.RegisterRoute("TutorialView", typeof(TutorialView));
+            Routing.RegisterRoute("TutorialSuccessView", typeof(TutorialSuccessView));            
             Routing.RegisterRoute("UnPairView", typeof(UnPairView));
             Routing.RegisterRoute("ViewPastResultsView", typeof(ViewPastResultsView));
             Routing.RegisterRoute("ViewRecentErrorsView", typeof(ViewRecentErrorsView));

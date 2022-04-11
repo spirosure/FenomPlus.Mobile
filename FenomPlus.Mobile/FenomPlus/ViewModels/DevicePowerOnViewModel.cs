@@ -31,28 +31,31 @@ namespace FenomPlus.ViewModels
         public void StartScan()
         {
             // if scanning then stop the scan
+            _ = App.DisconnectDevice();
             App.BleDevice = null;
+            //
             Seconds = App.ScanSeconds;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
-            FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), async (IBleDevice bleDevice) =>
+            _ = FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), async (IBleDevice bleDevice) =>
+              {
+                  if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name) && (App.BleDevice == null))
+                  {
+                      FenomHub.StopScan();
+                      //Device.BeginInvokeOnMainThread(async () =>
+                      //{
+                          var connected = await bleDevice.ConnectAsync();
+                          if (connected == true)
+                          {
+                              App.BleDevice = bleDevice;
+                              Stop = true;
+                              await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
+                          }
+                      //});
+                  }
+              }, (IEnumerable<IBleDevice> bleDevices) =>
             {
-                if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name) && (App.BleDevice == null))
-                {
-                    App.BleDevice = bleDevice;
-                    FenomHub.StopScan();
-                    if(await App.BleDevice.ConnectAsync() == true)
-                    {
-                        Stop = true;
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
-                        });
-                    }
-                }
-            }, (IEnumerable<IBleDevice> bleDevices) =>
-            {
-                
-            });
+
+                });
         }
 
         /// <summary>
@@ -76,8 +79,10 @@ namespace FenomPlus.ViewModels
             */
             if (Seconds <= 0)
             {
+                _ = App.DisconnectDevice();
                 StopScan();
                 StartScan();
+                return false;
             }
             return ((Seconds >= 0) && (Stop == false));
         }

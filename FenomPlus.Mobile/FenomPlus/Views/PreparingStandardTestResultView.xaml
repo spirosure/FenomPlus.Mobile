@@ -3,8 +3,11 @@
     xmlns:views="clr-namespace:FenomPlus.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="FenomPlus.Views.PreparingStandardTestResultView">
-<Shell.TitleView>
+    x:Class="FenomPlus.Views.PreparingStandardTestResultView"
+    Title="{Binding Title}"
+    Style="{StaticResource MainView}"
+    NavigationPage.HasBackButton="True">
+    <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"
                Margin="0, 16"

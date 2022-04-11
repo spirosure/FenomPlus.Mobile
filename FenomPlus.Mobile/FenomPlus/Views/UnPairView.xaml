@@ -4,7 +4,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Views.UnPairView"
-    Title="{Binding Title}">
+    Title="{Binding Title}"
+    Style="{StaticResource MainView}"
+    NavigationPage.HasBackButton="True">
     <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"

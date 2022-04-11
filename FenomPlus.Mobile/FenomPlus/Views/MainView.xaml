@@ -8,12 +8,14 @@
         <controls:HeaderContentView />
     </Shell.FlyoutHeader>
 
-        <ShellContent Title="Start Screen"
+            <ShellContent Title="Device Power On View"
+                      Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:DevicePowerOnView}"
-                  Route="start"
-                  IsVisible="true"/>
-    
-        <ShellContent Title="ChooseTestView"
+                  Route="DevicePowerOnView"
+                  IsVisible="false"/>
+
+            <ShellContent Title="Take A Test"
+                      Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:ChooseTestView}"
                   Route="ChooseTestView"
                   IsVisible="true"/>
@@ -40,11 +42,21 @@
                   Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:UnPairView}"
                   Route="UnPairView"
-                  IsVisible="true"/>
+                  IsVisible="false"/>
 
     <ShellContent Title="Tutorial"
                   ContentTemplate="{DataTemplate pages:TutorialView}"
                   Route="start"
                   IsVisible="false"/>
+
+    <ShellContent Title="TestErrorView"
+                  ContentTemplate="{DataTemplate pages:TestErrorView}"
+                  Route="TestErrorView"
+                  IsVisible="true"/>
+
+        <ShellContent Title="TestFailedView"
+                  ContentTemplate="{DataTemplate pages:TestFailedView}"
+                  Route="TestFailedView"
+                  IsVisible="true"/>
 
 </Shell>

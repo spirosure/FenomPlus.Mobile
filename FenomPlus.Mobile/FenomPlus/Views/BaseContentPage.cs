@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public class BaseContentPage<T> : ContentPage
+    public class BaseContentPage : ContentPage
     {
-        protected T model;
+        //protected T model;
 
         /// <summary>
         /// 

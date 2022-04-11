@@ -5,14 +5,14 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class TestErrorView : BaseContentPage
+    public partial class TestFailedView : BaseContentPage
     {
-        private TestErrorViewModel model;
+        private TestFailedViewModel model;
 
-        public TestErrorView()
+        public TestFailedView()
         {
             InitializeComponent();
-            BindingContext = model = new TestErrorViewModel();
+            BindingContext = model = new TestFailedViewModel();
         }
 
         /// <summary>

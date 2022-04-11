@@ -5,8 +5,10 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
-    public partial class BleDevicePairingView : BaseContentPage<BleDevicePairingViewModel>
-    {        
+    public partial class BleDevicePairingView : BaseContentPage
+    {
+        private BleDevicePairingViewModel model;
+
         public BleDevicePairingView()
         {
             InitializeComponent();

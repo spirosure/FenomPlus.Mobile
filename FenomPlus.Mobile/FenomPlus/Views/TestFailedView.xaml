@@ -3,7 +3,7 @@
     xmlns:views="clr-namespace:FenomPlus.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="FenomPlus.Views.TestErrorView"
+    x:Class="FenomPlus.Views.TestFailedView"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
     NavigationPage.HasBackButton="True">
@@ -16,18 +16,13 @@
     </Shell.TitleView>
     <ContentPage.Content>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-                <Label Text="Test Error" Style="{StaticResource Header}"/>
-                <Label Text="E-001" Style="{StaticResource Important}"/>
-                <Label Text="Your breath was too hard. Remember to aim for the star!&#x0a; You can test again or follow the tutorial." Style="{StaticResource Notice}"/>
-                <Label Style="{StaticResource Notice}">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="For more information about this error,&#x0a;" />
-                            <Span Text="please view our online FAQ" TextColor="DodgerBlue"/>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                <Label Text="Standard Test Failed" Style="{StaticResource Header}"/>
+                <Label Text="Possible issues affecting your test include:" Style="{StaticResource Description}"/>
+                <Label Text="- Exhaling too hard" Style="{StaticResource Description}"/>
+                <Label Text="- Exhaling too soft" Style="{StaticResource Description}" />
+                <Label Text="- Exhaling at an unsteady rate that was not in range" Style="{StaticResource Description}"/>
+                <Label Text="- Failing to make a seal around the mouthpiece" Style="{StaticResource Description}"/>
                 <Button Text="Take New Test" Style="{StaticResource defaultButton}" Clicked="StartTest" />
                 <Button Text="Take Tutorial" Style="{StaticResource defaultButton}" Clicked="GoToTutorial" />
                 <Button Text="Cancel" Style="{StaticResource transparentButton}" Clicked="OnCancel" />

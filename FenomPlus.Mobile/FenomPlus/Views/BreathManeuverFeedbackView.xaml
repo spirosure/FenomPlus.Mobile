@@ -6,7 +6,8 @@
     x:Class="FenomPlus.Views.BreathManeuverFeedbackView"
     xmlns:controls="clr-namespace:FenomPlus.Controls"
     Title="{Binding Title}"
-    >
+    Style="{StaticResource MainView}"
+    NavigationPage.HasBackButton="True">
     <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"
@@ -32,6 +33,7 @@
             <controls:BreathGuage GuageSize="350"
                               GuageData="{Binding GuageData}"
                               Text="Seconds"
+                              IsStepfive="true"
                               Value="{Binding GuageSeconds}" />
 
             <Label Text="{Binding GuageStatus}"

@@ -1,9 +1,12 @@
 ﻿using System;
+
+using Xamarin.Forms;
+
 namespace FenomPlus.ViewModels
 {
-    public class SettingsViewModel : BaseViewModel
+    public class ShortTestViewModel : BaseViewModel
     {
-        public SettingsViewModel()
+        public ShortTestViewModel()
         {
         }
 

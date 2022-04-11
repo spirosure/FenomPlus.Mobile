@@ -1,9 +1,9 @@
 ﻿using System;
 namespace FenomPlus.ViewModels
 {
-    public class SettingsViewModel : BaseViewModel
+    public class TestFailedViewModel : BaseViewModel
     {
-        public SettingsViewModel()
+        public TestFailedViewModel()
         {
         }
 

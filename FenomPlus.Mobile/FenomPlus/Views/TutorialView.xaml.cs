@@ -91,6 +91,8 @@ namespace FenomPlus.Views
             {
                 carousel.Position++;
                 header.Text = $"Step {carousel.Position + 1}";
+            } else {
+                Shell.Current.Navigation.PushAsync(new TutorialSuccessView(), false);
             }
         }
 

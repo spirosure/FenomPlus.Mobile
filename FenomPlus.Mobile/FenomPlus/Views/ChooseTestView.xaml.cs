@@ -14,6 +14,7 @@ namespace FenomPlus.Views
         {
             InitializeComponent();
             BindingContext = model = new ChooseTestViewModel();
+            //Shell.Current.IsVisible = false;
         }
 
         /// <summary>
@@ -36,6 +37,31 @@ namespace FenomPlus.Views
         {
             App.TestType = TestTypeEnum.Short;
             await Shell.Current.GoToAsync(new ShellNavigationState("StartTestView"), false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            model.OnAppearing();
+            if ((App.BleDevice == null) || (App.BleDevice.Connected == false))
+            {
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    //await Shell.Current.GoToAsync(new ShellNavigationState("DevicePowerOnView"), false);
+                });
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            model.OnDisappearing();
         }
     }
 }
