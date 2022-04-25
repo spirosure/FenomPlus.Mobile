@@ -33,7 +33,9 @@
             <controls:BreathGuage GuageSize="350"
                               GuageData="{Binding GuageData}"
                               Text="Seconds"
-                              IsStepfive="true"
+                              IsStepfive="false"
+                              IsStepsix="false"
+                              IsStepseven="false"
                               Value="{Binding GuageSeconds}" />
 
             <Label Text="{Binding GuageStatus}"

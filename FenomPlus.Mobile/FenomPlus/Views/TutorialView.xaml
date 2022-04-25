@@ -2,7 +2,7 @@
 <views:BaseContentPage
     xmlns:views="clr-namespace:FenomPlus.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:FenomPlus.Controls"
     x:Class="FenomPlus.Views.TutorialView"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
@@ -31,7 +31,19 @@
                             <Image x:Name="image"
                                    Grid.Column="1"
                                    Source="{Binding Illustration}"
-                                   Aspect="AspectFit" />
+                                   Aspect="AspectFit"
+                                   IsVisible="{Binding ShowImage}"/>
+                            <controls:BreathGuage
+                                Grid.Column="1"
+                                GuageSize="350"
+                                GuageData="{Binding GuageData}"
+                                Text=""
+                                IsStepfive="{Binding ShowStep5}"
+                                IsStepsix="{Binding ShowStep6}"
+                                IsStepseven="{Binding ShowStep7}"
+                                Value="{Binding GuageSeconds}"
+                                IsVisible="{Binding ShowGuage}"
+                              />
                         </Grid>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>

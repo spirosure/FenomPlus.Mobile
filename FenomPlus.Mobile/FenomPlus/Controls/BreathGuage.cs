@@ -1,11 +1,14 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Xamarin.Forms;
 
 namespace FenomPlus.Controls
 {
+
     // ------------------------------------------------------------------------------------------------------------------------
     // Breath Flow(lpm)     On the Gauge(degree)    Colour on the UI        Comments	
     // 0 to 1	            0 to 22.5	            White(Blank)
@@ -31,10 +34,35 @@ namespace FenomPlus.Controls
             BindableProperty.Create(nameof(GuageData), typeof(float), typeof(BreathGuage));
 
         public static readonly BindableProperty ValueProperty =
-            BindableProperty.Create(nameof(Value), typeof(string), typeof(BreathGuage));
+            BindableProperty.Create(nameof(Value), typeof(string), typeof(BreathGuage), "");
 
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create(nameof(Text), typeof(string), typeof(BreathGuage));
+            BindableProperty.Create(nameof(Text), typeof(string), typeof(BreathGuage), "");
+
+        public static readonly BindableProperty IsStepfiveProperty =
+            BindableProperty.Create(nameof(IsStepfive), typeof(bool), typeof(BreathGuage));
+
+        public static readonly BindableProperty IsStepsixProperty =
+            BindableProperty.Create(nameof(IsStepsix), typeof(bool), typeof(BreathGuage));
+
+        public static readonly BindableProperty IsStepsevenProperty =
+            BindableProperty.Create(nameof(IsStepseven), typeof(bool), typeof(BreathGuage));
+
+        public bool IsStepfive
+        {
+            get => (bool)GetValue(IsStepfiveProperty);
+            set => SetValue(IsStepfiveProperty, value);
+        }
+        public bool IsStepsix
+        {
+            get => (bool)GetValue(IsStepsixProperty);
+            set => SetValue(IsStepsixProperty, value);
+        }
+        public bool IsStepseven
+        {
+            get => (bool)GetValue(IsStepsevenProperty);
+            set => SetValue(IsStepsevenProperty, value);
+        }
 
         public float Size
         {
@@ -77,9 +105,11 @@ namespace FenomPlus.Controls
         SKPaint dangerArcPaint;
         SKPaint warningArcPaint;
         SKPaint safeArcPaint;
+        SKPaint arrowPaint;
 
         public BreathGuage()
         {
+
             backgroundCirclePaint = new SKPaint()
             {
                 Style = SKPaintStyle.Fill,
@@ -125,6 +155,14 @@ namespace FenomPlus.Controls
                 Color = SKColor.Parse("#ffffff"),
                 IsAntialias = true
             };
+
+            arrowPaint = new SKPaint()
+            {
+                Style = SKPaintStyle.Stroke,
+                Color = SKColor.Parse("#FFFFFF").WithAlpha(100),
+                IsAntialias = true,
+                StrokeWidth = 4
+            };
         }
 
         protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -166,16 +204,81 @@ namespace FenomPlus.Controls
             canvas.DrawPath(warningpath, warningArcPaint);
             canvas.DrawPath(safepath, safeArcPaint);
 
+            var arrow = new SKPath();
+
+            if (IsStepfive)
+            {
+                var arrowheadPaint = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    Color = SKColor.Parse("#FFFFFF").WithAlpha(100),
+                    IsAntialias = true
+                };
+                arrow.AddArc(bounds, 112.5f, 50);
+                //Arrow headpath
+                SKPath arrowhead = new SKPath();
+                arrowhead.RMoveTo(arrow.LastPoint + new SKPoint(3, 8));
+                arrowhead.RLineTo(-3, 12);
+                arrowhead.RLineTo(13, -6);
+                arrowhead.Close();
+                canvas.DrawPath(arrow, arrowPaint);
+                canvas.DrawCircle(arrow.LastPoint, 8, backgroundCirclePaint);
+                canvas.DrawPath(arrowhead, arrowheadPaint);
+            }
+            else if (IsStepsix)
+            {
+                var arrowheadPaint = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    Color = SKColor.Parse("#FFFFFF").WithAlpha(100),
+                    IsAntialias = true
+                };
+                arrow.AddArc(bounds, 112.5f, 280);
+
+                //Arrow headpath
+                SKPath arrowhead = new SKPath();
+                arrowhead.RMoveTo(arrow.LastPoint + new SKPoint(3, 8));
+                arrowhead.RLineTo(-3, -12);
+                arrowhead.RLineTo(13, -6);
+                arrowhead.Close();
+
+                canvas.DrawPath(arrow, arrowPaint);
+                canvas.DrawCircle(arrow.LastPoint, 8, backgroundCirclePaint);
+                canvas.DrawPath(arrowhead, arrowheadPaint);
+            }
+            else if (IsStepseven)
+            {
+                var arrowheadPaint = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    Color = SKColor.Parse("#FFFFFF").WithAlpha(100),
+                    IsAntialias = true
+                };
+                arrow.AddArc(bounds, 112.5f, 153f);
+                //Arrow headpath
+                SKPath arrowhead = new SKPath();
+                arrowhead.RMoveTo(arrow.LastPoint);
+                arrowhead.RLineTo(-8, -8);
+                arrowhead.RLineTo(0, 16);
+                arrowhead.Close();
+                canvas.DrawPath(arrow, arrowPaint);
+                canvas.DrawPath(arrowhead, arrowheadPaint);
+            }
+
             canvas.Save();
             canvas.Scale(0.5f);
             canvas.Translate(0, -180);
-            SKPath starPath = SKPath.ParseSvgPathData("m-11,-1.49329l8.32289,0l2.57184,-7.90671l2.57184,7.90671l8.32289,0l-6.73335,4.88656l2.57197,7.90671l-6.73336,-4.8867l-6.73335,4.8867l2.57197,-7.90671l-6.73335,-4.88656l0,0z");
-            canvas.DrawPath(starPath, new SKPaint()
+            if (!IsStepfive && !IsStepsix)
             {
-                Color = SKColors.White,
-                Style = SKPaintStyle.Fill,
-                IsAntialias = true
-            });
+                SKPath starPath = SKPath.ParseSvgPathData("m-11,-1.49329l8.32289,0l2.57184,-7.90671l2.57184,7.90671l8.32289,0l-6.73335,4.88656l2.57197,7.90671l-6.73336,-4.8867l-6.73335,4.8867l2.57197,-7.90671l-6.73335,-4.88656l0,0z");
+                canvas.DrawPath(starPath, new SKPaint()
+                {
+                    Color = SKColors.White,
+                    Style = SKPaintStyle.Fill,
+                    IsAntialias = true
+                });
+
+            }
             canvas.Restore();
 
             DrawNeedle(canvas, GuageData);
@@ -198,7 +301,7 @@ namespace FenomPlus.Controls
             canvas.DrawText(UnitsText, xText, yText, textPaint);
 
             // Draw the Value on the display
-            var valueText = Value.ToString(); //You can set F1 or F2 if you need float values
+            var valueText = Value.ToString();
             float valueTextWidth = textPaint.MeasureText(valueText);
             textPaint.TextSize = ValueFontSize;
 

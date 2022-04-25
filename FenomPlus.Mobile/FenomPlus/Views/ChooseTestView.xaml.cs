@@ -1,20 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using FenomPlus.Models;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using FenomPlus.ViewModels;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using FenomPlus.Models;
 
 namespace FenomPlus.Views
 {
     public partial class ChooseTestView : BaseContentPage
     {
         private ChooseTestViewModel model;
+        private bool isBackdropTapEnabled;
+        private double offsetY = 20;
+        private uint duration = 100;
 
         public ChooseTestView()
         {
             InitializeComponent();
             BindingContext = model = new ChooseTestViewModel();
             //Shell.Current.IsVisible = false;
+        }
+
+        private async Task OpenDrawer()
+        {
+            await Task.WhenAll(
+                Backdrop.FadeTo(1, length: duration),
+                Drawer.TranslateTo(0, offsetY, duration, Easing.SinIn)
+                );
+            isBackdropTapEnabled = true;
+            Backdrop.InputTransparent = false;
+        }
+
+        private async Task CloseDrawer()
+        {
+            await Task.WhenAll(
+                Backdrop.FadeTo(0, length: duration),
+                Drawer.TranslateTo(0, 200, duration, Easing.SinIn)
+                );
+            isBackdropTapEnabled = false;
+            Backdrop.InputTransparent = true;
+        }
+
+        private async void OnBackdropTapped(object sender, EventArgs e)
+        {
+            if (isBackdropTapEnabled)
+            {
+                await CloseDrawer();
+            }
+        }
+
+        private async void OnSwipeUp(object sender, SwipedEventArgs e)
+        {
+            await OpenDrawer();
+        }
+
+        private async void OnSwipeDown(object sender, SwipedEventArgs e)
+        {
+            await CloseDrawer();
         }
 
         /// <summary>

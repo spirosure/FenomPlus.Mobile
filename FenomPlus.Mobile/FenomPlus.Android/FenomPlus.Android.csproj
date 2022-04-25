@@ -60,6 +60,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BLEPermission.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -147,7 +148,7 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\BatteryFul.png">
+    <AndroidResource Include="Resources\drawable\BatteryFull.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -167,23 +168,23 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\Checkbook.png">
+    <AndroidResource Include="Resources\drawable\QualityControl.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\CheckbookAlert.png">
+    <AndroidResource Include="Resources\drawable\QualityControlAlert.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\CheckbookFull.png">
+    <AndroidResource Include="Resources\drawable\QualityControlFull.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\CheckbookIcon.png">
+    <AndroidResource Include="Resources\drawable\QualityControlIcon.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\CheckbookWarnin.png">
+    <AndroidResource Include="Resources\drawable\QualityControlWarning.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -215,7 +216,7 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\SensorAlert.png">
+    <AndroidResource Include="Resources\drawable\SensorLow.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -224,6 +225,10 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\drawable\SensorWarning.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\CheckbookIcon.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

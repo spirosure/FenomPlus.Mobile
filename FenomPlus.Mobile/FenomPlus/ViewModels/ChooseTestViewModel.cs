@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Models;
 
 namespace FenomPlus.ViewModels
 {
@@ -6,6 +7,7 @@ namespace FenomPlus.ViewModels
     {
         public ChooseTestViewModel()
         {
+            DeviceStatus = new DeviceStatus();
         }
 
         /// <summary>
@@ -23,5 +25,8 @@ namespace FenomPlus.ViewModels
         {
             base.OnDisappearing();
         }
+
+
+        public DeviceStatus DeviceStatus { get;set; }
     }
 }

@@ -12,7 +12,7 @@
                       Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:DevicePowerOnView}"
                   Route="DevicePowerOnView"
-                  IsVisible="false"/>
+                  IsVisible="true"/>
 
             <ShellContent Title="Take A Test"
                       Icon="BluetoothIcon"
@@ -20,7 +20,7 @@
                   Route="ChooseTestView"
                   IsVisible="true"/>
     
-    <ShellContent Icon="CheckbookIcon"
+    <ShellContent Icon="QualityControlIcon"
                   Title="Quality Control"
                   ContentTemplate="{DataTemplate pages:QualityControlView}" 
                   Route="QualityControlView"
