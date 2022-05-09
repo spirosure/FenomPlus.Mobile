@@ -5,7 +5,7 @@ namespace FenomPlus.Services
 {
     public class NavigationService : BaseService, INavigationService
     {
-        public NavigationService()
+        public NavigationService(IAppServices services) : base(services)
         {
         }
     }

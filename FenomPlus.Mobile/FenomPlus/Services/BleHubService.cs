@@ -8,7 +8,7 @@ namespace FenomPlus.Services
 {
     public class BleHubService : BaseService, IBleHubService
     {
-        public BleHubService()
+        public BleHubService(IAppServices services) : base(services)
         {
         }
 

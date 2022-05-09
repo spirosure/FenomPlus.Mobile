@@ -5,7 +5,7 @@ namespace FenomPlus.Services
 {
     public class StatusService : BaseService, IStatusService
     {
-        public StatusService()
+        public StatusService(IAppServices services) : base(services)
         {
         }
     }

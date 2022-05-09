@@ -5,7 +5,7 @@ namespace FenomPlus.Services
 {
     public class EnvironmentService : BaseService, IEnvironmentService
     {
-        public EnvironmentService()
+        public EnvironmentService(IAppServices services) : base(services)
         {
         }
     }

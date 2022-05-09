@@ -24,6 +24,22 @@
         <Grid>
             <ScrollView>
                 <StackLayout Padding="32, 16">
+                    <CollectionView x:Name="ErrorList" HeightRequest="220" ItemsSource="{Binding ErrorList}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="6" HeightRequest="60" BorderColor="#eeeeee">
+                                    <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" >
+                                        <Image Source="{Binding Image}" Aspect="AspectFit" WidthRequest="32" Margin="4" HorizontalOptions="Start"/>
+                                        <StackLayout VerticalOptions="Start" HorizontalOptions="StartAndExpand">
+                                            <Label Text="{Binding Title}" FontSize="16" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Description}"/>
+                                        </StackLayout>
+                                        <Button Text="Dismiss" Padding="4" VerticalOptions="Center" HorizontalOptions="End" Style="{StaticResource Def}"/>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                     <Label Text="Ready for test"
                            Grid.ColumnSpan="2"
                            FontAttributes="Bold"
