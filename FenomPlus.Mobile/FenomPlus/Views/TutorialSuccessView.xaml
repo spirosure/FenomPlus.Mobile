@@ -6,7 +6,9 @@
     x:Class="FenomPlus.Views.TutorialSuccessView"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
-    NavigationPage.HasBackButton="True">
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
     <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"

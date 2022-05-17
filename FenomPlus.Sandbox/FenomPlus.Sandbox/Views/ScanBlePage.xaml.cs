@@ -47,7 +47,7 @@ namespace FenomPlus.Sandbox.Views
                 if (await App.BleDevice.ConnectAsync())
                 {
                     model.StopScan();
-                    await Shell.Current.GoToAsync(nameof(StandardTestPage));
+                    await Shell.Current.GoToAsync(new ShellNavigationState($"///StandardTestPage"), false);
                 }
             });
         }

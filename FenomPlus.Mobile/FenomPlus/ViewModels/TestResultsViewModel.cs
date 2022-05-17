@@ -17,6 +17,15 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
+            if (App.TestType == TestTypeEnum.Standard)
+            {
+                TestType = "Standard";
+            }
+            else
+            {
+                TestType = "Short";
+            }
+
             TestResult = App.TestResult;
             Stop = false;
         }
@@ -33,9 +42,15 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        private string _TestType;
         public string TestType
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "Standard" : "Short" ; }
+            get => _TestType;
+            set
+            {
+                _TestType = value;
+                OnPropertyChanged("TestType");
+            }
         }
 
         /// <summary>

@@ -16,6 +16,8 @@
     <PackageReference Include="SkiaSharp" Version="2.88.0-preview.232" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.5.0" />
     <PackageReference Include="Xam.Plugins.Settings" Version="4.1.0-beta" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="20.1.0.55" />
+    <PackageReference Include="Syncfusion.Licensing" Version="20.1.0.55" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Extensions.Logging" />
@@ -34,6 +36,8 @@
     <None Remove="Helpers\" />
     <None Remove="Xam.Plugin.SimpleAudioPlayer" />
     <None Remove="Xam.Plugins.Settings" />
+    <None Remove="Syncfusion.Xamarin.SfDataGrid" />
+    <None Remove="Syncfusion.Licensing" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

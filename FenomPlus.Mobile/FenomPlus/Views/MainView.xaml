@@ -3,19 +3,22 @@
        xmlns:pages="clr-namespace:FenomPlus.Views"
        xmlns:controls="clr-namespace:FenomPlus.Controls"
        x:Class="FenomPlus.Views.MainView"
-       BackgroundColor="#4895D9">
+       BackgroundColor="#4895D9"
+       Shell.NavBarIsVisible="True"
+       NavigationPage.HasBackButton="False"
+       NavigationPage.HasNavigationBar="False">
     <Shell.FlyoutHeader>
         <controls:HeaderContentView />
     </Shell.FlyoutHeader>
 
-            <ShellContent Title="Device Power On View"
-                      Icon="BluetoothIcon"
+    <ShellContent Title="Device Power On View"
+                  Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:DevicePowerOnView}"
                   Route="DevicePowerOnView"
                   IsVisible="true"/>
 
-            <ShellContent Title="Take A Test"
-                      Icon="BluetoothIcon"
+    <ShellContent Title="Take A Test"
+                  Icon="BluetoothIcon"
                   ContentTemplate="{DataTemplate pages:ChooseTestView}"
                   Route="ChooseTestView"
                   IsVisible="true"/>
@@ -24,6 +27,18 @@
                   Title="Quality Control"
                   ContentTemplate="{DataTemplate pages:QualityControlView}" 
                   Route="QualityControlView"
+                  IsVisible="true"/>
+
+    <ShellContent Icon="QualityControlIcon"
+                  Title="Quality Control Users"
+                  ContentTemplate="{DataTemplate pages:QualityControlUsersView}" 
+                  Route="QualityControlUsersView"
+                  IsVisible="true"/>
+
+    <ShellContent Icon="QualityControlIcon"
+                  Title="Quality Control Devices"
+                  ContentTemplate="{DataTemplate pages:QualityControlDevicesView}" 
+                  Route="QualityControlDevicesView"
                   IsVisible="true"/>
 
     <ShellContent Icon="PastResultIcon"
@@ -38,25 +53,24 @@
                   Route="ViewRecentErrorsView"
                   IsVisible="true"/>
 
-    <ShellContent Title="Unpair Bluetooth"
-                  Icon="BluetoothIcon"
-                  ContentTemplate="{DataTemplate pages:UnPairView}"
-                  Route="UnPairView"
-                  IsVisible="false"/>
-
-    <ShellContent Title="Tutorial"
-                  ContentTemplate="{DataTemplate pages:TutorialView}"
-                  Route="start"
-                  IsVisible="false"/>
-
-    <ShellContent Title="TestErrorView"
-                  ContentTemplate="{DataTemplate pages:TestErrorView}"
-                  Route="TestErrorView"
-                  IsVisible="true"/>
-
-        <ShellContent Title="TestFailedView"
-                  ContentTemplate="{DataTemplate pages:TestFailedView}"
-                  Route="TestFailedView"
-                  IsVisible="true"/>
-
+    <ShellContent FlyoutItemIsVisible="False" Route="AnalysisView" ContentTemplate="{DataTemplate pages:AnalysisView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="BleDevicePairingView" ContentTemplate="{DataTemplate pages:BleDevicePairingView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="BreathManeuverFeedbackView" ContentTemplate="{DataTemplate pages:BreathManeuverFeedbackView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="DeviceReadyView" ContentTemplate="{DataTemplate pages:DeviceReadyView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="EndOfBreathManeuverFeedbackView" ContentTemplate="{DataTemplate pages:EndOfBreathManeuverFeedbackView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="FirmwareUpdateView" ContentTemplate="{DataTemplate pages:FirmwareUpdateView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="InstructionsView" ContentTemplate="{DataTemplate pages:InstructionsView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="MainView" ContentTemplate="{DataTemplate pages:MainView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="PreparingStandardTestResultView" ContentTemplate="{DataTemplate pages:PreparingStandardTestResultView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="SettingsView" ContentTemplate="{DataTemplate pages:SettingsView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="StartScreenView" ContentTemplate="{DataTemplate pages:StartScreenView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="StartTestView" ContentTemplate="{DataTemplate pages:StartTestView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="StopExhalingView" ContentTemplate="{DataTemplate pages:StopExhalingView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="TestErrorView" ContentTemplate="{DataTemplate pages:TestErrorView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="TestFailedView" ContentTemplate="{DataTemplate pages:TestFailedView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="TestResultsView" ContentTemplate="{DataTemplate pages:TestResultsView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="TutorialView" ContentTemplate="{DataTemplate pages:TutorialView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="TutorialSuccessView" ContentTemplate="{DataTemplate pages:TutorialSuccessView}" />
+    <ShellContent FlyoutItemIsVisible="False" Route="UnPairView" ContentTemplate="{DataTemplate pages:UnPairView}" />
+    
 </Shell>

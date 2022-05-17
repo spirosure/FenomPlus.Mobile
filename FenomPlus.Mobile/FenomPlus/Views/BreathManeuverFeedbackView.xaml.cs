@@ -23,7 +23,7 @@ namespace FenomPlus.Views
         public void Cancel_Clicked(System.Object sender, System.EventArgs e)
         {
             App.BleDevice?.DisconnectAsync();
-            Shell.Current.Navigation.PopToRootAsync();
+            Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
         }
 
         /// <summary>

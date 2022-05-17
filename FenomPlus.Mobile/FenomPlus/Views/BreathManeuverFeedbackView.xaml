@@ -7,7 +7,9 @@
     xmlns:controls="clr-namespace:FenomPlus.Controls"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
-    NavigationPage.HasBackButton="True">
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
     <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -48,7 +49,7 @@ namespace FenomPlus.ViewModels
                           {
                               App.BleDevice = bleDevice;
                               Stop = true;
-                              await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
+                              await Shell.Current.GoToAsync(new ShellNavigationState($"///DeviceReadyView"), false);
                           }
                       //});
                   }

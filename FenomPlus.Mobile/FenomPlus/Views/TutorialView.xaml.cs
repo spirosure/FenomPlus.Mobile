@@ -6,9 +6,18 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
+    [QueryProperty(nameof(Source), "source")]
     public partial class TutorialView : BaseContentPage
     {
         private TutorialViewModel model;
+
+        // ShortTestView, StartTestView, TestErrorView, TestFailedView,
+        private string _Source;
+        public string Source
+        {
+            get { return _Source; }
+            set { _Source = value; }
+        }
 
         ObservableCollection<Tutorial> Tutorials { get; set; }
 
@@ -101,7 +110,7 @@ namespace FenomPlus.Views
                 carousel.Position++;
                 header.Text = $"Step {carousel.Position + 1}";
             } else {
-                Shell.Current.Navigation.PushAsync(new TutorialSuccessView(), false);
+                Shell.Current.GoToAsync(new ShellNavigationState($"///TutorialSuccessView?source=" + Source), false);
             }
         }
 
@@ -122,10 +131,8 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnCancelled(object sender, EventArgs e)
         {
-            //GotoPostion(0);
-            //await Shell.Current.GoToAsync(new ShellNavigationState(".."), false);
-            //await Shell.Current.Navigation.PopAsync();
-            await Shell.Current.GoToAsync(new ShellNavigationState("///ChooseTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///" + Source), false);
+//            await Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
         }
     }
 }

@@ -11,7 +11,12 @@ namespace FenomPlus.Services
 		{
 			get
 			{
-				return (_Services == null) ? _Services = TinyIoCContainer.Current.Resolve<IAppServices>() : _Services;
+				if(_Services == null)
+                {
+					TinyIoCContainer.Current.Register<IAppServices, AppServices>().AsSingleton();
+					_Services = TinyIoCContainer.Current.Resolve<IAppServices>();
+				}
+				return _Services;
 			}
 		}
 	}

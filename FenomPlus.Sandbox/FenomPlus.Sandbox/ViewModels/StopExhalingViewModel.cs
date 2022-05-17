@@ -35,12 +35,12 @@ namespace FenomPlus.Sandbox.ViewModels
             Seconds--;
             if (Seconds <= 0)
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
                     // ok time to goto next page here
                     if (Stop == false)
                     {
-                        _ = Shell.Current.GoToAsync(nameof(PreparingStandardTestResultPage));
+                        await Shell.Current.GoToAsync(new ShellNavigationState($"///PreparingStandardTestResultPage"), false);
                     }
                 });
             }

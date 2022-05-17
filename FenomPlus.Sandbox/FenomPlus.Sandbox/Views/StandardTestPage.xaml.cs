@@ -20,7 +20,7 @@ namespace FenomPlus.Sandbox.Views
         /// <param name="e"></param>
         public void LiveData_Clicked(System.Object sender, System.EventArgs e)
         {
-            Shell.Current.GoToAsync(nameof(LiveDataPage));
+            Shell.Current.GoToAsync(new ShellNavigationState($"///LiveDataPage"), false);
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace FenomPlus.Sandbox.Views
         /// <param name="e"></param>
         void TakeStandardTest_Clicked(System.Object sender, System.EventArgs e)
         {
-            Shell.Current.GoToAsync(nameof(GaugePage));
+            Shell.Current.GoToAsync(new ShellNavigationState($"///GaugePage"), false);
         }
 
         /// <summary>

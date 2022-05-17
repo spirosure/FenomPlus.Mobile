@@ -145,7 +145,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FenomPlus.Sandbox\FenomPlus.Sandbox.csproj">
       <Project>{34E5F295-9EB3-4028-92EA-DCAEEEC02DDF}</Project>
-      <Name>FenomPlus.Sandbox</Name>
+      <Name>FenomPlus</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

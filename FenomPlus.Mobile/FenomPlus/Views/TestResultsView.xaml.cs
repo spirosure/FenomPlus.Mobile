@@ -38,7 +38,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         void Finish_Pressed(System.Object sender, System.EventArgs e)
         {
-            Shell.Current.Navigation.PopToRootAsync();
+            Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
         }
     }
 }

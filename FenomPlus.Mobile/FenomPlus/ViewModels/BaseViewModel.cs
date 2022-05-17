@@ -1,5 +1,7 @@
-﻿using FenomPlus.SDK.Abstractions;
+﻿using FenomPlus.Interfaces;
+using FenomPlus.SDK.Abstractions;
 using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +13,7 @@ namespace FenomPlus.ViewModels
     {
         public IBleDevice BleDevice => App.BleDevice;
         public IFenomHubSystemDiscovery FenomHub = App.FenomHubSystemDiscovery;
+        public IAppServices Services => IOC.Services;
 
         bool isBusy = false;
         public bool IsBusy

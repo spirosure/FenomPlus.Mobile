@@ -10,24 +10,68 @@ namespace FenomPlus.ViewModels
         {
         }
 
+        private string _TestType;
         public string TestType
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "Standard Test" : "Short Test"; }
+            get => _TestType;
+            set
+            {
+                _TestType = value;
+                OnPropertyChanged("TestType");
+            }
         }
 
+
+        private ImageSource _TestImageSource;
         public ImageSource TestImageSource
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "StandardBreathe" : "ShortBreathe"; }
+            get => _TestImageSource;
+            set
+            {
+                _TestImageSource = value;
+                OnPropertyChanged("TestImageSource");
+            }
         }
 
+        private string _TestSeconds;
         public string TestSeconds
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "10 seconds" : "6 seconds"; }
+            get => _TestSeconds;
+            set
+            {
+                _TestSeconds = value;
+                OnPropertyChanged("TestSeconds");
+            }
         }
-        
+
+        private string _TestButton;
         public string TestButton
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "Take Standard Test" : "Take Short Test"; }
+            get => _TestButton;
+            set
+            {
+                _TestButton = value;
+                OnPropertyChanged("TestButton");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (App.TestType == TestTypeEnum.Standard) {
+                TestType = "Standard Test";
+                TestButton = "Take Standard Test";
+                TestSeconds = "10 seconds";
+                TestImageSource = "StandardBreathe";
+            } else {
+                TestType = "Short Test";
+                TestButton = "Take Short Test";
+                TestSeconds = "6 seconds";
+                TestImageSource = "ShortBreathe";
+            }
         }
     }
 }

@@ -4,9 +4,12 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Views.ViewRecentErrorsView"
+    xmlns:sfgrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
-    NavigationPage.HasBackButton="True">
+    Shell.NavBarIsVisible="true"
+    NavigationPage.HasBackButton="False"
+    NavigationPage.HasNavigationBar="False">
     <Shell.TitleView>
         <Image Source="TitleIcon"
                Aspect="AspectFit"
@@ -16,8 +19,27 @@
     </Shell.TitleView>
     <ContentPage.Content>
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
-
+            <sfgrid:SfDataGrid x:Name="dataGrid"
+                           ItemsSource="{Binding DataForGrid}"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           AllowResizingColumn="True"
+                           AutoGenerateColumns="False"
+                           AllowEditing="True"
+                           AllowSorting="True"
+                           NavigationMode="Cell"
+                           SelectionMode="Single"
+             >
+                <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
+                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID"  IsHidden="True" />
+                    <sfgrid:GridTextColumn HeaderText="Date / Time" MappingName="Date_Time" />
+                    <sfgrid:GridTextColumn HeaderText="Code / Description"  MappingName="Description" />
+                    <sfgrid:GridTextColumn HeaderText="Humidity" MappingName="Humidity" />
+                    <sfgrid:GridTextColumn HeaderText="Device S/N" MappingName="Device" />
+                    <sfgrid:GridTextColumn HeaderText="Firmware" MappingName="Firmware" />
+                    <sfgrid:GridTextColumn HeaderText="Software" MappingName="Software" />
+                </sfgrid:SfDataGrid.Columns>
+            </sfgrid:SfDataGrid>
         </ScrollView>
     </ContentPage.Content>
 </views:BaseContentPage>

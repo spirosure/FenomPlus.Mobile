@@ -22,7 +22,7 @@ namespace FenomPlus.Sandbox.ViewModels
         public void OnAppearing()
         {
             Stop = false;
-            Seconds = 25;
+            Seconds = 28;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
 
@@ -42,11 +42,18 @@ namespace FenomPlus.Sandbox.ViewModels
             if (Seconds <= 0)
             {
                 // ok time to goto next page here
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
+                    // read value again 
+                    var breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
+                    if (breathManeuver != null)
+                    {
+                        App.TestResult = breathManeuver.NOScore;
+                    }
+
                     if (Stop == false)
                     {
-                        _ = Shell.Current.GoToAsync(nameof(StandardTestResultPage));
+                        await Shell.Current.GoToAsync(new ShellNavigationState($"///StandardTestResultPage"), false);
                     }
                 });
             }

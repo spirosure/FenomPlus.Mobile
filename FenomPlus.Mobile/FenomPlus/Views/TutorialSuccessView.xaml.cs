@@ -5,9 +5,18 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
+    [QueryProperty(nameof(Source), "source")]
     public partial class TutorialSuccessView : BaseContentPage
     {
         private TutorialSuccessViewModel model;
+
+        // ShortTestView, StartTestView, TestErrorView, TestFailedView,
+        private string _Source;
+        public string Source
+        {
+            get { return _Source; }
+            set { _Source = value; }
+        }
 
         public TutorialSuccessView()
         {
@@ -22,8 +31,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         public async void OnFinish(System.Object sender, System.EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState("///ChooseTestView"), false);
- //           await Shell.Current.GoToAsync(new ShellNavigationState(".."), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///" + Source), false);
         }
     }
 }

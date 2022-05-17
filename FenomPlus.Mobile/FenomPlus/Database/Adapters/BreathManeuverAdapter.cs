@@ -1,4 +1,5 @@
 ﻿
+using System;
 using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models.Characteristic;
@@ -17,7 +18,7 @@ namespace FenomPlus.Database.Adapters
             if (input == null) return null;
             return new BreathManeuverModel()
             {
-                Id = input.Id,
+                Id = input.Id!= null ? input.Id : Guid.NewGuid().ToString(),
                 BreathFlow = input.BreathFlow,
                 DateOfTest = input.DateOfTest,
                 NOScore = input.NOScore,
@@ -38,7 +39,7 @@ namespace FenomPlus.Database.Adapters
             if (input == null) return null;
             return new BreathManeuverTb()
             {
-                Id = input.Id,
+                Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 BreathFlow = input.BreathFlow,
                 DateOfTest = input.DateOfTest,
                 NOScore = input.NOScore,

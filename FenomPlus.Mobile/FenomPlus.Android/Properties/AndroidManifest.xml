@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="1.00.02" package="com.caireinc.fenomplus">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="3" android:versionName="1.00.03" package="com.caireinc.fenomplus">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<application android:label="FenomPlus.Android" android:theme="@style/MainTheme"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,6 +11,7 @@
 	<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 	<uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
 	<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-feature android:name="android.hardware.bluetooth" android:required="false" />
 	<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
 </manifest>

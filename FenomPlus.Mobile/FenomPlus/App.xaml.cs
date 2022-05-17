@@ -24,12 +24,15 @@ namespace FenomPlus
         {
             InitializeComponent();
 
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzgyMTc2QDMxMzkyZTM0MmUzMFZCbHlzYTd3MGdoWGZGOXFJdWZOY0dkOGdFT3JiVXA1MnRIbU5nd3J3Tjg9");
+
             App.loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.SetMinimumLevel(LogLevel.Debug)
                     .AddFilter("FenomPlus", LogLevel.Debug);
             });
 
+            /*
             Routing.RegisterRoute("AnalysisView", typeof(AnalysisView));
             Routing.RegisterRoute("BleDevicePairingView", typeof(BleDevicePairingView));
             Routing.RegisterRoute("BreathManeuverFeedbackView", typeof(BreathManeuverFeedbackView));            
@@ -41,6 +44,9 @@ namespace FenomPlus
             Routing.RegisterRoute("InstructionsView", typeof(InstructionsView));
             Routing.RegisterRoute("MainView", typeof(MainView));
             Routing.RegisterRoute("PreparingStandardTestResultView", typeof(PreparingStandardTestResultView));
+            Routing.RegisterRoute("QualityControlView", typeof(QualityControlView));
+            Routing.RegisterRoute("QualityControlUsersView", typeof(QualityControlUsersView));
+            Routing.RegisterRoute("QualityControlDevicesView", typeof(QualityControlDevicesView));
             Routing.RegisterRoute("SettingsView", typeof(SettingsView));
             Routing.RegisterRoute("StartScreenView", typeof(StartScreenView));
             Routing.RegisterRoute("StartTestView", typeof(StartTestView));
@@ -53,6 +59,7 @@ namespace FenomPlus
             Routing.RegisterRoute("UnPairView", typeof(UnPairView));
             Routing.RegisterRoute("ViewPastResultsView", typeof(ViewPastResultsView));
             Routing.RegisterRoute("ViewRecentErrorsView", typeof(ViewRecentErrorsView));
+            */
             MainPage = new MainView();
         }
 

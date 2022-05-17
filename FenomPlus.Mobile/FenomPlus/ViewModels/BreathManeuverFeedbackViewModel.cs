@@ -2,7 +2,6 @@
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models.Characteristic;
-using FenomPlus.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -15,27 +14,46 @@ namespace FenomPlus.ViewModels
 
         private bool Stop;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        private string _TestType;
         public string TestType
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? "Standard Test" : "Short Test"; }
+            get => _TestType;
+            set
+            {
+                _TestType = value;
+                OnPropertyChanged("TestType");
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
+        private int _TestTime;
         public int TestTime
         {
-            get { return (App.TestType == TestTypeEnum.Standard) ? 10 : 6; }
+            get => _TestTime;
+            set
+            {
+                _TestTime = value;
+                OnPropertyChanged("TestTime");
+            }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void OnAppearing()
+        public override void OnAppearing()
         {
+            base.OnAppearing();
+            if (App.TestType == TestTypeEnum.Standard)
+            {
+                TestType = "Standard Test";
+                TestTime = 10;
+            }
+            else
+            {
+                TestType = "Short Test";
+                TestTime = 6;
+            }
+
+
             Stop = false;
             TestSeconds = TestTime * (1000 / App.ReadBreathData);
             GuageData = 0;
@@ -72,7 +90,7 @@ namespace FenomPlus.ViewModels
                                 _ = App.BleDevice?.StopMesurementFeature();
                             }
                             // stop exhale here
-                            await Shell.Current.GoToAsync(nameof(StopExhalingView));
+                            await Shell.Current.GoToAsync(new ShellNavigationState($"///StopExhalingView"), false);
                         });
                 }
 
@@ -107,8 +125,9 @@ namespace FenomPlus.ViewModels
             });
         }
 
-        public void OnDisappearing()
+        public override void OnDisappearing()
         {
+            base.OnDisappearing();
             Stop = true;
             PlaySounds.StopAll();
         }
@@ -156,7 +175,7 @@ namespace FenomPlus.ViewModels
             {
                 guageData = value;
                 OnPropertyChanged("GuageData");
-                PlaySounds.PlaySound(GuageData);
+                if(!Stop) PlaySounds.PlaySound(GuageData);
             }
         }
 

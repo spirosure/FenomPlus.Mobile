@@ -17,9 +17,7 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public string DatabasePath(string dbFile)
         {
-            string libPath = "./";
-
-            string path = Path.Combine(libPath, dbFile);
+            var path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), dbFile);
             Console.WriteLine("DB:" + path);
             return path;
         }

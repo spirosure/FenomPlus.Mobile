@@ -29,7 +29,7 @@ namespace FenomPlus.Views
             await Task.WhenAll(
                 Backdrop.FadeTo(1, length: duration),
                 Drawer.TranslateTo(0, offsetY, duration, Easing.SinIn)
-                );
+            );
             isBackdropTapEnabled = true;
             Backdrop.InputTransparent = false;
         }
@@ -39,7 +39,7 @@ namespace FenomPlus.Views
             await Task.WhenAll(
                 Backdrop.FadeTo(0, length: duration),
                 Drawer.TranslateTo(0, 200, duration, Easing.SinIn)
-                );
+            );
             isBackdropTapEnabled = false;
             Backdrop.InputTransparent = true;
         }
@@ -70,7 +70,7 @@ namespace FenomPlus.Views
         private async void OnStandartTest(object sender, EventArgs e)
         {
             App.TestType = TestTypeEnum.Standard;
-            await Shell.Current.GoToAsync(new ShellNavigationState("StartTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///StartTestView?test=Standard"), false);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace FenomPlus.Views
         private async void OnShortTest(object sender, EventArgs e)
         {
             App.TestType = TestTypeEnum.Short;
-            await Shell.Current.GoToAsync(new ShellNavigationState("StartTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///StartTestView?test=short"), false);
         }
 
         /// <summary>
@@ -107,6 +107,16 @@ namespace FenomPlus.Views
         {
             base.OnDisappearing();
             model.OnDisappearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Error_Clicked(System.Object sender, System.EventArgs e)
+        {
+
         }
     }
 }

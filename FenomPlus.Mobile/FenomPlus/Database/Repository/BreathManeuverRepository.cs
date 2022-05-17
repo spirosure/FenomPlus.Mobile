@@ -6,6 +6,7 @@ using FenomPlus.Database.Repository.Interfaces;
 using FenomPlus.Database.Tables;
 using FenomPlus.Interfaces;
 using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models.Characteristic;
 using FenomPlus.Services;
 using LiteDB;
 
@@ -36,19 +37,30 @@ namespace FenomPlus.Database.Repository
         /// </summary>
         /// <param name="breathManeuver"></param>
         /// <returns></returns>
-        public async Task Insert(BreathManeuverModel breathManeuver)
+        public void Insert(BreathManeuverModel breathManeuver)
         {
             BreathManeuverTb breathManeuverTb = breathManeuver.Convert();
             try
-            {   
-                if(breathManeuver != null)
+            {
+                if (breathManeuver != null)
                 {
                     this.Collection.Insert(breathManeuverTb);
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 //IOC.Services.LogCat.Print(ex);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="breathManeuver"></param>
+        /// <returns></returns>
+        public void Insert(BreathManeuver breathManeuver)
+        {
+            this.Insert(BreathManeuverModel.Create(breathManeuver));
         }
     }
 }

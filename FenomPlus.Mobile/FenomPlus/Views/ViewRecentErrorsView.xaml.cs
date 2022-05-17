@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FenomPlus.Helpers;
 using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
@@ -13,6 +14,7 @@ namespace FenomPlus.Views
         {
             InitializeComponent();
             BindingContext = model = new ViewRecentErrorsViewModel();
+            dataGrid.GridStyle = new CustomGridStyle();
         }
     }
 }
