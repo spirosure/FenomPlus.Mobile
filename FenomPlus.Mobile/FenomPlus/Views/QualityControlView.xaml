@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Views.QualityControlView"
     xmlns:sfgrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    xmlns:sfPager="clr-namespace:Syncfusion.SfDataGrid.XForms.DataPager;assembly=Syncfusion.SfDataGrid.XForms"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
     Shell.NavBarIsVisible="True"
@@ -18,33 +19,56 @@
         />
     </Shell.TitleView>
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                        <sfgrid:SfDataGrid x:Name="dataGrid"
-                           ItemsSource="{Binding DataForGrid}"
+        
+            <Grid Margin="10"> 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <sfPager:SfDataPager x:Name ="dataPager"
+                           Grid.Row="1"           
+                           PageSize="10" 
+                           HeightRequest ="50"
+                           NumericButtonCount="20"
+                           Source="{Binding DataForGrid}">
+           
+                    <sfPager:SfDataPager.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double"
+                            iOS="50"
+                            Android="50"
+                            WinPhone="70"/>
+                    </sfPager:SfDataPager.HeightRequest>
+                </sfPager:SfDataPager>
+
+                <sfgrid:SfDataGrid x:Name="dataGrid"
+                           Grid.Row="0"
+                           ItemsSource="{Binding PagedSource, Source={x:Reference dataPager}}"
                            VerticalOptions="FillAndExpand"
                            HorizontalOptions="FillAndExpand"
                            AllowResizingColumn="True"
                            AutoGenerateColumns="False"
-                           AllowEditing="True"
+                           AllowEditing="False"
                            AllowSorting="True"
                            NavigationMode="Row"
                            SelectionMode="Single"
-                           Margin="40"
-             >
-                <sfgrid:SfDataGrid.GroupColumnDescriptions>
-                    <sfgrid:GroupColumnDescription ColumnName="SerialNumber" />
-                </sfgrid:SfDataGrid.GroupColumnDescriptions>
-                <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
-                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True"  />
-                    <sfgrid:GridTextColumn HeaderText="Serial Number" MappingName="SerialNumber" Width="250" />
-                    <sfgrid:GridTextColumn HeaderText="QC Expiration"  MappingName="QCExpiration" Width="150" />
-                    <sfgrid:GridTextColumn HeaderText="Test Date /Time" MappingName="Date_Time" Width="150"  />
-                    <sfgrid:GridTextColumn HeaderText="User" MappingName="User" Width="250"  />
-                    <sfgrid:GridTextColumn HeaderText="QCStatus" MappingName="QCStatus" Width="150"  />
-                    <sfgrid:GridTextColumn HeaderText="Test Results" MappingName="TestResults" Width="150" />
-                </sfgrid:SfDataGrid.Columns>
-            </sfgrid:SfDataGrid>
-
-        </ScrollView>
+                           AutoExpandGroups="True"
+                           AllowGroupExpandCollapse="True"
+                >
+                    <sfgrid:SfDataGrid.GroupColumnDescriptions>
+                        <sfgrid:GroupColumnDescription ColumnName="SerialNumber" />
+                    </sfgrid:SfDataGrid.GroupColumnDescriptions>
+                    <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
+                        <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True"  />
+                        <sfgrid:GridTextColumn HeaderText="Serial Number" MappingName="SerialNumber" Width="175" />
+                        <sfgrid:GridTextColumn HeaderText="QC Expiration"  MappingName="QCExpiration" Width="125" />
+                        <sfgrid:GridTextColumn HeaderText="Test Date /Time" MappingName="Date_Time" Width="125"  />
+                        <sfgrid:GridTextColumn HeaderText="User" MappingName="User" Width="175"  />
+                        <sfgrid:GridTextColumn HeaderText="QCStatus" MappingName="QCStatus" Width="125"  />
+                        <sfgrid:GridTextColumn HeaderText="Test Results" MappingName="TestResults" Width="125" />
+                    </sfgrid:SfDataGrid.Columns>
+                </sfgrid:SfDataGrid>
+            </Grid> 
+        
     </ContentPage.Content>
 </views:BaseContentPage>

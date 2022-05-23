@@ -14,7 +14,6 @@ namespace FenomPlus.Models
         public string QCStatus { get; set; }
         public string TestResults { get; set; }
 
-
         public QualityControlDataModel()
         {
             ID = "1";

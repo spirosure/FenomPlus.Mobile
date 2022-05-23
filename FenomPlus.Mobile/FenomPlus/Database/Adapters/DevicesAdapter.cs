@@ -6,10 +6,10 @@ namespace FenomPlus.Database.Adapters
 {
     public static class DevicesAdapter
     {
-        public static DeviceModel Convert(this DevicesTb input)
+        public static DeviceDBModel Convert(this DevicesTb input)
         {
             if (input == null) return null;
-            return new DeviceModel()
+            return new DeviceDBModel()
             {
                 Id = input.Id
             };
@@ -20,7 +20,7 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static DevicesTb Convert(this DeviceModel input)
+        public static DevicesTb Convert(this DeviceDBModel input)
         {
             if (input == null) return null;
             return new DevicesTb()

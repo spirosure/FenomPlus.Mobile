@@ -24,7 +24,7 @@ namespace FenomPlus
         {
             InitializeComponent();
 
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzgyMTc2QDMxMzkyZTM0MmUzMFZCbHlzYTd3MGdoWGZGOXFJdWZOY0dkOGdFT3JiVXA1MnRIbU5nd3J3Tjg9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjQwNDYxQDMyMzAyZTMxMmUzMGlPTklYM3hoQmpKc2F2bVlEUFBBS29YU1FGQTBWSTZyY2RJbkJBVm1pbEU9");
 
             App.loggerFactory = LoggerFactory.Create(builder =>
             {

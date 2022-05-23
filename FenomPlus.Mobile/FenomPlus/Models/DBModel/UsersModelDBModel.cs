@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FenomPlus.Models
 {
-    public class QualityControlModel
+    public class UsersModelDBModel
     {
         public string Id { get; set; }
     }

@@ -37,7 +37,7 @@ namespace FenomPlus.Database.Repository
         /// </summary>
         /// <param name="breathManeuver"></param>
         /// <returns></returns>
-        public void Insert(BreathManeuverModel breathManeuver)
+        public void Insert(BreathManeuverDBModel breathManeuver)
         {
             BreathManeuverTb breathManeuverTb = breathManeuver.Convert();
             try
@@ -60,7 +60,7 @@ namespace FenomPlus.Database.Repository
         /// <returns></returns>
         public void Insert(BreathManeuver breathManeuver)
         {
-            this.Insert(BreathManeuverModel.Create(breathManeuver));
+            this.Insert(BreathManeuverDBModel.Create(breathManeuver));
         }
     }
 }

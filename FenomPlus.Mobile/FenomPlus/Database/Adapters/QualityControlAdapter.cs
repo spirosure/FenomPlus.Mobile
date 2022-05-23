@@ -6,10 +6,10 @@ namespace FenomPlus.Database.Adapters
 {
     public static class QualityControlAdapter
     {
-        public static QualityControlModel Convert(this QualityControlTb input)
+        public static QualityControlDBModel Convert(this QualityControlTb input)
         {
             if (input == null) return null;
-            return new QualityControlModel()
+            return new QualityControlDBModel()
             {
                 Id = input.Id
             };
@@ -20,7 +20,7 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static QualityControlTb Convert(this QualityControlModel input)
+        public static QualityControlTb Convert(this QualityControlDBModel input)
         {
             if (input == null) return null;
             return new QualityControlTb()

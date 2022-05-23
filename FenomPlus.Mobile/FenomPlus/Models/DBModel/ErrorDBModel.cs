@@ -3,7 +3,7 @@ using FenomPlus.Database.Tables;
 
 namespace FenomPlus.Models
 {
-    public class Error : ErrorsTb
+    public class ErrorDBModel : ErrorsTb
     {
     }
 }

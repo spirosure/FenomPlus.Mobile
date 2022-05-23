@@ -10,10 +10,10 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static Log Convert(this LogsTb input)
+        public static LogDBModel Convert(this LogsTb input)
         {
             if (input == null) return null;
-            return new Log()
+            return new LogDBModel()
             {
                 Id = input.Id,
                 Log = input.Log,
@@ -26,7 +26,7 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static LogsTb Convert(this Log input)
+        public static LogsTb Convert(this LogDBModel input)
         {
             if (input == null) return null;
             return new LogsTb()

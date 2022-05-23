@@ -9,6 +9,10 @@ namespace FenomPlus.ViewModels
         public ViewPastResultsViewModel()
         {
             DataForGrid = new RangeObservableCollection<ViewPastResultsDataModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                DataForGrid.Add(new ViewPastResultsDataModel() { });
+            }
         }
 
         /// <summary>

@@ -13,10 +13,10 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static BreathManeuverModel Convert(this BreathManeuverTb input)
+        public static BreathManeuverDBModel Convert(this BreathManeuverTb input)
         {
             if (input == null) return null;
-            return new BreathManeuverModel()
+            return new BreathManeuverDBModel()
             {
                 Id = input.Id!= null ? input.Id : Guid.NewGuid().ToString(),
                 BreathFlow = input.BreathFlow,
@@ -34,7 +34,7 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static BreathManeuverTb Convert(this BreathManeuverModel input)
+        public static BreathManeuverTb Convert(this BreathManeuverDBModel input)
         {
             if (input == null) return null;
             return new BreathManeuverTb()

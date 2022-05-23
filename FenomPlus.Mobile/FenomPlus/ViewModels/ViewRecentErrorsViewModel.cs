@@ -9,6 +9,10 @@ namespace FenomPlus.ViewModels
         public ViewRecentErrorsViewModel()
         {
             DataForGrid = new RangeObservableCollection<ViewRecentErrorsDataModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                DataForGrid.Add(new ViewRecentErrorsDataModel() { });
+            }
         }
 
         /// <summary>

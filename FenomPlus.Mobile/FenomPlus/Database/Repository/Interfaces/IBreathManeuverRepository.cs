@@ -7,7 +7,7 @@ namespace FenomPlus.Database.Repository.Interfaces
 {
     public interface IBreathManeuverRepository
     {
-        void Insert(BreathManeuverModel breathManeuver);
+        void Insert(BreathManeuverDBModel breathManeuver);
         void Insert(BreathManeuver breathManeuver);
     }
 }

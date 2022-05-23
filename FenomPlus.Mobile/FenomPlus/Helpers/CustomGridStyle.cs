@@ -52,12 +52,13 @@ namespace FenomPlus.Helpers
 
         public override Color GetCaptionSummaryRowBackgroundColor()
         {
-            return Color.FromRgb(02, 02, 02);
+            return Color.FromRgb(0xbb, 0xbb, 0xbb);
         }
 
+        [Obsolete]
         public override Color GetCaptionSummaryRowForeGroundColor()
         {
-            return Color.FromRgb(255, 255, 255);
+            return Color.FromRgb(0x00, 0x00, 0x00);
         }
 
         public override Color GetBorderColor()

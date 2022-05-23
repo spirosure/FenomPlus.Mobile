@@ -38,6 +38,8 @@
     <None Remove="Xam.Plugins.Settings" />
     <None Remove="Syncfusion.Xamarin.SfDataGrid" />
     <None Remove="Syncfusion.Licensing" />
+    <None Remove="Models\DB\" />
+    <None Remove="Models\Grid\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -47,6 +49,8 @@
     <Folder Include="Models\" />
     <Folder Include="Controls\" />
     <Folder Include="Helpers\" />
+    <Folder Include="Models\DB\" />
+    <Folder Include="Models\GridDataModel\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="AppShell.xaml" />

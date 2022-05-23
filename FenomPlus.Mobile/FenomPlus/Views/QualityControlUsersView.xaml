@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="FenomPlus.Views.QualityControlUsersView"
     xmlns:sfgrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+    xmlns:sfPager="clr-namespace:Syncfusion.SfDataGrid.XForms.DataPager;assembly=Syncfusion.SfDataGrid.XForms"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
     Shell.NavBarIsVisible="True"
@@ -18,27 +19,50 @@
         />
     </Shell.TitleView>
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <sfgrid:SfDataGrid x:Name="dataGrid"
-                           ItemsSource="{Binding DataForGrid}"
+        <Grid Margin="10"> 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <sfPager:SfDataPager x:Name ="dataPager"
+                           Grid.Row="1"           
+                           PageSize="10" 
+                           HeightRequest ="50"
+                           NumericButtonCount="20"
+                           Source="{Binding DataForGrid}">
+           
+                    <sfPager:SfDataPager.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double"
+                            iOS="50"
+                            Android="50"
+                            WinPhone="70"/>
+                    </sfPager:SfDataPager.HeightRequest>
+                </sfPager:SfDataPager>
+
+                <sfgrid:SfDataGrid x:Name="dataGrid"
+                           Grid.Row="0"
+                           ItemsSource="{Binding PagedSource, Source={x:Reference dataPager}}"
                            VerticalOptions="FillAndExpand"
                            HorizontalOptions="FillAndExpand"
                            AllowResizingColumn="True"
                            AutoGenerateColumns="False"
-                           AllowEditing="True"
+                           AllowEditing="False"
                            AllowSorting="True"
-                           NavigationMode="Cell"
+                           NavigationMode="Row"
                            SelectionMode="Single"
-             >
+                           AutoExpandGroups="True"
+                           AllowGroupExpandCollapse="True"
+                >
                 <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
                     <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True" />
-                    <sfgrid:GridTextColumn HeaderText="User Added" MappingName="DateAdded" />
-                    <sfgrid:GridTextColumn HeaderText="User"  MappingName="User" />
-                    <sfgrid:GridTextColumn HeaderText="Status" MappingName="QCStatus"  />
-                    <sfgrid:GridTextColumn HeaderText="Select" MappingName="Select"  />
+                    <sfgrid:GridTextColumn HeaderText="User Added" MappingName="DateAdded" Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="User"  MappingName="User" Width="175" />
+                    <sfgrid:GridTextColumn HeaderText="Status" MappingName="QCStatus"  Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="Select" MappingName="Select"  Width="125" />
                 </sfgrid:SfDataGrid.Columns>
             </sfgrid:SfDataGrid>
 
-        </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </views:BaseContentPage>

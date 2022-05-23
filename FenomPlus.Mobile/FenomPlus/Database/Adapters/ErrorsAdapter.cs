@@ -10,10 +10,10 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static Error Convert(this ErrorsTb input)
+        public static ErrorDBModel Convert(this ErrorsTb input)
         {
             if (input == null) return null;
-            return new Error()
+            return new ErrorDBModel()
             {
             };
         }
@@ -23,7 +23,7 @@ namespace FenomPlus.Database.Adapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static ErrorsTb Convert(this Error input)
+        public static ErrorsTb Convert(this ErrorDBModel input)
         {
             if (input == null) return null;
             return new ErrorsTb()

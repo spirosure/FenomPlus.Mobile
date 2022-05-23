@@ -1,27 +1,20 @@
 ﻿using System;
+using FenomPlus.Database.Tables;
 using FenomPlus.SDK.Core.Models.Characteristic;
 
 namespace FenomPlus.Models
 {
-    public class BreathManeuverModel
+    public class BreathManeuverDBModel : BreathManeuverTb
     {
-        public string Id { get; set; }
-        public DateTime DateOfTest { get; set; }
-        public short TestNumber { get; set; }
-        public byte Temperature { get; set; }
-        public byte Pressure { get; set; }
-        public byte BreathFlow { get; set; }
-        public short NOScore { get; set; }
-        public byte StatusCode { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static BreathManeuverModel Create(BreathManeuver input)
+        public static BreathManeuverDBModel Create(BreathManeuver input)
         {
-            return new BreathManeuverModel()
+            return new BreathManeuverDBModel()
             {
                 Id = null,
                 BreathFlow = input.BreathFlow,

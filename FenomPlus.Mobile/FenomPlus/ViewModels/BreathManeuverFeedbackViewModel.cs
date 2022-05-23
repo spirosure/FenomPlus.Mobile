@@ -8,6 +8,8 @@ namespace FenomPlus.ViewModels
 {
     public class BreathManeuverFeedbackViewModel : BaseViewModel
     {
+        private bool StartMeasure;
+
         public BreathManeuverFeedbackViewModel()
         {
         }
@@ -53,12 +55,13 @@ namespace FenomPlus.ViewModels
                 TestTime = 6;
             }
 
-
             Stop = false;
+            StartMeasure = false;
+
             TestSeconds = TestTime * (1000 / App.ReadBreathData);
             GuageData = 0;
             GuageSeconds = TestTime * (1000 / App.ReadBreathData);
-            GuageStatus = "Exhale Harder";
+            GuageStatus = "Start Blowing";
 
             // TODO: start mesurement to ble
             Device.BeginInvokeOnMainThread(async () =>
@@ -76,9 +79,12 @@ namespace FenomPlus.ViewModels
             // start timer
             Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
             {
-                TestSeconds--;
-                if ((TestSeconds <= 0) && (Stop == false))
+                // have we started the Measure yet?
+                if (StartMeasure == true)
                 {
+                    TestSeconds--;
+                    if ((TestSeconds <= 0) && (Stop == false))
+                    {
                         // TODO: read value from ble ppb?
                         Device.BeginInvokeOnMainThread(async () =>
                         {
@@ -92,6 +98,7 @@ namespace FenomPlus.ViewModels
                             // stop exhale here
                             await Shell.Current.GoToAsync(new ShellNavigationState($"///StopExhalingView"), false);
                         });
+                    }
                 }
 
                 Device.BeginInvokeOnMainThread(async () => {
@@ -104,27 +111,39 @@ namespace FenomPlus.ViewModels
                             App.TestResult = breathManeuver.NOScore;
                             GuageData = (float)(((float)breathManeuver.BreathFlow) / 10);
 
-                            if (GuageData < 2.8f)
+                            if ((GuageData <= 0.0f) && (StartMeasure == false))
                             {
-                                GuageStatus = "Exhale Harder";
-                            }
-                            else if (GuageData > 3.2f)
-                            {
-                                GuageStatus = "Exhale Softer";
+                                GuageStatus = "Start Blowing";
                             }
                             else
                             {
-                                GuageStatus = "Good Job!";
+                                StartMeasure = true;
+                                if (GuageData < 2.8f)
+                                {
+                                    GuageStatus = "Exhale Harder";
+                                }
+                                else if (GuageData > 3.2f)
+                                {
+                                    GuageStatus = "Exhale Softer";
+                                }
+                                else
+                                {
+                                    GuageStatus = "Good Job!";
+                                }
                             }
                         }
                     }
                 });
+
                 // return contiune of below the time
                 GuageSeconds = TestSeconds / (1000 / App.ReadBreathData);
                 return (TestSeconds > 0) && (Stop == false);
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public override void OnDisappearing()
         {
             base.OnDisappearing();
@@ -179,6 +198,9 @@ namespace FenomPlus.ViewModels
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private string guageStatus;
         public string GuageStatus
         {
