@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using FenomPlus.Database.Adapters;
+using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 
@@ -9,9 +11,31 @@ namespace FenomPlus.ViewModels
         public QualityControlDevicesViewModel()
         {
             DataForGrid = new RangeObservableCollection<QualityControlDevicesDataModel>();
-            for (int i = 0; i < 10; i++)
+            UpdateGrid();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateGrid()
+        {
+            DataForGrid.Clear();
+            IEnumerable<QualityControlDevicesTb> records = QCDevicesRepo.SelectAll();
+            foreach (QualityControlDevicesTb record in records)
             {
-                DataForGrid.Add(new QualityControlDevicesDataModel());
+                AddToGrid(record);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        public void AddToGrid(QualityControlDevicesTb record)
+        {
+            if (record != null)
+            {
+                DataForGrid.Add(record.ConvertForGrid());
             }
         }
 
@@ -21,7 +45,6 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
-
         }
 
         /// <summary>

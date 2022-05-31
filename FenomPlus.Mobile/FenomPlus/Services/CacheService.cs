@@ -48,6 +48,8 @@ namespace FenomPlus.Services
             return AppSettings.GetValueOrDefault("DeviceBatteryConfirmedLow_key", false);
             //  AppSettings.AddOrUpdateValue("DeviceBatteryLow_key", value);
         }
+
+        public string QCUsername { get; set; }
     }
 }
 

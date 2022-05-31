@@ -31,7 +31,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         public async void OnFinish(System.Object sender, System.EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///" + Source), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{Source}"), false);
         }
     }
 }

@@ -34,20 +34,19 @@ namespace FenomPlus.Services
         {
         }
 
+        private IBreathManeuverErrorRepository _BreathManeuverErrorRepo;
+        public IBreathManeuverErrorRepository BreathManeuverErrorRepo { get { return (_BreathManeuverErrorRepo == null) ? _BreathManeuverErrorRepo = new BreathManeuverErrorRepository() : _BreathManeuverErrorRepo; } }
 
-        private IBreathManeuverRepository _BreathManeuverRepo;
-        public IBreathManeuverRepository BreathManeuverRepo { get { return (_BreathManeuverRepo == null) ? _BreathManeuverRepo = new BreathManeuverRepository() : _BreathManeuverRepo; } }
-
-        private IDevicesRepository _DevicesRepo;
-        public IDevicesRepository DevicesRepo { get { return (_DevicesRepo == null) ? _DevicesRepo = new DevicesRepository() : _DevicesRepo; } }
-
-        private ILogsRepository _LogsRepo;
-        public ILogsRepository LogsRepo { get { return (_LogsRepo == null) ? _LogsRepo = new LogsRepository() : _LogsRepo; } }
+        private IBreathManeuverResultRepository _BreathManeuverResultRepo;
+        public IBreathManeuverResultRepository BreathManeuverResultRepo { get { return (_BreathManeuverResultRepo == null) ? _BreathManeuverResultRepo = new BreathManeuverResultRepository() : _BreathManeuverResultRepo; } }
 
         private IQualityControlRepository _QualityControlRepo;
         public IQualityControlRepository QualityControlRepo { get { return (_QualityControlRepo == null) ? _QualityControlRepo = new QualityControlRepository() : _QualityControlRepo; } }
 
-        private IUsersRepository _UsersRepo;
-        public IUsersRepository UsersRepo { get { return (_UsersRepo == null) ? _UsersRepo = new UsersRepository() : _UsersRepo; } }
+        private IQualityControlDevicesRepository _QualityControlDevicesRepo;
+        public IQualityControlDevicesRepository QualityControlDevicesRepo { get { return (_QualityControlDevicesRepo == null) ? _QualityControlDevicesRepo = new QualityControlDevicesRepository() : _QualityControlDevicesRepo; } }
+
+        private IQualityControlUsersRepository _QualityControlUsersRepo;
+        public IQualityControlUsersRepository QualityControlUsersRepo { get { return (_QualityControlUsersRepo == null) ? _QualityControlUsersRepo = new QualityControlUsersRepository() : _QualityControlUsersRepo; } }
     }
 }

@@ -70,7 +70,7 @@ namespace FenomPlus.Views
         private async void OnStandartTest(object sender, EventArgs e)
         {
             App.TestType = TestTypeEnum.Standard;
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///StartTestView?test=Standard"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=Standard"), false);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace FenomPlus.Views
         private async void OnShortTest(object sender, EventArgs e)
         {
             App.TestType = TestTypeEnum.Short;
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///StartTestView?test=short"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=short"), false);
         }
 
         /// <summary>

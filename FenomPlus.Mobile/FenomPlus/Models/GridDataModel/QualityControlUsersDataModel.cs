@@ -4,21 +4,13 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Models
 {
-    public class QualityControlUsersDataModel
+    public class QualityControlUsersDataModel : QualityControlUsersDBModel
     {
-        public string ID { get; set; }
-        public string DateAdded { get; set; }
-        public string User { get; set; }
-        public string QCStatus { get; set; }
-        public string Select { get; set; }
+        public string Delete { get; set; }
+        public string Renew { get; set; }
 
-        public QualityControlUsersDataModel()
+        public QualityControlUsersDataModel() : base()
         {
-            ID = "1";
-            DateAdded = "2001-08-01 18:55";
-            User = "VB";
-            QCStatus = "Qualified";
-            Select = "Select";
         }
     }
 }

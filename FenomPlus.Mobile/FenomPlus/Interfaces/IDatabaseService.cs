@@ -7,10 +7,10 @@ namespace FenomPlus.Interfaces
     public interface IDatabaseService
     {
         ILiteDatabase DB { get; }
-        IBreathManeuverRepository BreathManeuverRepo { get; }
-        IDevicesRepository DevicesRepo { get; }
-        ILogsRepository LogsRepo { get; }
+        IBreathManeuverErrorRepository BreathManeuverErrorRepo { get; }
+        IBreathManeuverResultRepository BreathManeuverResultRepo { get; }
         IQualityControlRepository QualityControlRepo { get; }
-        IUsersRepository UsersRepo { get; } 
+        IQualityControlDevicesRepository QualityControlDevicesRepo { get; }
+        IQualityControlUsersRepository QualityControlUsersRepo { get; } 
     }
 }

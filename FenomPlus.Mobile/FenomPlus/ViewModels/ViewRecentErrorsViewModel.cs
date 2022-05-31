@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using FenomPlus.Database.Adapters;
+using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 
@@ -8,10 +11,32 @@ namespace FenomPlus.ViewModels
     {
         public ViewRecentErrorsViewModel()
         {
-            DataForGrid = new RangeObservableCollection<ViewRecentErrorsDataModel>();
-            for (int i = 0; i < 10; i++)
+            DataForGrid = new RangeObservableCollection<BreathManeuverErrorDataModel>();
+            UpdateGrid();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateGrid()
+        {
+            DataForGrid.Clear();
+            IEnumerable<BreathManeuverErrorTb> records = ErrorsRepo.SelectAll();
+            foreach (BreathManeuverErrorTb record in records)
             {
-                DataForGrid.Add(new ViewRecentErrorsDataModel() { });
+                AddToGrid(record);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        public void AddToGrid(BreathManeuverErrorTb record)
+        {
+            if (record != null)
+            {
+                DataForGrid.Add(record.ConvertForGrid());
             }
         }
 
@@ -21,7 +46,6 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
-
         }
 
         /// <summary>
@@ -35,8 +59,8 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private RangeObservableCollection<ViewRecentErrorsDataModel> _DataForGrid;
-        public RangeObservableCollection<ViewRecentErrorsDataModel> DataForGrid
+        private RangeObservableCollection<BreathManeuverErrorDataModel> _DataForGrid;
+        public RangeObservableCollection<BreathManeuverErrorDataModel> DataForGrid
         {
             get => _DataForGrid;
             set

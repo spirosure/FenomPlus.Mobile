@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using FenomPlus.Database.Adapters;
+using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 
@@ -9,17 +11,31 @@ namespace FenomPlus.ViewModels
         public QualityControlViewModel()
         {
             DataForGrid = new RangeObservableCollection<QualityControlDataModel>();
-            for (int i = 0; i < 5; i++)
+            UpdateGrid();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void UpdateGrid()
+        {
+            DataForGrid.Clear();
+            IEnumerable<QualityControlTb> records = QCRepo.SelectAll();
+            foreach (QualityControlTb record in records)
             {
-                DataForGrid.Add(new QualityControlDataModel() { SerialNumber = "F150-23de121w1", TestResults = i.ToString() });
+                AddToGrid(record);
             }
-            for (int i = 0; i < 1; i++)
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        public void AddToGrid(QualityControlTb record)
+        {
+            if (record != null)
             {
-                DataForGrid.Add(new QualityControlDataModel() { SerialNumber = "F150-23de121w2", TestResults = i.ToString() });
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                DataForGrid.Add(new QualityControlDataModel() { SerialNumber = "F150-23de121w3", TestResults = i.ToString() });
+                DataForGrid.Add(record.ConvertForGrid());
             }
         }
 
@@ -29,7 +45,6 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
-
         }
 
         /// <summary>

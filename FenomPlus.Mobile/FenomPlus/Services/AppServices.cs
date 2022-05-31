@@ -15,6 +15,7 @@ namespace FenomPlus.Services
                 Container.Register<IDatabaseAccessService, DatabaseAccessService>().AsSingleton();
                 Container.Register<IDatabaseService, DatabaseService>().AsSingleton();
                 Container.Register<IEnvironmentService, EnvironmentService>().AsSingleton();
+                Container.Register<ILogCatService, LogCatService>().AsSingleton();                
                 Container.Register<INavigationService, NavigationService>().AsSingleton();
                 Container.Register<IStatusService, StatusService>().AsSingleton();
             }
@@ -42,6 +43,13 @@ namespace FenomPlus.Services
             set { _BleHub = value; }
         }
 
+        protected ICacheService _Cache;
+        public ICacheService Cache
+        {
+            get { return _Cache ?? (_Cache = Container.Resolve<ICacheService>()); }
+            set { _Cache = value; }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -65,16 +73,6 @@ namespace FenomPlus.Services
         /// <summary>
         /// 
         /// </summary>
-        protected ICacheService _Cache;
-        public ICacheService Cache
-        {
-            get { return _Cache ?? (_Cache = Container.Resolve<ICacheService>()); }
-            set { _Cache = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         protected IEnvironmentService _Environment;
         public IEnvironmentService Environment
         {
@@ -82,6 +80,19 @@ namespace FenomPlus.Services
             set { _Environment = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        protected ILogCatService _LogCat;
+        public ILogCatService LogCat
+        {
+            get { return _LogCat ?? (_LogCat = Container.Resolve<ILogCatService>()); }
+            set { _LogCat = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         protected INavigationService _Navigation;
         public INavigationService Navigation
         {

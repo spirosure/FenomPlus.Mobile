@@ -110,7 +110,7 @@ namespace FenomPlus.Views
                 carousel.Position++;
                 header.Text = $"Step {carousel.Position + 1}";
             } else {
-                Shell.Current.GoToAsync(new ShellNavigationState($"///TutorialSuccessView?source=" + Source), false);
+                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TutorialSuccessView)}?source={Source}"), false);
             }
         }
 
@@ -131,8 +131,8 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnCancelled(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///" + Source), false);
-//            await Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{Source}"), false);
+            //            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
         }
     }
 }

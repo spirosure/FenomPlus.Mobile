@@ -2,6 +2,7 @@
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models.Characteristic;
+using FenomPlus.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -96,7 +97,7 @@ namespace FenomPlus.ViewModels
                                 _ = App.BleDevice?.StopMesurementFeature();
                             }
                             // stop exhale here
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///StopExhalingView"), false);
+                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingView)}"), false);
                         });
                     }
                 }

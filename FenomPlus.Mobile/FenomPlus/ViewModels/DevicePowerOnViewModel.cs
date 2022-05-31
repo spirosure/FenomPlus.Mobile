@@ -49,7 +49,7 @@ namespace FenomPlus.ViewModels
                           {
                               App.BleDevice = bleDevice;
                               Stop = true;
-                              await Shell.Current.GoToAsync(new ShellNavigationState($"///DeviceReadyView"), false);
+                              await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DeviceReadyView)}"), false);
                           }
                       //});
                   }
@@ -120,7 +120,7 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public void OnAppearing()
+        override public void OnAppearing()
         {
             Stop = false;
             StopScan();
@@ -130,10 +130,11 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        public void OnDisappearing()
+        override public void OnDisappearing()
         {
             Stop = true;
             StopScan();
         }
+
     }
 }

@@ -1,11 +1,13 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
+using LiteDB;
 
 namespace FenomPlus.Database.Tables
 {
-    public class BaseTb<T> : IEqualityComparer<T>, IComparable<T> where T : BaseTb<T>
+    public class BaseTb<T> : IEqualityComparer<T>, IComparable<T> where T : BaseTb<T> , new()
     {
-        public string Id { get; set; }
+        public BsonValue _id { get; set; }
+        private string Id { get; set; }
 
         public BaseTb()
         {

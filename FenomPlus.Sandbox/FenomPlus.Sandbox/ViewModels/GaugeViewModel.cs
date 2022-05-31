@@ -49,7 +49,7 @@ namespace FenomPlus.Sandbox.ViewModels
                             _ = App.BleDevice.StopMesurementFeature();
 
                             // stop exhale here
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///StopExhalingPage"), false);
+                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingPage)}"), false);
                         });
 
                     }

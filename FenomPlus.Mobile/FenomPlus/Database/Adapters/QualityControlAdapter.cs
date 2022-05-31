@@ -11,7 +11,13 @@ namespace FenomPlus.Database.Adapters
             if (input == null) return null;
             return new QualityControlDBModel()
             {
-                Id = input.Id
+                _id = input._id,
+                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
+                DateTaken = input.DateTaken,
+                SerialNumber = input.SerialNumber,
+                TestResult = input.TestResult,
+                QCStatus = input.QCStatus,
+                User = input.User
             };
         }
 
@@ -25,7 +31,33 @@ namespace FenomPlus.Database.Adapters
             if (input == null) return null;
             return new QualityControlTb()
             {
-                Id = input.Id
+                _id = input._id,
+                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
+                DateTaken = input.DateTaken,
+                SerialNumber = input.SerialNumber,
+                TestResult = input.TestResult,
+                QCStatus = input.QCStatus,
+                User = input.User
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static QualityControlDataModel ConvertForGrid(this QualityControlTb input)
+        {
+            if (input == null) return null;
+            return new QualityControlDataModel()
+            {
+                _id = input._id,
+                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
+                DateTaken = input.DateTaken,
+                SerialNumber = input.SerialNumber,
+                TestResult = input.TestResult,
+                QCStatus = input.QCStatus,
+                User = input.User
             };
         }
     }

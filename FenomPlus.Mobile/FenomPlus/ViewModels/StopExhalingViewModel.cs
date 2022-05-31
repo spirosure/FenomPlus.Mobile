@@ -45,7 +45,7 @@ namespace FenomPlus.ViewModels
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///PreparingStandardTestResultView"), false);
+                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultView)}"), false);
                 });
             }
             return Seconds > 0;

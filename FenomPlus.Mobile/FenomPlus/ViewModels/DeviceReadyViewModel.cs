@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -53,7 +54,7 @@ namespace FenomPlus.ViewModels
             {
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
+                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
                 });
             }
             return false;

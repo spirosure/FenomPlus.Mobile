@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Models
 {
-    public class QualityControlDataModel
+    public class QualityControlDataModel : QualityControlDBModel
     {
         public string ID { get; set; }
         public string SerialNumber { get; set; }
@@ -14,7 +14,7 @@ namespace FenomPlus.Models
         public string QCStatus { get; set; }
         public string TestResults { get; set; }
 
-        public QualityControlDataModel()
+        public QualityControlDataModel() : base()
         {
             ID = "1";
             SerialNumber = "F150-23de121ww";

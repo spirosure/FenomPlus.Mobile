@@ -1,19 +1,13 @@
 ﻿using System;
+using FenomPlus.Database.Tables;
 using Xamarin.Forms;
 
 namespace FenomPlus.Models
 {
-    public class QualityControlDevicesDataModel
+    public class QualityControlDevicesDataModel : QualityControlDevicesTb
     {
-        public string ID { get; set; }
-        public string Date_Time { get; set; }
-        public string SerialNumber { get; set; }
-
-        public QualityControlDevicesDataModel()
+        public QualityControlDevicesDataModel() : base()
         {
-            ID = "1";
-            SerialNumber = "F150-23de121ww";
-            Date_Time = "Expired";
         }
     }
 }

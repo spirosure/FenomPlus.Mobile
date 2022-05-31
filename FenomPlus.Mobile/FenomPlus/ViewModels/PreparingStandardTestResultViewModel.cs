@@ -1,6 +1,7 @@
 ﻿using System;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models.Characteristic;
+using FenomPlus.Views;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -67,10 +68,11 @@ namespace FenomPlus.ViewModels
                         if (breathManeuver != null)
                         {
                             App.TestResult = breathManeuver.NOScore;
-                            Services.Database.BreathManeuverRepo.Insert(breathManeuver);
+                            var model = BreathManeuverResultDBModel.Create(breathManeuver);
+                            ResultsRepo.Insert(model);
                         }
                     }
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///TestResultsView"), false);
+                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
                 });
             }
             return Seconds > 0;

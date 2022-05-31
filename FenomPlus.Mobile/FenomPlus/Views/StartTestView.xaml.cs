@@ -5,9 +5,17 @@ using Xamarin.Forms;
 
 namespace FenomPlus.Views
 {
+    [QueryProperty(nameof(Test), "test")]
     public partial class StartTestView : BaseContentPage
     {
         private StartTestViewModel model;
+
+        private string _Test;
+        public string Test
+        {
+            get { return _Test; }
+            set { _Test = value; }
+        }
 
         public StartTestView()
         {
@@ -40,7 +48,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void GoToTutorial(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///TutorialView?source=StartTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TutorialView)}?source=StartTestView"), false);
         }
 
         /// <summary>
@@ -50,7 +58,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnCancel(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///ChooseTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
         }
 
         /// <summary>
@@ -60,7 +68,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void StartTest(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///BreathManeuverFeedbackView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(BreathManeuverFeedbackView)}"), false);
         }
     }
 }

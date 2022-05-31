@@ -1,4 +1,5 @@
-﻿using FenomPlus.Interfaces;
+﻿using FenomPlus.Database.Repository.Interfaces;
+using FenomPlus.Interfaces;
 using FenomPlus.SDK.Abstractions;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.Services;
@@ -9,11 +10,18 @@ using System.Runtime.CompilerServices;
 
 namespace FenomPlus.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged, IBaseServices
     {
         public IBleDevice BleDevice => App.BleDevice;
-        public IFenomHubSystemDiscovery FenomHub = App.FenomHubSystemDiscovery;
         public IAppServices Services => IOC.Services;
+        public IFenomHubSystemDiscovery FenomHub => App.FenomHubSystemDiscovery;
+
+        // repos here
+        public IBreathManeuverErrorRepository ErrorsRepo => Services.Database.BreathManeuverErrorRepo;
+        public IBreathManeuverResultRepository ResultsRepo => Services.Database.BreathManeuverResultRepo;
+        public IQualityControlRepository QCRepo => Services.Database.QualityControlRepo;
+        public IQualityControlDevicesRepository QCDevicesRepo => Services.Database.QualityControlDevicesRepo;
+        public IQualityControlUsersRepository QCUsersRepo => Services.Database.QualityControlUsersRepo;
 
         bool isBusy = false;
         public bool IsBusy
@@ -22,13 +30,29 @@ namespace FenomPlus.ViewModels
             set { SetProperty(ref isBusy, value); }
         }
 
-        string title = string.Empty;
+        private string title = string.Empty;
         public string Title
         {
             get { return title; }
             set { SetProperty(ref title, value); }
         }
 
+        private string deviceSerialNumber;
+        public string DeviceSerialNumber
+        {
+            get { return deviceSerialNumber; }
+            set { SetProperty(ref deviceSerialNumber, value);  }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="backingStore"></param>
+        /// <param name="value"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="onChanged"></param>
+        /// <returns></returns>
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
             Action onChanged = null)
@@ -53,6 +77,14 @@ namespace FenomPlus.ViewModels
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public BaseViewModel()
+        {
+            DeviceSerialNumber = "F150-23de121ww";
+        }
 
         /// <summary>
         /// 

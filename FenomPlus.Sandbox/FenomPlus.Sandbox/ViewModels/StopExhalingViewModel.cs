@@ -40,7 +40,7 @@ namespace FenomPlus.Sandbox.ViewModels
                     // ok time to goto next page here
                     if (Stop == false)
                     {
-                        await Shell.Current.GoToAsync(new ShellNavigationState($"///PreparingStandardTestResultPage"), false);
+                        await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultPage)}"), false);
                     }
                 });
             }

@@ -7,5 +7,22 @@ namespace FenomPlus.ViewModels
         public InstructionsViewModel()
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void OnAppearing()
+        {
+            base.OnAppearing();
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void OnDisappearing()
+        {
+            base.OnDisappearing();
+        }
     }
 }

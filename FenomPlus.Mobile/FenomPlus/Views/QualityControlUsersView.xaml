@@ -18,6 +18,9 @@
                HorizontalOptions="StartAndExpand"
         />
     </Shell.TitleView>
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Icon="add.png" Text="+ Add User" Clicked="OnAddNew"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid Margin="10"> 
                 <Grid.RowDefinitions>
@@ -28,10 +31,8 @@
                 <sfPager:SfDataPager x:Name ="dataPager"
                            Grid.Row="1"           
                            PageSize="10" 
-                           HeightRequest ="50"
                            NumericButtonCount="20"
                            Source="{Binding DataForGrid}">
-           
                     <sfPager:SfDataPager.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double"
                             iOS="50"
@@ -55,11 +56,30 @@
                            AllowGroupExpandCollapse="True"
                 >
                 <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
-                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True" />
-                    <sfgrid:GridTextColumn HeaderText="User Added" MappingName="DateAdded" Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="Id" MappingName="Id" IsHidden="True" />
+                    <sfgrid:GridTextColumn HeaderText="User Added" MappingName="DateAdded" Width="150" />
                     <sfgrid:GridTextColumn HeaderText="User"  MappingName="User" Width="175" />
-                    <sfgrid:GridTextColumn HeaderText="Status" MappingName="QCStatus"  Width="125" />
-                    <sfgrid:GridTextColumn HeaderText="Select" MappingName="Select"  Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="Status" MappingName="QCStatus" Width="125" />
+                    <sfgrid:GridTemplateColumn HeaderText="" MappingName="Delete" Width="125" > 
+                        <sfgrid:GridTemplateColumn.CellTemplate> 
+                            <DataTemplate> 
+                                <Grid Padding="5,5,5,5"> 
+                                    <Button Text="Delete" Clicked="OnDelete"/> 
+                                </Grid> 
+                            </DataTemplate> 
+                        </sfgrid:GridTemplateColumn.CellTemplate> 
+                    </sfgrid:GridTemplateColumn>
+                    <!--
+                    <sfgrid:GridTemplateColumn HeaderText="" MappingName="Renew" Width="140" > 
+                        <sfgrid:GridTemplateColumn.CellTemplate> 
+                            <DataTemplate> 
+                                <Grid Padding="5,5,5,5"> 
+                                    <Button Text="Renew" Clicked="OnRenew"/> 
+                                </Grid> 
+                            </DataTemplate> 
+                        </sfgrid:GridTemplateColumn.CellTemplate> 
+                    </sfgrid:GridTemplateColumn>
+                    -->
                 </sfgrid:SfDataGrid.Columns>
             </sfgrid:SfDataGrid>
 

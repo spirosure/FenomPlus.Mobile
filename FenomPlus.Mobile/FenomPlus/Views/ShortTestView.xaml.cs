@@ -22,7 +22,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void GoToTutorial(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///TutorialView?source=ShortTestView"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TutorialView)}?source=ShortTestView"), false);
         }
 
         /// <summary>

@@ -18,6 +18,9 @@
                HorizontalOptions="StartAndExpand"
         />
     </Shell.TitleView>
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Icon="add.png" Text="+ Add Device" Clicked="OnAddNew"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid Margin="10"> 
                 <Grid.RowDefinitions>
@@ -28,10 +31,8 @@
                 <sfPager:SfDataPager x:Name ="dataPager"
                            Grid.Row="1"           
                            PageSize="10" 
-                           HeightRequest ="50"
                            NumericButtonCount="20"
                            Source="{Binding DataForGrid}">
-           
                     <sfPager:SfDataPager.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double"
                             iOS="50"
@@ -55,9 +56,18 @@
                            AllowGroupExpandCollapse="True"
                 >
                 <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
-                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True" />
-                    <sfgrid:GridTextColumn HeaderText="Last Connected" MappingName="Date_Time" Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="Id" MappingName="Id" IsHidden="True" />
+                    <sfgrid:GridTextColumn HeaderText="Last Connected" MappingName="LastConnected" Width="150" />
                     <sfgrid:GridTextColumn HeaderText="Device Serial Number"  MappingName="SerialNumber" Width="175" />
+                    <sfgrid:GridTemplateColumn HeaderText="" MappingName="Delete" Width="125" > 
+                        <sfgrid:GridTemplateColumn.CellTemplate> 
+                            <DataTemplate> 
+                                <Grid Padding="5,5,5,5"> 
+                                    <Button Text="Delete" Clicked="OnDelete"/> 
+                                </Grid> 
+                            </DataTemplate> 
+                        </sfgrid:GridTemplateColumn.CellTemplate> 
+                    </sfgrid:GridTemplateColumn>
                 </sfgrid:SfDataGrid.Columns>
             </sfgrid:SfDataGrid>
 

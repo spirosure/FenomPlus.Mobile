@@ -6,6 +6,9 @@ namespace FenomPlus.Models
 {
     public class QualityControlDBModel : QualityControlTb
     {
+        public QualityControlDBModel() : base()
+        {
+        }
     }
 }
 

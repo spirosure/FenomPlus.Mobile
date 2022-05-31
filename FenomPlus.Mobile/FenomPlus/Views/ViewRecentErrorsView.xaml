@@ -28,10 +28,8 @@
                 <sfPager:SfDataPager x:Name ="dataPager"
                            Grid.Row="1"           
                            PageSize="10" 
-                           HeightRequest ="50"
                            NumericButtonCount="20"
-                           Source="{Binding DataForGrid}">
-           
+                           Source="{Binding DataForGrid}">           
                     <sfPager:SfDataPager.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double"
                             iOS="50"
