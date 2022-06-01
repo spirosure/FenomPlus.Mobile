@@ -66,6 +66,15 @@
                         <sfgrid:GridTextColumn HeaderText="User" MappingName="User" Width="150"  />
                         <sfgrid:GridTextColumn HeaderText="QCStatus" MappingName="QCStatus" Width="125"  />
                         <sfgrid:GridTextColumn HeaderText="Test Result" MappingName="TestResult" Width="125" />
+                        <sfgrid:GridTemplateColumn HeaderText="" MappingName="Delete" Width="125" > 
+                            <sfgrid:GridTemplateColumn.CellTemplate> 
+                                <DataTemplate> 
+                                    <Grid Padding="5,5,5,5"> 
+                                        <Button Text="Delete" Clicked="OnDelete"/> 
+                                    </Grid> 
+                                </DataTemplate> 
+                            </sfgrid:GridTemplateColumn.CellTemplate> 
+                        </sfgrid:GridTemplateColumn>
                     </sfgrid:SfDataGrid.Columns>
                 </sfgrid:SfDataGrid>
             </Grid> 

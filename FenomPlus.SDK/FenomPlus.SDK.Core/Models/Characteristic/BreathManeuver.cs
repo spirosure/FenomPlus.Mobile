@@ -3,20 +3,23 @@ using System.Runtime.InteropServices;
 
 namespace FenomPlus.SDK.Core.Models.Characteristic
 {
+    // 8 bytes old * 9 bytes new
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class BreathManeuver
+    public class BreathManeuver : BaseCharacteristic
     {
-        public short TestNumber;
-        public byte TimeRemaining;
-        public byte Temperature;
-        public byte Pressure;
-        public byte BreathFlow;
-        public short NOScore;
-        public byte AnalysisTimeLeft;
-        public byte StatusCode;
+        public static int Min = 10;
 
-        // store orginal data
-        public byte[] Data;
+        public short TestNumber;
+        public byte  TimeRemaining;
+        public byte  Temperature;
+        public byte  Pressure;
+        public byte  BreathFlow;
+        public short NOScore;
+        public byte  AnalysisTimeLeft;
+        public byte  StatusCode;
+        public byte  BreathGaugePressure;
+        public short NOCounts;
+        public byte  SampleMassFlow;
 
         /// <summary>
         /// 
@@ -37,16 +40,22 @@ namespace FenomPlus.SDK.Core.Models.Characteristic
         public BreathManeuver Decode(byte[] data)
         {
             Data = data;
-            if((data != null) && (data.Length >= 10))
+            if((data != null) && (data.Length >= Min))
             {
-                TestNumber          = (short)((int)(((int)Data[0])*256 + (int)Data[1]));
-                TimeRemaining       = Data[2];
-                Temperature         = Data[3];
-                Pressure            = Data[4];
-                BreathFlow          = Data[5];
-                NOScore             = (short)((int)(((int)Data[6])*256 + (int)Data[7]));
-                AnalysisTimeLeft    = Data[8];
-                StatusCode          = Data[9];
+                TestNumber = (short)((int)(((int)Data[0]) * 256 + (int)Data[1]));
+                TimeRemaining = Data[2];
+                Temperature = Data[3];
+                Pressure = Data[4];
+                BreathFlow = Data[5];
+                NOScore = (short)((int)(((int)Data[6]) * 256 + (int)Data[7]));
+                AnalysisTimeLeft = Data[8];
+                StatusCode = Data[9];
+
+                if (NewVersion && (data.Length > Min)) {
+                    BreathGaugePressure = Data[10];
+                    NOCounts = (short)((int)(((int)Data[11]) * 256 + (int)Data[12]));
+                    SampleMassFlow = Data[13];
+               }
             }
             return this;
         }

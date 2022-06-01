@@ -53,6 +53,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTestEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BaseCharacteristic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />

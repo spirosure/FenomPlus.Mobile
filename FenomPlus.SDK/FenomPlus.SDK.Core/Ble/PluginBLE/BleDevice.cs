@@ -288,7 +288,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<float> ReadMesurementFeature()
         {
-            return 25.0f;
+            float measurement = 0f;
+            BreathManeuver breathManeuver = await ReadBreathManeuverFeature();
+            if(breathManeuver != null)
+            {
+                measurement = breathManeuver.NoCount;
+            }
+            return measurement;
         }
 
         /// <summary>
@@ -300,11 +306,57 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             BreathManeuver breathManeuver = null;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathManeuverCharacteristic);
             var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length >= 10)) {
+            if ((data != null) && (data.Length >= BreathManeuver.Min)) {
                 breathManeuver = BreathManeuver.Create(data);
             }
             return breathManeuver;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<DeviceInfo> ReadDeviceInfoFeature()
+        {
+            DeviceInfo deviceInfo = null;
+            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.DeviceInfoCharacteristic);
+            var data = await Characteristic.ReadAsync();
+            if ((data != null) && (data.Length >= DeviceInfo.Min))
+            {
+                deviceInfo = DeviceInfo.Create(data);
+            }
+            return deviceInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<EnvironmentalInfo> ReadEnvironmentalInfoFeature()
+        {
+            EnvironmentalInfo environmentalInfo = null;
+            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.EnvironmentalInfoCharacteristic);
+            var data = await Characteristic.ReadAsync();
+            if ((data != null) && (data.Length >= EnvironmentalInfo.Min))
+            {
+                environmentalInfo = EnvironmentalInfo.Create(data);
+            }
+            return environmentalInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<int> ReadBatteryLevelFeature()
+        {
+            int batteryLevel = 0;
+            EnvironmentalInfo environmentalInfo = await ReadEnvironmentalInfoFeature();
+            if (environmentalInfo != null)
+            {
+                batteryLevel = environmentalInfo.BatteryLevel;
+            }
+            return batteryLevel;
+        }
     }
 }

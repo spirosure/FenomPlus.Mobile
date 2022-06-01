@@ -28,6 +28,23 @@ namespace FenomPlus.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private async void OnDelete(object sender, EventArgs e)
+        {
+            dataGrid.SelectedItem = (sender as Button).BindingContext;
+            QualityControlDataModel dataModel = (QualityControlDataModel)dataGrid.SelectedItem;
+            bool answer = await DisplayAlert("Delete Test Record", "Are you sure you want to delete record?", "Yes, Delete", "Cancel");
+            if (answer == true)
+            {
+                QCRepo.Delete(dataModel);
+                model.UpdateGrid();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public async void OnAddNew(System.Object sender, System.EventArgs e)
         {
             IEnumerable<QualityControlUsersTb> records = QCUsersRepo.SelectAll();
@@ -48,20 +65,20 @@ namespace FenomPlus.Views
             //ok goto test now.
 
 
-            /*
+            
             // try to find if user is already in database
             QualityControlDBModel testDBModel = new Models.QualityControlDBModel()
             {
-                SerialNumber = "SerialNumber",
+                SerialNumber = "SerialNumber-" + DateTime.Now.Second,
                 DateTaken = DateTime.Now,
-                QCExpiration = "QCExpiration",
-                QCStatus = "QCStatus",
-                TestResult = 1.00,
+                QCExpiration = "Expired",
+                QCStatus = "Qualified",
+                TestResult = DateTime.Now.Second,
                 User = userName
             };
             QualityControlTb record = QCRepo.Insert(testDBModel);
             testDBModel = record.Convert();
-            */
+            
             model.UpdateGrid();
         }
     }

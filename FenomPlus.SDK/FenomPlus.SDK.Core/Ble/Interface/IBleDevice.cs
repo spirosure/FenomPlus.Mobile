@@ -37,6 +37,10 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum);
         Task<bool> StopMesurementFeature();
         Task<float> ReadMesurementFeature();
+
+        Task<int> ReadBatteryLevelFeature();
+        Task<DeviceInfo> ReadDeviceInfoFeature();
+        Task<EnvironmentalInfo> ReadEnvironmentalInfoFeature();
         Task<BreathManeuver> ReadBreathManeuverFeature();
     }
 }

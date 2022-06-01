@@ -83,7 +83,7 @@ namespace FenomPlus.ViewModels
         /// </summary>
         public BaseViewModel()
         {
-            DeviceSerialNumber = "F150-23de121ww";
+            DeviceSerialNumber = App.DeviceSerialNumber;
         }
 
         /// <summary>
