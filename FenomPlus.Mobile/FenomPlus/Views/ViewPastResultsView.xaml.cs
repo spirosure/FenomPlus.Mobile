@@ -16,5 +16,23 @@ namespace FenomPlus.Views
             BindingContext = model = new ViewPastResultsViewModel();
             dataGrid.GridStyle = new CustomGridStyle();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            model.OnAppearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            model.OnDisappearing();
+        }
     }
 }

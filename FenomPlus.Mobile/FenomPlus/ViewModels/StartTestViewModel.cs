@@ -1,5 +1,6 @@
 ﻿using System;
 using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models.Characteristic;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -72,6 +73,19 @@ namespace FenomPlus.ViewModels
                 TestSeconds = "6 seconds";
                 TestImageSource = "ShortBreathe";
             }
+
+            // TODO: start mesurement to ble
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                if (App.BleDevice != null)
+                {
+                    _ = await App.BleDevice.StartMesurementFeature(
+                        (App.TestType == TestTypeEnum.Standard) ?
+                        BreathTestEnum.Start10Second :
+                        BreathTestEnum.Start6Second);
+                    var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
+                }
+            });
         }
     }
 }

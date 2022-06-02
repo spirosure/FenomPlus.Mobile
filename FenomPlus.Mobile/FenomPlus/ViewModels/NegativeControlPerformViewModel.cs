@@ -31,7 +31,7 @@ namespace FenomPlus.ViewModels
 
                         if (App.BleDevice != null)
                         {
-                            App.TestResult = App.BleDevice.ReadMesurementFeature().Result;
+                            App.TestResult = App.BleDevice.ReadNOScoreFeature().Result;
 
                             // TODO: send stop to ble here
                             _ = App.BleDevice?.StopMesurementFeature();

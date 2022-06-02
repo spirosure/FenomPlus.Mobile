@@ -1,5 +1,4 @@
-﻿using System;
-using FenomPlus.Database.Tables;
+﻿using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Adapters
@@ -12,7 +11,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlUsersDBModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateAdded = input.DateAdded,
                 QCStatus = input.QCStatus,
                 User = input.User
@@ -30,7 +28,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlUsersTb()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateAdded = input.DateAdded,
                 QCStatus = input.QCStatus,
                 User = input.User
@@ -48,7 +45,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlUsersDataModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateAdded = input.DateAdded,
                 QCStatus = input.QCStatus,
                 User = input.User

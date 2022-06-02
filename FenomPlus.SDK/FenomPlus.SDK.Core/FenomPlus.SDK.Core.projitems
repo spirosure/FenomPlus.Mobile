@@ -49,11 +49,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\EnvironmentalInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathManeuver.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\StatuCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTestEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BaseCharacteristic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\StatusCodeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\MainThreadExtentions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />

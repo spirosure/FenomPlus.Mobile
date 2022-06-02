@@ -64,19 +64,6 @@ namespace FenomPlus.ViewModels
             GuageSeconds = TestTime * (1000 / App.ReadBreathData);
             GuageStatus = "Start Blowing";
 
-            // TODO: start mesurement to ble
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                if (App.BleDevice != null)
-                {
-                    _ = await App.BleDevice.StartMesurementFeature(
-                        (App.TestType == TestTypeEnum.Standard) ?
-                        BreathTestEnum.Start10Second :
-                        BreathTestEnum.Start6Second);
-                    var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
-                }
-            });   
-
             // start timer
             Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
             {
@@ -91,7 +78,7 @@ namespace FenomPlus.ViewModels
                         {
                             if (App.BleDevice != null)
                             {
-                                App.TestResult = App.BleDevice.ReadMesurementFeature().Result;
+                                //App.TestResult = App.BleDevice.ReadMesurementFeature().Result;
 
                                 // TODO: send stop to ble here
                                 _ = App.BleDevice?.StopMesurementFeature();
@@ -109,7 +96,7 @@ namespace FenomPlus.ViewModels
                         var breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
                         if (breathManeuver != null)
                         {
-                            App.TestResult = breathManeuver.NOScore;
+                            //App.TestResult = breathManeuver.NOScore;
                             GuageData = (float)(((float)breathManeuver.BreathFlow) / 10);
 
                             if ((GuageData <= 0.0f) && (StartMeasure == false))

@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:controls="clr-namespace:FenomPlus.Controls"
     x:Class="FenomPlus.Views.TutorialView"
+    x:Name="TutorialPage" 
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
     Shell.NavBarIsVisible="False"
@@ -38,12 +39,12 @@
                             <controls:BreathGuage
                                 Grid.Column="1"
                                 GuageSize="350"
-                                GuageData="{Binding GuageData}"
+                                GuageData="{Binding BindingContext.GuageData , Source={x:Reference TutorialPage}}"
                                 Text=""
                                 IsStepfive="{Binding ShowStep5}"
                                 IsStepsix="{Binding ShowStep6}"
                                 IsStepseven="{Binding ShowStep7}"
-                                Value="{Binding GuageSeconds}"
+                                Value=""
                                 IsVisible="{Binding ShowGuage}"
                               />
                         </Grid>

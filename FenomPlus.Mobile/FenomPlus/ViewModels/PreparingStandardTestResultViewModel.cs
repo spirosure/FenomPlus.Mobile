@@ -68,8 +68,17 @@ namespace FenomPlus.ViewModels
                         if (breathManeuver != null)
                         {
                             App.TestResult = breathManeuver.NOScore;
-                            var model = BreathManeuverResultDBModel.Create(breathManeuver);
-                            ResultsRepo.Insert(model);
+
+                            if ((App.TestResult <= 0) || (App.TestResult >= 10))
+                            {
+                                var model = BreathManeuverErrorDBModel.Create(breathManeuver);
+                                ErrorsRepo.Insert(model);
+                            }
+                            else
+                            {
+                                var model = BreathManeuverResultDBModel.Create(breathManeuver);
+                                ResultsRepo.Insert(model);
+                            }
                         }
                     }
                     await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);

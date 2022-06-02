@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
     public class BleRadioService : IBleRadioService
@@ -186,7 +185,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IEnumerable<IBleDevice>> Scan(double scanTime, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null, Action scanTimeoutCallback = null)
         {
-            
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await Scan(scanTime, deviceFoundCallback, scanCompletedCallback, scanTimeoutCallback);
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleRadioService), "Scan");
@@ -253,7 +256,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         private async Task<BleDevice> ConnectToDeviceAsync(IDevice device = null, Guid id = default, bool disconnect = false)
         {
-            
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ConnectToDeviceAsync(device, id, disconnect);
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleRadioService), "ConnectToDeviceAsync");
@@ -323,6 +330,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IEnumerable<IBleDevice>> StopScan()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await StopScan();
+            }
+
             try
             {
                 
@@ -351,6 +363,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         private static async Task<string> CharacteristicToString(IGattCharacteristic characteristic)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await CharacteristicToString(characteristic);
+            }
+
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleRadioService), "CharacteristicToString");

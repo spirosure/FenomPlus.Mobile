@@ -1,5 +1,4 @@
-﻿using System;
-using FenomPlus.Database.Tables;
+﻿using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Adapters
@@ -17,7 +16,6 @@ namespace FenomPlus.Database.Adapters
             return new BreathManeuverErrorDBModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateError = input.DateError,
                 Description = input.Description,
                 Firmware = input.Firmware,
@@ -38,7 +36,6 @@ namespace FenomPlus.Database.Adapters
             return new BreathManeuverErrorTb()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateError = input.DateError,
                 Description = input.Description,
                 Firmware = input.Firmware,
@@ -59,7 +56,6 @@ namespace FenomPlus.Database.Adapters
             return new BreathManeuverErrorDataModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 DateError = input.DateError,
                 Description = input.Description,
                 Firmware = input.Firmware,

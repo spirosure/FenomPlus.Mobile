@@ -18,8 +18,8 @@ namespace FenomPlus.SDK.Abstractions
 
         bool IsScanning { get; }
 
-        IFenomHubSystem Connect();
+        Task<IFenomHubSystem> Connect();
         Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null);
-        void StopScan();
+        Task<bool> StopScan();
     }
 }

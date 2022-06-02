@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
@@ -56,8 +57,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// </summary>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public async Task EnableMonitorAsync(Action<byte[]> callback)
+        public async Task<bool> EnableMonitorAsync(Action<byte[]> callback)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await EnableMonitorAsync(callback);
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -65,10 +71,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "EnableMonitorAsync");
                 _monitorType = MonitorType.Characteristic;
 
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -81,8 +89,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task DisableMonitorAsync()
+        public async Task<bool> DisableMonitorAsync()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await DisableMonitorAsync();
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -91,10 +104,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
 
                 
                 await Characteristic.StopUpdatesAsync();
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -109,8 +124,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <param name="configId"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public async Task EnableWatcher(int configId, Action<byte[]> callback)
+        public async Task<bool> EnableWatcher(int configId, Action<byte[]> callback)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await EnableWatcher(configId, callback);
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -123,10 +143,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 }
 
                 (_notificationDict[configId] as List<Action<byte[]>>).Add(callback);
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -141,8 +163,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <param name="configId"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public async Task DisableWatcher(int configId, Action<byte[]> callback)
+        public async Task<bool> DisableWatcher(int configId, Action<byte[]> callback)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await DisableWatcher(configId, callback);
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -152,10 +179,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 
 
                 Console.WriteLine("GattCharacteristic.DisableWatcher() - Success!");
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {
@@ -170,6 +199,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<byte[]> ReadAsync()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadAsync();
+            }
+
             //await _lock.WaitAsync();
 
             try
@@ -209,6 +243,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<bool> WriteAsync(byte[] value)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await WriteAsync(value);
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -249,8 +288,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task WriteWithoutResponseAsync(byte[] value)
+        public async Task<bool> WriteWithoutResponseAsync(byte[] value)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await WriteWithoutResponseAsync(value);
+            }
+
             await _lock.WaitAsync();
 
             try
@@ -272,11 +316,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                             // log failed write in here
                         });
 
-                await policy.Execute(() => Characteristic.WriteAsync(value));
+                return await policy.Execute(() => Characteristic.WriteAsync(value));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             finally
             {

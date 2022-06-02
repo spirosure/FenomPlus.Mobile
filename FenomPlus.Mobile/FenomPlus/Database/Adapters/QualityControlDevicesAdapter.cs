@@ -1,5 +1,4 @@
-﻿using System;
-using FenomPlus.Database.Tables;
+﻿using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Adapters
@@ -12,7 +11,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlDeviceDBModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 LastConnected = input.LastConnected,
                 SerialNumber = input.SerialNumber
             };
@@ -29,7 +27,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlDevicesTb()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 LastConnected = input.LastConnected,
                 SerialNumber = input.SerialNumber
             };
@@ -46,7 +43,6 @@ namespace FenomPlus.Database.Adapters
             return new QualityControlDevicesDataModel()
             {
                 _id = input._id,
-                //Id = input.Id != null ? input.Id : Guid.NewGuid().ToString(),
                 LastConnected = input.LastConnected,
                 SerialNumber = input.SerialNumber
             };

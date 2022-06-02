@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace FenomPlus.SDK.Core.Models.Characteristic
 {
     public class BaseCharacteristic

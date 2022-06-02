@@ -11,10 +11,10 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         string Description { get; }
         bool IsNotifying { get; }
 
-        Task EnableMonitorAsync(Action<byte[]> callback);
-        Task DisableMonitorAsync();
+        Task<bool> EnableMonitorAsync(Action<byte[]> callback);
+        Task<bool> DisableMonitorAsync();
         Task<byte[]> ReadAsync();
         Task<bool> WriteAsync(byte[] value);
-        Task WriteWithoutResponseAsync(byte[] value);
+        Task<bool> WriteWithoutResponseAsync(byte[] value);
     }
 }

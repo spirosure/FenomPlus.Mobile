@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FenomPlus.Database.Tables;
+﻿using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Repository.Interfaces

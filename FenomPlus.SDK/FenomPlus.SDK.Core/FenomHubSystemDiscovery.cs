@@ -79,8 +79,12 @@ namespace FenomPlus.SDK.Core
         /// 
         /// </summary>
         /// <returns></returns>
-        public IFenomHubSystem Connect()
+        public async Task<IFenomHubSystem> Connect()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await Connect();
+            }
             //FenomHubSystem = AsyncHelper.RunSync(() => _bleRadio.Connect());
             return FenomHubSystem;
         }
@@ -88,8 +92,13 @@ namespace FenomPlus.SDK.Core
         /// <summary>
         /// Scan
         /// </summary>
-        public Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null)
+        public async Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await Scan(scanTime, deviceFoundCallback, scanCompletedCallback);
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(FenomHubSystemDiscovery), "Scan");
@@ -101,7 +110,7 @@ namespace FenomPlus.SDK.Core
                     return null;
                 }
 
-                _bleRadio.Scan(scanTime.TotalMilliseconds,
+                await _bleRadio.Scan(scanTime.TotalMilliseconds,
                     ((IBleDevice bleDevice) =>
                     {
                         if ((bleDevice != null) && (!string.IsNullOrEmpty(bleDevice.Name)))
@@ -138,14 +147,21 @@ namespace FenomPlus.SDK.Core
         /// <summary>
         /// StopScan
         /// </summary>
-        public void StopScan()
+        public async Task<bool> StopScan()
         {
+            if(await MainThreadEX.EnsureMainThread())
+            {
+                return await StopScan();
+            }
+
             PerformanceLogger.StartLog(typeof(FenomHubSystemDiscovery), "StopScan");
             _logger.LogDebug("FenomHubSystemDiscovery: StopScan");
 
-            AsyncHelper.RunSync(() => _bleRadio.StopScan());
+            //AsyncHelper.RunSync(() => _bleRadio.StopScan());
+            await _bleRadio.StopScan();
 
             PerformanceLogger.EndLog(typeof(FenomHubSystemDiscovery), "StopScan");
+            return true;
         }
     }
 }

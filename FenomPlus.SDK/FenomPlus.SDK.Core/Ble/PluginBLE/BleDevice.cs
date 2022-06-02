@@ -57,6 +57,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns>bool for success or failure</returns>
         public async Task<bool> ConnectAsync()
         {
+            if(await MainThreadEX.EnsureMainThread())
+            {
+                return await ConnectAsync();
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "ConnectAsync");
@@ -67,9 +72,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     return false;
                 }
 
+                ConnectParameters connectParameters = new ConnectParameters(autoConnect: true, forceBleTransport: false);
                 if (Device.State == DeviceState.Disconnected)
                 {
-                    var device = await Adapter.ConnectToKnownDeviceAsync(Device.Id, new ConnectParameters(true, true));
+                    var device = await Adapter.ConnectToKnownDeviceAsync(Device.Id, connectParameters);//, cancellationToken.Token);
+
+                    //var device = await Adapter.ConnectToKnownDeviceAsync(Device.Id, new ConnectParameters(true, true));
 
                     if (device is null)
                     {
@@ -88,7 +96,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 }
                 else if (Device.State == DeviceState.Limited)
                 {
-                    await Adapter.ConnectToDeviceAsync(Device, new ConnectParameters(true, true));
+                    await Adapter.ConnectToDeviceAsync(Device, connectParameters);//, cancellationToken.Token);
                 }
 
                 return Device.State == DeviceState.Connected;
@@ -115,8 +123,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task DisconnectAsync()
+        public async Task<bool> DisconnectAsync()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await DisconnectAsync();
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "DisconnectAsync");
@@ -126,14 +139,16 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
 
                 if (!Connected)
                 {
-                    return;
+                    return true;
                 }
 
                 await Adapter.DisconnectDeviceAsync(Device);
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.LogException(ex);
+                return false;
             }
             finally
             {
@@ -147,6 +162,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IEnumerable<IGattCharacteristic>> GetCharacterasticsAync()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await GetCharacterasticsAync();
+            }
+
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "GetCharacterasticsAync");
@@ -231,6 +251,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IGattCharacteristic> FindCharacteristic(string uuid)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await FindCharacteristic(uuid);
+            }
+
             Guid guid = new Guid(uuid);
             IGattCharacteristic gatt = null;
 
@@ -261,6 +286,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum = BreathTestEnum.Start10Second)
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await StartMesurementFeature(breathTestEnum);
+            }
+
             breathFlow = 0;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
             byte[] data = new byte[1];
@@ -275,6 +305,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<bool> StopMesurementFeature()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await StopMesurementFeature();
+            }
+
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
             byte[] data = new byte[1];
             data[0] = (byte)BreathTestEnum.Stop;
@@ -286,13 +321,19 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<float> ReadMesurementFeature()
+        public async Task<float> ReadNOScoreFeature()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadNOScoreFeature();
+            }
+
+
             float measurement = 0f;
             BreathManeuver breathManeuver = await ReadBreathManeuverFeature();
             if(breathManeuver != null)
             {
-                measurement = breathManeuver.NoCount;
+                measurement = breathManeuver.NOScore;
             }
             return measurement;
         }
@@ -303,6 +344,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<BreathManeuver> ReadBreathManeuverFeature()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadBreathManeuverFeature();
+            }
+
+
             BreathManeuver breathManeuver = null;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathManeuverCharacteristic);
             var data = await Characteristic.ReadAsync();
@@ -316,14 +363,19 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<DeviceInfo> ReadDeviceInfoFeature()
+        public async Task<Models.Characteristic.DeviceInfo> ReadDeviceInfoFeature()
         {
-            DeviceInfo deviceInfo = null;
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadDeviceInfoFeature();
+            }
+
+            Models.Characteristic.DeviceInfo deviceInfo = null;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.DeviceInfoCharacteristic);
             var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length >= DeviceInfo.Min))
+            if ((data != null) && (data.Length >= Models.Characteristic.DeviceInfo.Min))
             {
-                deviceInfo = DeviceInfo.Create(data);
+                deviceInfo = Models.Characteristic.DeviceInfo.Create(data);
             }
             return deviceInfo;
         }
@@ -334,6 +386,12 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<EnvironmentalInfo> ReadEnvironmentalInfoFeature()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadEnvironmentalInfoFeature();
+            }
+
+
             EnvironmentalInfo environmentalInfo = null;
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.EnvironmentalInfoCharacteristic);
             var data = await Characteristic.ReadAsync();
@@ -350,6 +408,11 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<int> ReadBatteryLevelFeature()
         {
+            if (await MainThreadEX.EnsureMainThread())
+            {
+                return await ReadBatteryLevelFeature();
+            }
+
             int batteryLevel = 0;
             EnvironmentalInfo environmentalInfo = await ReadEnvironmentalInfoFeature();
             if (environmentalInfo != null)

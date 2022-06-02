@@ -14,5 +14,23 @@ namespace FenomPlus.Views
             InitializeComponent();
             BindingContext = model = new HumanControlPreparingViewModel();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            model.OnAppearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            model.OnDisappearing();
+        }
     }
 }

@@ -21,9 +21,10 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         Guid Uuid { get; }
         bool IsBonded { get; }
         bool Connected { get; }
+
         IEnumerable<IGattCharacteristic> GattCharacteristics { get; }
         Task<bool> ConnectAsync();
-        Task DisconnectAsync();
+        Task<bool> DisconnectAsync();
         Task<bool> EnsureConnected();
         Task<int> UpdatedRssi();
         Task<IGattCharacteristic> GetCharacterasticsAync(Guid gattCharacteristicUuid);
@@ -36,7 +37,7 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         // add features for device here
         Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum);
         Task<bool> StopMesurementFeature();
-        Task<float> ReadMesurementFeature();
+        Task<float> ReadNOScoreFeature();
 
         Task<int> ReadBatteryLevelFeature();
         Task<DeviceInfo> ReadDeviceInfoFeature();

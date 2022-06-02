@@ -132,7 +132,26 @@ namespace FenomPlus.Views
         private async void OnCancelled(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{Source}"), false);
-            //            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            model.OnAppearing();
+            GotoPostion(0);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            model.OnDisappearing();
+            GotoPostion(0);
         }
     }
 }
