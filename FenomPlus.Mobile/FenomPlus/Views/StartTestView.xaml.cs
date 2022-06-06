@@ -68,6 +68,9 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void StartTest(object sender, EventArgs e)
         {
+            // ok send test type here
+            // wait until breath here
+
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(BreathManeuverFeedbackView)}"), false);
         }
     }

@@ -63,22 +63,8 @@ namespace FenomPlus.Views
             Services.Cache.QCUsername = userName;
 
             //ok goto test now.
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlPerformView)}"), false);
 
-
-            
-            // try to find if user is already in database
-            QualityControlDBModel testDBModel = new Models.QualityControlDBModel()
-            {
-                SerialNumber = "SerialNumber-" + DateTime.Now.Second,
-                DateTaken = DateTime.Now,
-                QCExpiration = "Expired",
-                QCStatus = "Qualified",
-                TestResult = DateTime.Now.Second,
-                User = userName
-            };
-            QualityControlTb record = QCRepo.Insert(testDBModel);
-            testDBModel = record.Convert();
-            
             model.UpdateGrid();
         }
 

@@ -6,7 +6,7 @@
     x:Class="FenomPlus.Views.HumanControlPreparingView"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
-    Shell.NavBarIsVisible="True"
+    Shell.NavBarIsVisible="False"
     NavigationPage.HasBackButton="False"
     NavigationPage.HasNavigationBar="False">
     <Shell.TitleView>
@@ -20,7 +20,7 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                 <Label Text="Preparing Human Control Test Result" Style="{StaticResource Header}"/>
-                <Label Text="9" Style="{StaticResource Important}"/>
+                <Label Text="{Binding TestTime}" Style="{StaticResource Important}"/>
                 <Label Text="Seconds" Style="{StaticResource EmCaption}"/>
                 <Label FontSize="24"
                        FontAttributes="Bold"

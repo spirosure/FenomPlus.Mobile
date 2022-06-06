@@ -15,6 +15,7 @@ namespace FenomPlus.ViewModels
         {
             DeviceStatus = new DeviceStatus();
             ErrorList = new RangeObservableCollection<Alert>();
+            /*
             ErrorList.Add(new Alert()
             {
                 Id = 1,
@@ -36,6 +37,7 @@ namespace FenomPlus.ViewModels
                 Image = "DeviceWarning",
                 Title = "Device Expiring Soon"
             });
+            */
             UpdateErrorList();
 
             DismissCommand = new Command<Alert>((model) => {

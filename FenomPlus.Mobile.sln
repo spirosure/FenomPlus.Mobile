@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.UWP", "FenomPlus.Mobile\FenomPlus.UWP\FenomPlus.UWP.csproj", "{E7049879-B738-40BC-93EC-0718FC6CAD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.Android", "FenomPlus.Mobile\FenomPlus.Android\FenomPlus.Android.csproj", "{C0752B92-261B-405C-B713-988B7931AC1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.Sandbox.Android", "FenomPlus.Sandbox\FenomPlus.Sandbox.Android\FenomPlus.Sandbox.Android.csproj", "{C0752B92-261B-405C-B713-988B7931AC1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FenomPlus.iOS", "FenomPlus.Mobile\FenomPlus.iOS\FenomPlus.iOS.csproj", "{35044C2E-FC4C-4583-AA7A-CCB3349605D0}"
 EndProject

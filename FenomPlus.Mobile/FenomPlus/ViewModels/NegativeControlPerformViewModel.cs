@@ -23,6 +23,7 @@ namespace FenomPlus.ViewModels
             Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
             {
                 TestSeconds--;
+                TestTime = TestSeconds / (1000 / App.ReadBreathData);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
                     Device.BeginInvokeOnMainThread(async () =>

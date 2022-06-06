@@ -107,7 +107,7 @@ namespace FenomPlus.Views
         {
             if (carousel.Position + 1 < Tutorials.Count)
             {
-                carousel.Position++;
+                GotoPostion(carousel.Position+1);
                 header.Text = $"Step {carousel.Position + 1}";
             } else {
                 Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TutorialSuccessView)}?source={Source}"), false);
@@ -121,6 +121,7 @@ namespace FenomPlus.Views
         public void GotoPostion(int postion)
         {
             carousel.Position = postion;
+            model.Postion = carousel.Position;
             header.Text = $"Step {carousel.Position + 1}";
         }
 

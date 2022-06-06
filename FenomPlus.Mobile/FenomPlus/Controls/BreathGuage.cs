@@ -24,6 +24,16 @@ namespace FenomPlus.Controls
 
     public class BreathGuage : SKCanvasView
     {
+        public static double LowWhite = 0.0d;
+        public static double LowRed = 1.0d;
+        public static double LowYellow = 2.7d;
+        public static double LowGreen = 2.8d;
+        public static double HighGreen = 3.2d;
+        public static double HighYellow = 3.3d;
+        public static double HighRed = 5.0d;
+        public static double HighWhite = 6.00;
+
+
         public static readonly BindableProperty SizeProperty =
             BindableProperty.Create(nameof(Size), typeof(float), typeof(BreathGuage));
 

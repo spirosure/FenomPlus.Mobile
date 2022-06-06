@@ -73,7 +73,7 @@ namespace FenomPlus.ViewModels
         {
             base.OnDisappearing();
             Stop = true;
-            //PlaySounds.StopAll();
+            PlaySounds.StopAll();
         }
 
         /// <summary>
@@ -87,7 +87,13 @@ namespace FenomPlus.ViewModels
             {
                 guageData = value;
                 OnPropertyChanged("GuageData");
-                //if (!Stop) PlaySounds.PlaySound(GuageData);
+                if ((!Stop) && (Postion == 5 || Postion == 6 || Postion == 7))
+                {
+                    PlaySounds.PlaySound(GuageData);
+                } else
+                {
+                    PlaySounds.StopAll();
+                }
             }
         }
 
@@ -102,6 +108,17 @@ namespace FenomPlus.ViewModels
             {
                 guageStatus = value;
                 OnPropertyChanged("GuageStatus");
+            }
+        }
+
+        protected int postion;
+        public int Postion
+        {
+            get => postion;
+            set
+            {
+                postion = value;
+                OnPropertyChanged("Postion");
             }
         }
     }
