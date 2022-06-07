@@ -37,6 +37,7 @@ namespace FenomPlus.SDK.Core.Models.Characteristic
                 Temperature = Data[0];
                 Humidity = Data[1];
                 Pressure = Data[2];
+                BatteryLevel = 0;
                 if (NewVersion && (data.Length != Min))
                 {
                     BatteryLevel = Data[3];

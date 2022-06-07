@@ -41,7 +41,7 @@ namespace FenomPlus.ViewModels
               {
                   if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name) && (App.BleDevice == null))
                   {
-                      FenomHub.StopScan();
+                      await FenomHub.StopScan();
                       Device.BeginInvokeOnMainThread(async () =>
                       {
                           var connected = await bleDevice.ConnectAsync();

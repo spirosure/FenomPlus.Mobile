@@ -415,9 +415,16 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
 
             int batteryLevel = 0;
             EnvironmentalInfo environmentalInfo = await ReadEnvironmentalInfoFeature();
-            if (environmentalInfo != null)
+            if ((environmentalInfo != null) && (environmentalInfo.BatteryLevel != 0))
             {
                 batteryLevel = environmentalInfo.BatteryLevel;
+            } else {
+                // read old 
+                DeviceInfo deviceInfo = await ReadDeviceInfoFeature();
+                if (deviceInfo != null)
+                {
+                    batteryLevel = deviceInfo.BatteryLevel;
+                }
             }
             return batteryLevel;
         }

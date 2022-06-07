@@ -27,7 +27,7 @@ namespace FenomPlus.Sandbox.ViewModels
 
             // TODO: start mesurement to ble
             //Device.BeginInvokeOnMainThread(async () => {
-            _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start10Second);
+            _ = App.BleDevice.StartMesurementFeature(BreathTestEnum.Start6Second);
                 // var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
             //});   
 
