@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 namespace FenomPlus.ViewModels
 {
     public class UnPairViewModel : BaseViewModel
@@ -22,6 +22,14 @@ namespace FenomPlus.ViewModels
         override public void OnDisappearing()
         {
             base.OnDisappearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

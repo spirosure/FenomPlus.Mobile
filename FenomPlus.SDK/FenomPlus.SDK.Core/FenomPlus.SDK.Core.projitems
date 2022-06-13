@@ -15,9 +15,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
     <Folder Include="$(MSBuildThisFileDirectory)Ble\Interface\" />
     <Folder Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Command\" />
-    <Folder Include="$(MSBuildThisFileDirectory)UI\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Characteristic\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Utils\AsyncHelper.cs" />
@@ -26,37 +23,27 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\PerformanceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SynchronizedList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FenomHubSystemDiscovery.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Ble\BleLocker.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Ble\PacketHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\Interface\CharacteristicPropertiesEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\Interface\IBleDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\Interface\IBleRadioService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\Interface\IGattCharacteristic.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\BleDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\BleRadioService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Features\CharacteristicBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LoggingManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ble\PluginBLE\GattCharacteristic.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Features\BaseFeature.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Features\FeatureStatus.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandQueue.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandPacket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\BasePacket.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\CommandMessage.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\DeviceCommandsEnum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Command\AppCommandsEnum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\DeviceInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\EnvironmentalInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathManeuver.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\TrainingMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BreathTestEnum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\BaseCharacteristic.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Characteristic\StatusCodeEnum.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utils\MainThreadExtentions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)UI\BreathGuage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\ID_SUB.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\ID_MESSAGE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\MESSAGE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Features\Features.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BaseCharacteristic.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BreathManeuver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BreathTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BreathTestEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DebugMsg.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\EnvironmentalInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\StatusCodeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TrainingMode.cs" />
   </ItemGroup>
 </Project>

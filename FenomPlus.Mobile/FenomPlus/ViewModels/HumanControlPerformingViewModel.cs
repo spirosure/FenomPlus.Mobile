@@ -19,54 +19,43 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             TestTime = 10;
-            TestSeconds = TestTime * (1000 / App.ReadBreathData);
+            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
             Stop = false;
 
-            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
             {
                 TestSeconds--;
-                TestTime = TestSeconds / (1000 / App.ReadBreathData);
+                TestTime = TestSeconds / (1000 / Cache.ReadBreathData);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    BleHub.StopTest();
+
+                    QualityControlDataModel model = new QualityControlDataModel()
                     {
-                        App.TestResult = 0;
+                        DateTaken = DateTime.Now,
+                        User = Services.Cache.QCUsername,
+                        TestResult = Cache._BreathManeuver.NOScore,
+                        SerialNumber = this.DeviceSerialNumber,
+                        QCStatus = "",
+                        QCExpiration = "",
+                    };
 
-                        if (App.BleDevice != null)
-                        {
-                            App.TestResult = App.BleDevice.ReadNOScoreFeature().Result;
-
-                            // TODO: send stop to ble here
-                            _ = App.BleDevice?.StopMesurementFeature();
-                        }
-
-                        QualityControlDataModel model = new QualityControlDataModel()
-                        {
-                            DateTaken = DateTime.Now,
-                            User = Services.Cache.QCUsername,
-                            TestResult = App.TestResult,
-                            SerialNumber = this.DeviceSerialNumber,
-                            QCStatus = "",
-                            QCExpiration = "",
-                        };
-                        // depending on result
-                        if ((App.TestResult >= BreathGuage.LowGreen) && (App.TestResult <= BreathGuage.HighGreen))
-                        {
-                            model.QCStatus = "Qualified";
-                            QCRepo.Insert(model);
-                            // log passed here
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPassedView)}"), false);
-                        }
-                        else
-                        {
-                            model.QCStatus = "Disqualified";
-                            QCRepo.Insert(model);
-                            // log failed here
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlDisqualifiedView)}"), false);
-                        }
-                    });
+                    // depending on result
+                    if ((Cache._BreathManeuver.NOScore >= BreathGuage.LowGreen) && (Cache._BreathManeuver.NOScore <= BreathGuage.HighGreen))
+                    {
+                        model.QCStatus = "Qualified";
+                        QCRepo.Insert(model);
+                        // log passed here
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPassedView)}"), false);
+                    }
+                    else
+                    {
+                        model.QCStatus = "Disqualified";
+                        QCRepo.Insert(model);
+                        // log failed here
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlDisqualifiedView)}"), false);
+                    }
                 }
-
                 return (TestSeconds > 0) && (Stop == false);
             });
         }
@@ -94,5 +83,13 @@ namespace FenomPlus.ViewModels
 
         private bool Stop;
         private int TestSeconds;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

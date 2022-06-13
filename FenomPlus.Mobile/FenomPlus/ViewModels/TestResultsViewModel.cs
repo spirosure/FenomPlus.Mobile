@@ -1,5 +1,4 @@
-﻿using System;
-using FenomPlus.Models;
+﻿using FenomPlus.Models;
 
 namespace FenomPlus.ViewModels
 {
@@ -9,15 +8,13 @@ namespace FenomPlus.ViewModels
         {
         }
 
-        private bool Stop;
-
         /// <summary>
         /// 
         /// </summary>
         override public void OnAppearing()
         {
             base.OnAppearing();
-            if (App.TestType == TestTypeEnum.Standard)
+            if (Cache.TestType == TestTypeEnum.Standard)
             {
                 TestType = "Standard";
             }
@@ -26,8 +23,7 @@ namespace FenomPlus.ViewModels
                 TestType = "Short";
             }
 
-            TestResult = App.TestResult;
-            Stop = false;
+            TestResult = Cache._BreathManeuver.NOScore;
         }
 
         /// <summary>
@@ -36,7 +32,6 @@ namespace FenomPlus.ViewModels
         override public void OnDisappearing()
         {
             base.OnDisappearing();
-            Stop = true;
         }
 
         /// <summary>
@@ -65,6 +60,14 @@ namespace FenomPlus.ViewModels
                 testResult = value;
                 OnPropertyChanged("TestResult");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

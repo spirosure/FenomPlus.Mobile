@@ -17,31 +17,33 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             TestTime = 10;
-            TestSeconds = TestTime * (1000 / App.ReadBreathData);
+            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
             Stop = false;
-            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
             {
                 TestSeconds--;
-                TestTime = TestSeconds / (1000 / App.ReadBreathData);
+                TestTime = TestSeconds / (1000 / Cache.ReadBreathData);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
-                    {
-                        await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPerformingView)}"), false);
-                    });
+                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPerformingView)}"), false);
                 }
 
                 return (TestSeconds > 0) && (Stop == false);
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         override public void OnDisappearing()
         {
             base.OnDisappearing();
             Stop = true;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         private int _TestTime;
         public int TestTime
         {
@@ -55,5 +57,13 @@ namespace FenomPlus.ViewModels
 
         private bool Stop;
         private int TestSeconds;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

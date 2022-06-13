@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using FenomPlus.SDK.Core.Features;
-using FenomPlus.SDK.Core.Models.Characteristic;
-using FenomPlus.SDK.Core.Models.Command;
+using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.SDK.Core.Ble.Interface
 {
@@ -25,23 +22,14 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         IEnumerable<IGattCharacteristic> GattCharacteristics { get; }
         Task<bool> ConnectAsync();
         Task<bool> DisconnectAsync();
-        Task<bool> EnsureConnected();
-        Task<int> UpdatedRssi();
-        Task<IGattCharacteristic> GetCharacterasticsAync(Guid gattCharacteristicUuid);
-        Task<IGattCharacteristic> GetCharacterasticsAync(string gattCharacteristicUuid);
 
-        // used for queuing
-        Guid Subscribe(IBleDevice subscriber, Action<IBleDevice, byte[], CommandPacket> callBack = null);
-        void UnSubscribe(Guid token);
+        Task<bool> DEVICEINFO();
+        Task<bool> ENVIROMENTALINFO();
+        Task<bool> BREATHTEST(BreathTestEnum breathTestEnum = BreathTestEnum.Start10Second);
+        Task<bool> BREATHMANUEVER();
+        Task<bool> TRAININGMODE();
+        Task<bool> DEBUGMSG();
+        Task<bool> DEBUGMANUEVERTYPE();
 
-        // add features for device here
-        Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum);
-        Task<bool> StopMesurementFeature();
-        Task<float> ReadNOScoreFeature();
-
-        Task<int> ReadBatteryLevelFeature();
-        Task<DeviceInfo> ReadDeviceInfoFeature();
-        Task<EnvironmentalInfo> ReadEnvironmentalInfoFeature();
-        Task<BreathManeuver> ReadBreathManeuverFeature();
     }
 }

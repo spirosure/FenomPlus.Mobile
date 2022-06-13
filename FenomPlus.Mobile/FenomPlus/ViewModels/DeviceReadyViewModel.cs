@@ -1,5 +1,4 @@
 ﻿using System;
-using FenomPlus.SDK.Core.Models.Characteristic;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -33,16 +32,7 @@ namespace FenomPlus.ViewModels
             Message = "Your Device is Connected";
             Stop = false;
             Seconds = 5;
-            // scan for serail number here before startign the timer
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                //await App.BleDevice.StartMesurementFeature(BreathTestEnum.Start6Second);
-                int battery = await App.BleDevice.ReadBatteryLevelFeature();
-                DeviceInfo deviceInfo = await App.BleDevice.ReadDeviceInfoFeature();
-                EnvironmentalInfo environmentalInfo = await App.BleDevice.ReadEnvironmentalInfoFeature();
-
-                Device.StartTimer(TimeSpan.FromSeconds(Seconds), TimerCallback);
-            });
+            Device.StartTimer(TimeSpan.FromSeconds(Seconds), TimerCallback);
         }
 
         /// <summary>
@@ -62,10 +52,7 @@ namespace FenomPlus.ViewModels
         {
             if (Stop == false)
             {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
-                });
+                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
             }
             return false;
         }
@@ -82,6 +69,14 @@ namespace FenomPlus.ViewModels
                 seconds = value;
                 OnPropertyChanged("Seconds");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

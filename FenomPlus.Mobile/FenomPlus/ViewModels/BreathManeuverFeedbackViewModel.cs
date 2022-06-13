@@ -1,7 +1,6 @@
 ﻿using System;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
-using FenomPlus.SDK.Core.Models.Characteristic;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -45,7 +44,7 @@ namespace FenomPlus.ViewModels
         public override void OnAppearing()
         {
             base.OnAppearing();
-            if (App.TestType == TestTypeEnum.Standard)
+            if (Cache.TestType == TestTypeEnum.Standard)
             {
                 TestType = "Standard Test";
                 TestTime = 10;
@@ -59,13 +58,13 @@ namespace FenomPlus.ViewModels
             Stop = false;
             StartMeasure = false;
 
-            TestSeconds = TestTime * (1000 / App.ReadBreathData);
+            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
             GuageData = 0;
-            GuageSeconds = TestTime * (1000 / App.ReadBreathData);
+            GuageSeconds = TestTime * (1000 / Cache.ReadBreathData);
             GuageStatus = "Start Blowing";
 
             // start timer
-            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
             {
                 // have we started the Measure yet?
                 if (StartMeasure == true)
@@ -73,58 +72,39 @@ namespace FenomPlus.ViewModels
                     TestSeconds--;
                     if ((TestSeconds <= 0) && (Stop == false))
                     {
-                        // TODO: read value from ble ppb?
-                        Device.BeginInvokeOnMainThread(async () =>
-                        {
-                            if (App.BleDevice != null)
-                            {
-                                //App.TestResult = App.BleDevice.ReadMesurementFeature().Result;
-
-                                // TODO: send stop to ble here
-                                _ = App.BleDevice?.StopMesurementFeature();
-                            }
-                            // stop exhale here
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingView)}"), false);
-                        });
+                        BleHub.StopTest();
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingView)}"), false);
                     }
                 }
 
-                Device.BeginInvokeOnMainThread(async () => {
-                    // TODO: read from ble charestic
-                    if ((Stop == false) && (App.BleDevice != null) && (App.BleDevice.Connected))
-                    {
-                        var breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
-                        if (breathManeuver != null)
-                        {
-                            //App.TestResult = breathManeuver.NOScore;
-                            GuageData = (float)(((float)breathManeuver.BreathFlow) / 10);
+                if (Cache._BreathManeuver != null)
+                {
+                    GuageData = (float)(((float)Cache._BreathManeuver.BreathFlow) / 10);
 
-                            if ((GuageData <= 0.0f) && (StartMeasure == false))
-                            {
-                                GuageStatus = "Start Blowing";
-                            }
-                            else
-                            {
-                                StartMeasure = true;
-                                if (GuageData < 2.8f)
-                                {
-                                    GuageStatus = "Exhale Harder";
-                                }
-                                else if (GuageData > 3.2f)
-                                {
-                                    GuageStatus = "Exhale Softer";
-                                }
-                                else
-                                {
-                                    GuageStatus = "Good Job!";
-                                }
-                            }
+                    if ((GuageData <= 0.0f) && (StartMeasure == false))
+                    {
+                        GuageStatus = "Start Blowing";
+                    }
+                    else
+                    {
+                        StartMeasure = true;
+                        if (GuageData < 2.8f)
+                        {
+                            GuageStatus = "Exhale Harder";
+                        }
+                        else if (GuageData > 3.2f)
+                        {
+                            GuageStatus = "Exhale Softer";
+                        }
+                        else
+                        {
+                            GuageStatus = "Good Job!";
                         }
                     }
-                });
+                }
 
                 // return contiune of below the time
-                GuageSeconds = TestSeconds / (1000 / App.ReadBreathData);
+                GuageSeconds = TestSeconds / (1000 / Cache.ReadBreathData);
                 return (TestSeconds > 0) && (Stop == false);
             });
         }
@@ -200,5 +180,12 @@ namespace FenomPlus.ViewModels
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

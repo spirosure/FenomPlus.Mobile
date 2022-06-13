@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FenomPlus.Interfaces;
+using FenomPlus.SDK.Abstractions;
+using FenomPlus.SDK.Core;
 using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.Services
 {
@@ -12,36 +15,113 @@ namespace FenomPlus.Services
         {
         }
 
-        public bool IsStateOn { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        /// <summary>
+        /// 
+        /// </summary>
+        private IBleDevice BleDevice { get; set; }
 
-        public Task<bool> Connect(string serial)
+        /// <summary>
+        /// 
+        /// </summary>
+        private IFenomHubSystemDiscovery fenomHubSystemDiscovery;
+        protected  IFenomHubSystemDiscovery FenomHubSystemDiscovery
         {
-            throw new NotImplementedException();
+            get
+            {
+                if (fenomHubSystemDiscovery == null)
+                {
+                    fenomHubSystemDiscovery = new FenomHubSystemDiscovery();
+                    fenomHubSystemDiscovery.SetLoggerFactory(Services.Cache.Logger);
+                }
+                return fenomHubSystemDiscovery;
+            }
         }
 
-        public Task<bool> Connect(IBleDevice bleDevice)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> StopScan()
         {
-            throw new NotImplementedException();
+            return await FenomHubSystemDiscovery.StopScan();
         }
 
-        public Task<bool> Disconnect(IBleDevice bleDevice = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scanTime"></param>
+        /// <param name="deviceFoundCallback"></param>
+        /// <param name="scanCompletedCallback"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null)
         {
-            throw new NotImplementedException();
+            return await FenomHubSystemDiscovery.Scan(scanTime, deviceFoundCallback, scanCompletedCallback);
         }
 
-        public Task<bool> Feature(IBleDevice bleDevice = null, Action<IEnumerable<IBleDevice>> completed = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bleDevice"></param>
+        /// <returns></returns>
+        public async Task<bool> Connect(IBleDevice bleDevice)
         {
-            throw new NotImplementedException();
+            await Disconnect();
+            BleDevice = bleDevice;
+            return await bleDevice.ConnectAsync();
         }
 
-        public Task<bool> IsConnected(IBleDevice bleDevice = null, Action<IEnumerable<IBleDevice>> completed = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bleDevice"></param>
+        /// <returns></returns>
+        public async Task<bool> Disconnect(IBleDevice bleDevice = null)
         {
-            throw new NotImplementedException();
+            if (IsConnected())
+            {
+                await BleDevice.DisconnectAsync();
+                BleDevice = null;
+            }
+            return true;
         }
 
-        public Task<bool> Scan(Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bleDevice"></param>
+        /// <param name="completed"></param>
+        /// <returns></returns>
+        public bool IsConnected()
         {
-            throw new NotImplementedException();
+            return (BleDevice != null) ? BleDevice.Connected : false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="breathTestEnum"></param>
+        /// <returns></returns>
+        public async Task<bool> StartTest(BreathTestEnum breathTestEnum)
+        {
+            if(IsConnected())
+            {
+                return await BleDevice.BREATHTEST(breathTestEnum);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> StopTest()
+        {
+            if (IsConnected())
+            {
+                return await BleDevice.BREATHTEST(BreathTestEnum.Stop);
+            }
+            return false;
+        }
+
     }
 }

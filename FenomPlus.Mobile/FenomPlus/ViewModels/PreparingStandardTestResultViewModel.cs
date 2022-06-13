@@ -1,6 +1,5 @@
 ﻿using System;
 using FenomPlus.Models;
-using FenomPlus.SDK.Core.Models.Characteristic;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -16,15 +15,13 @@ namespace FenomPlus.ViewModels
 
         }
 
-        private bool Stop;
-
         /// <summary>
         /// 
         /// </summary>
         override public void OnAppearing()
         {
             base.OnAppearing();
-            if (App.TestType == TestTypeEnum.Standard)
+            if (Cache.TestType == TestTypeEnum.Standard)
             {
                 TestType = "Standard Test Result";
             }
@@ -32,9 +29,6 @@ namespace FenomPlus.ViewModels
             {
                 TestType = "Short Test Result";
             }
-
-
-            Stop = false;
             Seconds = 28;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
@@ -45,7 +39,6 @@ namespace FenomPlus.ViewModels
         override public void OnDisappearing()
         {
             base.OnDisappearing();
-            Stop = true;
         }
 
 
@@ -58,31 +51,18 @@ namespace FenomPlus.ViewModels
             Seconds--;
             if (Seconds <= 0)
             {
-                // ok time to goto next page here
-                Device.BeginInvokeOnMainThread(async () =>
+                if ((Cache._BreathManeuver.NOScore <= 0) || (Cache._BreathManeuver.NOScore >= 10))
                 {
-                    // read value again
-                    if (App.BleDevice != null)
-                    {
-                        BreathManeuver breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
-                        if (breathManeuver != null)
-                        {
-                            App.TestResult = breathManeuver.NOScore;
-
-                            if ((App.TestResult <= 0) || (App.TestResult >= 10))
-                            {
-                                var model = BreathManeuverErrorDBModel.Create(breathManeuver);
-                                ErrorsRepo.Insert(model);
-                            }
-                            else
-                            {
-                                var model = BreathManeuverResultDBModel.Create(breathManeuver);
-                                ResultsRepo.Insert(model);
-                            }
-                        }
-                    }
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
-                });
+                    var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
+                    ErrorsRepo.Insert(model);
+                }
+                else
+                {
+                    var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
+                    ResultsRepo.Insert(model);
+                }
+                    
+                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
             }
             return Seconds > 0;
         }
@@ -112,6 +92,13 @@ namespace FenomPlus.ViewModels
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }
 

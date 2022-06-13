@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Text;
 using FenomPlus.Interfaces;
+using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models;
+using Microsoft.Extensions.Logging;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
@@ -9,8 +13,31 @@ namespace FenomPlus.Services
     {
         public CacheService(IAppServices services) : base(services)
         {
+            ReadBreathData = 200;
+            DeviceSerialNumber = "F150-1234567";
 
+            Logger = LoggerFactory.Create(builder =>
+            {
+                builder.SetMinimumLevel(LogLevel.Debug)
+                    .AddFilter("FenomPlus", LogLevel.Debug);
+            });
+
+            _EnvironmentalInfo = new EnvironmentalInfo();
+            _BreathManeuver = new BreathManeuver();
+            _DeviceInfo = new DeviceInfo();
+            _DebugMsg = new DebugMsg();
         }
+
+        public ILoggerFactory Logger { get; set; }
+
+        public string DeviceSerialNumber { get; set; }
+        public TestTypeEnum TestType { get; set; }
+        public int ReadBreathData { get; set; }
+
+        public EnvironmentalInfo _EnvironmentalInfo { get; set; }
+        public BreathManeuver _BreathManeuver { get; set; }
+        public DeviceInfo _DeviceInfo { get; set; }
+        public DebugMsg _DebugMsg { get; set; }
 
         /// <summary>
         /// 
@@ -37,19 +64,45 @@ namespace FenomPlus.Services
             //  AppSettings.AddOrUpdateValue("DeviceExpiringSoon_key", value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="days"></param>
+        /// <returns></returns>
         public bool GetDeviceSensorExpiringSoon(int days)
         {
             return AppSettings.GetValueOrDefault("DeviceSensorExpiringConfirmedSoon_key", false);
             //  AppSettings.AddOrUpdateValue("DeviceSensorExpiringSoon_key", value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="voltage"></param>
+        /// <returns></returns>
         public bool GetDeviceBatteryLow(double voltage)
         {
             return AppSettings.GetValueOrDefault("DeviceBatteryConfirmedLow_key", false);
             //  AppSettings.AddOrUpdateValue("DeviceBatteryLow_key", value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string QCUsername { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        public string SetDeviceSerialNumber(byte[] serialNumber)
+        {
+            if ((serialNumber != null) && (serialNumber.Length > 0))
+            {
+                DeviceSerialNumber = Encoding.Default.GetString(serialNumber);
+            }
+            return DeviceSerialNumber;
+        }
     }
 }
 

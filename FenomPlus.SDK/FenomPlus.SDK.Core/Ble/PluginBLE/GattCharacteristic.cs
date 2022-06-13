@@ -1,29 +1,21 @@
 ﻿using Plugin.BLE.Abstractions;
-using Polly;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.SDK.Core.Utils;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
+using Plugin.BLE.Abstractions.EventArgs;
+using FenomPlus.Services;
+using FenomPlus.Interfaces;
 
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
     public class GattCharacteristic : IGattCharacteristic
     {
-        private enum MonitorType
-        {
-            None,
-            Characteristic
-        };
-
-        private readonly ConcurrentDictionary<int, IEnumerable<Action<byte[]>>> _notificationDict;
-        private Action<byte[]> _notificationCallback;
-        private MonitorType _monitorType = MonitorType.None;
-
+        private IAppServices Services => IOC.Services;
         private SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+        private Plugin.BLE.Abstractions.Contracts.ICharacteristic Characteristic { get; }
+        public Guid Uuid => Characteristic.Id;
 
         /// <summary>
         /// 
@@ -35,6 +27,51 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             {
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "GattCharacteristic");
                 Characteristic = characteristic;
+                try
+                {
+                    PerformanceLogger.StartLog(typeof(GattCharacteristic), "GattCharacteristic");
+
+                    if (Uuid.Equals(Constants.DeviceInfoCharacteristic))
+                    {
+                        Characteristic.ValueUpdated += DeviceInfoHandler;
+                        if (Characteristic.CanUpdate)
+                        {
+                            Characteristic.StartUpdatesAsync();
+                        }
+                    }
+                    else if (Uuid.Equals(Constants.EnvironmentalInfoCharacteristic))
+                    {
+                        Characteristic.ValueUpdated += EnvironmentalInfoHandler;
+                        if (Characteristic.CanUpdate)
+                        {
+                            Characteristic.StartUpdatesAsync();
+                        }
+                    }
+                    else if (Uuid.Equals(Constants.BreathManeuverCharacteristic))
+                    {
+                        Characteristic.ValueUpdated += BreathManeuverHandler;
+                        if (Characteristic.CanUpdate)
+                        {
+                            Characteristic.StartUpdatesAsync();
+                        }
+                    }
+                    else if (Uuid.Equals(Constants.DebugMessageCharacteristic))
+                    {
+                        Characteristic.ValueUpdated += DebugMsgHandler;
+                        if (Characteristic.CanUpdate)
+                        {
+                            Characteristic.StartUpdatesAsync();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    PerformanceLogger.EndLog(typeof(GattCharacteristic), "GattCharacteristic");
+                }
             }
             catch (Exception ex)
             {
@@ -46,165 +83,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
         }
 
-        private Plugin.BLE.Abstractions.Contracts.ICharacteristic Characteristic { get; }
-        public Guid Uuid => Characteristic.Id;
-        public string Description => Characteristic.Name;
-        public bool IsNotifying => _monitorType != MonitorType.None;
-        public CharacteristicPropertiesEnum Properties => throw new NotImplementedException();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        public async Task<bool> EnableMonitorAsync(Action<byte[]> callback)
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await EnableMonitorAsync(callback);
-            }
-
-            await _lock.WaitAsync();
-
-            try
-            {
-                PerformanceLogger.StartLog(typeof(GattCharacteristic), "EnableMonitorAsync");
-                _monitorType = MonitorType.Characteristic;
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-            finally
-            {
-                PerformanceLogger.EndLog(typeof(GattCharacteristic), "EnableMonitorAsync");
-                _lock.Release();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> DisableMonitorAsync()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await DisableMonitorAsync();
-            }
-
-            await _lock.WaitAsync();
-
-            try
-            {
-                PerformanceLogger.StartLog(typeof(GattCharacteristic), "DisableMonitorAsync");
-
-                
-                await Characteristic.StopUpdatesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-            finally
-            {
-                PerformanceLogger.EndLog(typeof(GattCharacteristic), "DisableMonitorAsync");
-                _lock.Release();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="configId"></param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        public async Task<bool> EnableWatcher(int configId, Action<byte[]> callback)
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await EnableWatcher(configId, callback);
-            }
-
-            await _lock.WaitAsync();
-
-            try
-            {
-                PerformanceLogger.StartLog(typeof(GattCharacteristic), "EnableWatcher");
-
-                if (!_notificationDict.ContainsKey(configId))
-                {
-                    _notificationDict[configId] = new List<Action<byte[]>>();
-                }
-
-                (_notificationDict[configId] as List<Action<byte[]>>).Add(callback);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-            finally
-            {
-                PerformanceLogger.EndLog(typeof(GattCharacteristic), "EnableWatcher");
-                _lock.Release();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="configId"></param>
-        /// <param name="callback"></param>
-        /// <returns></returns>
-        public async Task<bool> DisableWatcher(int configId, Action<byte[]> callback)
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await DisableWatcher(configId, callback);
-            }
-
-            await _lock.WaitAsync();
-
-            try
-            {
-                PerformanceLogger.StartLog(typeof(GattCharacteristic), "DisableWatcher");
-
-                
-
-                Console.WriteLine("GattCharacteristic.DisableWatcher() - Success!");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
-            finally
-            {
-                PerformanceLogger.EndLog(typeof(GattCharacteristic), "DisableWatcher");
-                _lock.Release();
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public async Task<byte[]> ReadAsync()
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadAsync();
-            }
-
-            //await _lock.WaitAsync();
+            await _lock.WaitAsync();
 
             try
             {
@@ -214,15 +99,8 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 {
                     throw new Exception("Characteristic cannot be read");
                 }
-                var policy = Policy
-                    .Handle<Plugin.BLE.Abstractions.Exceptions.CharacteristicReadException>()
-                    .WaitAndRetry(3, retryAttempt => TimeSpan.FromMilliseconds(100),
-                        (exception, timeSpan, retryCount, context) =>
-                        {
-                            // log failed read in here
-                        });
 
-                return await policy.Execute(async () => await Characteristic.ReadAsync());
+                return await Characteristic.ReadAsync();
             }
             catch (Exception ex)
             {
@@ -231,7 +109,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
             finally
             {
-                //_lock.Release();
+                _lock.Release();
                 PerformanceLogger.EndLog(typeof(GattCharacteristic), "ReadAsync");
             }
         }
@@ -243,11 +121,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<bool> WriteAsync(byte[] value)
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await WriteAsync(value);
-            }
-
             await _lock.WaitAsync();
 
             try
@@ -261,15 +134,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
 
                 Characteristic.WriteType = CharacteristicWriteType.WithResponse;
 
-                var policy = Policy
-                    .Handle<Exception>()
-                    .WaitAndRetry(3, retryAttempt => TimeSpan.FromMilliseconds(100),
-                        (exception, timeSpan, retryCount, context) =>
-                        {
-                            // log failed write in here
-                        });
-
-                return await policy.Execute(() => Characteristic.WriteAsync(value));
+                return await Characteristic.WriteAsync(value);
             }
             catch (Exception ex)
             {
@@ -288,35 +153,15 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task<bool> WriteWithoutResponseAsync(byte[] value)
+        public async Task<bool> WriteWithoutResponseAsyncFast(byte[] value)
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await WriteWithoutResponseAsync(value);
-            }
-
             await _lock.WaitAsync();
-
             try
             {
-                PerformanceLogger.StartLog(typeof(GattCharacteristic), "WriteWithoutResponseAsync");
-
-                if (!Characteristic.CanWrite)
-                {
-                    throw new Exception("Characteristic cannot be written");
-                }
-
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "WriteWithoutResponseAsync(" + value.Length + ")");
                 Characteristic.WriteType = CharacteristicWriteType.WithoutResponse;
-
-                var policy = Policy
-                    .Handle<Exception>()
-                    .WaitAndRetry(3, retryAttempt => TimeSpan.FromMilliseconds(100),
-                        (exception, timeSpan, retryCount, context) =>
-                        {
-                            // log failed write in here
-                        });
-
-                return await policy.Execute(() => Characteristic.WriteAsync(value));
+                await Characteristic.WriteAsync(value);
+                return true;
             }
             catch (Exception ex)
             {
@@ -330,6 +175,135 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
         }
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task<bool> WriteWithoutResponseAsync(byte[] value)
+        {
+            await _lock.WaitAsync();
+
+            try
+            {
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "WriteWithoutResponseAsync");
+
+                if (!Characteristic.CanWrite)
+                {
+                    throw new Exception("Characteristic cannot be written");
+                }
+
+                Characteristic.WriteType = CharacteristicWriteType.WithoutResponse;
+
+                await Characteristic.WriteAsync(value);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                _lock.Release();
+                PerformanceLogger.EndLog(typeof(GattCharacteristic), "WriteWithoutResponseAsync");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeviceInfoHandler(object sender, CharacteristicUpdatedEventArgs e)
+        {
+            _lock.Wait();
+            try
+            {
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "DeviceInfoHandler");
+                IOC.Services.Cache._DeviceInfo.Decode(e.Characteristic.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _lock.Release();
+                PerformanceLogger.EndLog(typeof(GattCharacteristic), "DeviceInfoHandler");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EnvironmentalInfoHandler(object sender, CharacteristicUpdatedEventArgs e)
+        {
+            _lock.Wait();
+            try
+            {
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "EnvironmentalInfoHandler");
+                IOC.Services.Cache._EnvironmentalInfo.Decode(e.Characteristic.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _lock.Release();
+                PerformanceLogger.EndLog(typeof(GattCharacteristic), "EnvironmentalInfoHandler");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BreathManeuverHandler(object sender, CharacteristicUpdatedEventArgs e)
+        {
+            _lock.Wait();
+            try
+            {
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "BreathManeuverHandler");
+                IOC.Services.Cache._BreathManeuver.Decode(e.Characteristic.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _lock.Release();
+                PerformanceLogger.EndLog(typeof(GattCharacteristic), "BreathManeuverHandler");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DebugMsgHandler(object sender, CharacteristicUpdatedEventArgs e)
+        {
+            _lock.Wait();
+            try
+            {
+                PerformanceLogger.StartLog(typeof(GattCharacteristic), "DebugMsgHandler");
+                Services.Cache._DebugMsg.Decode(e.Characteristic.Value);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _lock.Release();
+                PerformanceLogger.EndLog(typeof(GattCharacteristic), "DebugMsgHandler");
+            }
+        }
     }
 }

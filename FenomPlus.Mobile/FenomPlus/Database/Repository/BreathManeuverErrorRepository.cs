@@ -1,13 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using FenomPlus.Core.Database.Repository;
+﻿using FenomPlus.Core.Database.Repository;
 using FenomPlus.Database.Adapters;
 using FenomPlus.Database.Repository.Interfaces;
 using FenomPlus.Database.Tables;
 using FenomPlus.Interfaces;
 using FenomPlus.Models;
-using FenomPlus.SDK.Core.Models.Characteristic;
-using FenomPlus.Services;
 using LiteDB;
 
 namespace FenomPlus.Database.Repository

@@ -6,6 +6,8 @@ namespace FenomPlus.Interfaces
 {
     public interface IDatabaseService
     {
+        string DatabasePath(string dbFile);
+
         ILiteDatabase DB { get; }
         IBreathManeuverErrorRepository BreathManeuverErrorRepo { get; }
         IBreathManeuverResultRepository BreathManeuverResultRepo { get; }

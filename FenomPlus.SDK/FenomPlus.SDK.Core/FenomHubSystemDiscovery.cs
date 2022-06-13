@@ -12,14 +12,10 @@ namespace FenomPlus.SDK.Core
 {
     public class FenomHubSystemDiscovery : IFenomHubSystemDiscovery
     {
-        private FenomHubSystemLost _FenomHubSystemLost;
-
         private LoggingManager _loggingMaager;
         private Logger _logger;
         private IFenomHubSystem _FenomHubSystem;
         private readonly IBleRadioService _bleRadio;
-
-        public event FenomHubSystemLost FenomHubSystemLostEvent;
 
         /// <summary>
         /// 
@@ -41,7 +37,6 @@ namespace FenomPlus.SDK.Core
         /// <param name="e"></param>
         private void DeviceConnectionLost(object sender, DeviceErrorEventArgs e)
         {
-            //_FenomHubSystem?.RemoveDeviceAndUpdate(e.Device);
         }
 
         /// <summary>
@@ -67,38 +62,10 @@ namespace FenomPlus.SDK.Core
         public bool IsScanning => _bleRadio.IsScanning;
 
         /// <summary>
-        /// HFenomHubSystemLost
-        /// </summary>
-        public event FenomHubSystemLost HFenomHubSystemLostEvent
-        {
-            add => _FenomHubSystemLost += value;
-            remove => _FenomHubSystemLost -= value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IFenomHubSystem> Connect()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await Connect();
-            }
-            //FenomHubSystem = AsyncHelper.RunSync(() => _bleRadio.Connect());
-            return FenomHubSystem;
-        }
-
-        /// <summary>
         /// Scan
         /// </summary>
         public async Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null)
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await Scan(scanTime, deviceFoundCallback, scanCompletedCallback);
-            }
-
             try
             {
                 PerformanceLogger.StartLog(typeof(FenomHubSystemDiscovery), "Scan");
@@ -149,15 +116,9 @@ namespace FenomPlus.SDK.Core
         /// </summary>
         public async Task<bool> StopScan()
         {
-            if(await MainThreadEX.EnsureMainThread())
-            {
-                return await StopScan();
-            }
-
             PerformanceLogger.StartLog(typeof(FenomHubSystemDiscovery), "StopScan");
             _logger.LogDebug("FenomHubSystemDiscovery: StopScan");
 
-            //AsyncHelper.RunSync(() => _bleRadio.StopScan());
             await _bleRadio.StopScan();
 
             PerformanceLogger.EndLog(typeof(FenomHubSystemDiscovery), "StopScan");

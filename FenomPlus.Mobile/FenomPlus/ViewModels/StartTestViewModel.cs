@@ -1,6 +1,5 @@
-﻿using System;
-using FenomPlus.Models;
-using FenomPlus.SDK.Core.Models.Characteristic;
+﻿using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -62,7 +61,7 @@ namespace FenomPlus.ViewModels
         public override void OnAppearing()
         {
             base.OnAppearing();
-            if (App.TestType == TestTypeEnum.Standard) {
+            if (Cache.TestType == TestTypeEnum.Standard) {
                 TestType = "Standard Test";
                 TestButton = "Take Standard Test";
                 TestSeconds = "10 seconds";
@@ -74,18 +73,18 @@ namespace FenomPlus.ViewModels
                 TestImageSource = "ShortBreathe";
             }
 
-            // TODO: start mesurement to ble
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                if (App.BleDevice != null)
-                {
-                    _ = await App.BleDevice.StartMesurementFeature(
-                        (App.TestType == TestTypeEnum.Standard) ?
-                        BreathTestEnum.Start10Second :
-                        BreathTestEnum.Start6Second);
-                    var breathManeuvera = App.BleDevice.ReadBreathManeuverFeature();
-                }
-            });
+            BleHub.StartTest(
+                (Cache.TestType == TestTypeEnum.Standard) ?
+                BreathTestEnum.Start10Second :
+                BreathTestEnum.Start6Second);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

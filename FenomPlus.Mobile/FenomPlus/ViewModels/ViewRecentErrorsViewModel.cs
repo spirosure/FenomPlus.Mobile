@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FenomPlus.Database.Adapters;
 using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
@@ -68,6 +67,14 @@ namespace FenomPlus.ViewModels
                 _DataForGrid = value;
                 OnPropertyChanged("DataForGrid");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

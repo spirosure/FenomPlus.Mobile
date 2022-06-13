@@ -32,5 +32,7 @@ namespace FenomPlus.Views
             base.OnDisappearing();
             model.OnDisappearing();
         }
+
+
     }
 }

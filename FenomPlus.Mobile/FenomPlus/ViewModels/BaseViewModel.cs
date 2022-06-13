@@ -1,7 +1,5 @@
 ﻿using FenomPlus.Database.Repository.Interfaces;
 using FenomPlus.Interfaces;
-using FenomPlus.SDK.Abstractions;
-using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.Services;
 using System;
 using System.Collections.Generic;
@@ -12,10 +10,10 @@ namespace FenomPlus.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged, IBaseServices
     {
-        public IBleDevice BleDevice => App.BleDevice;
         public IAppServices Services => IOC.Services;
-        public IFenomHubSystemDiscovery FenomHub => App.FenomHubSystemDiscovery;
-
+        public IBleHubService BleHub => Services.BleHub;
+        public ICacheService Cache => Services.Cache;
+        
         // repos here
         public IBreathManeuverErrorRepository ErrorsRepo => Services.Database.BreathManeuverErrorRepo;
         public IBreathManeuverResultRepository ResultsRepo => Services.Database.BreathManeuverResultRepo;
@@ -83,7 +81,7 @@ namespace FenomPlus.ViewModels
         /// </summary>
         public BaseViewModel()
         {
-            DeviceSerialNumber = App.DeviceSerialNumber;
+            DeviceSerialNumber = Services.Cache.DeviceSerialNumber;
         }
 
         /// <summary>
@@ -97,6 +95,13 @@ namespace FenomPlus.ViewModels
         /// 
         /// </summary>
         virtual public void OnDisappearing()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        virtual public void NewGlobalData()
         {
         }
     }

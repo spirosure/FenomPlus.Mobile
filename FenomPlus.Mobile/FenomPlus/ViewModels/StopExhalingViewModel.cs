@@ -43,10 +43,7 @@ namespace FenomPlus.ViewModels
             if (Stop == true) seconds = 0;
             if ((Seconds <= 0) && (Stop == false))
             {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultView)}"), false);
-                });
+                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultView)}"), false);
             }
             return Seconds > 0;
         }
@@ -63,6 +60,14 @@ namespace FenomPlus.ViewModels
                 seconds = value;
                 OnPropertyChanged("Seconds");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

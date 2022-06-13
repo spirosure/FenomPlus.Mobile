@@ -22,7 +22,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         public void Cancel_Clicked(System.Object sender, System.EventArgs e)
         {
-            App.BleDevice?.DisconnectAsync();
+            BleHub.Disconnect();
             Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
         }
 
@@ -42,6 +42,15 @@ namespace FenomPlus.Views
         {
             base.OnDisappearing();
             model.OnDisappearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void NewGlobalData()
+        {
+            base.NewGlobalData();
+            model.NewGlobalData();
         }
     }
 }

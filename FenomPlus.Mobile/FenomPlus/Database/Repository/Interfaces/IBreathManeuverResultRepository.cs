@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using FenomPlus.Models;
-using FenomPlus.SDK.Core.Models.Characteristic;
+﻿using FenomPlus.Models;
 using FenomPlus.Database.Tables;
 
 namespace FenomPlus.Database.Repository.Interfaces

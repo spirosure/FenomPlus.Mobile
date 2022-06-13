@@ -73,5 +73,14 @@ namespace FenomPlus.Views
 
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(BreathManeuverFeedbackView)}"), false);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void NewGlobalData()
+        {
+            base.NewGlobalData();
+            model.NewGlobalData();
+        }
     }
 }

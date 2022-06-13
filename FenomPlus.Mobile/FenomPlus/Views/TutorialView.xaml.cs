@@ -154,5 +154,14 @@ namespace FenomPlus.Views
             model.OnDisappearing();
             GotoPostion(0);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void NewGlobalData()
+        {
+            base.NewGlobalData();
+            model.NewGlobalData();
+        }
     }
 }

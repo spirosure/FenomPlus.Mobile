@@ -49,19 +49,9 @@ namespace FenomPlus.ViewModels
             Stop = false;
 
             // start timer to read measure constally
-            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Services.Cache.ReadBreathData), () =>
             {
-                Device.BeginInvokeOnMainThread(async () => {
-                    // TODO: read from ble charestic
-                    if ((Stop == false) && (App.BleDevice != null) && (App.BleDevice.Connected))
-                    {
-                        var breathManeuver = await App.BleDevice.ReadBreathManeuverFeature();
-                        if (breathManeuver != null)
-                        {
-                            GuageData = (float)(((float)breathManeuver.BreathFlow) / 10);
-                        }
-                    }
-                });
+                GuageData = (float)(((float)Cache._BreathManeuver.BreathFlow) / 10);
                 return !Stop;
             });
         }
@@ -120,6 +110,14 @@ namespace FenomPlus.ViewModels
                 postion = value;
                 OnPropertyChanged("Postion");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

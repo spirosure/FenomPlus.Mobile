@@ -12,16 +12,12 @@ namespace FenomPlus.Services
             {
                 Container.Register<IBleHubService, BleHubService>().AsSingleton();
                 Container.Register<ICacheService, CacheService>().AsSingleton();
-                Container.Register<IDatabaseAccessService, DatabaseAccessService>().AsSingleton();
                 Container.Register<IDatabaseService, DatabaseService>().AsSingleton();
-                Container.Register<IEnvironmentService, EnvironmentService>().AsSingleton();
                 Container.Register<ILogCatService, LogCatService>().AsSingleton();                
-                Container.Register<INavigationService, NavigationService>().AsSingleton();
-                Container.Register<IStatusService, StatusService>().AsSingleton();
             }
             catch (Exception ex)
             {
-                
+                Console.Write(ex.ToString());
             }
         }
 
@@ -53,31 +49,11 @@ namespace FenomPlus.Services
         /// <summary>
         /// 
         /// </summary>
-        protected IDatabaseAccessService _DatabaseAccess;
-        public IDatabaseAccessService DatabaseAccess
-        {
-            get { return _DatabaseAccess ?? (_DatabaseAccess = Container.Resolve<IDatabaseAccessService>()); }
-            set { _DatabaseAccess = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         protected IDatabaseService _Database;
         public IDatabaseService Database
         {
             get { return _Database ?? (_Database = Container.Resolve<IDatabaseService>()); }
             set { _Database = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected IEnvironmentService _Environment;
-        public IEnvironmentService Environment
-        {
-            get { return _Environment ?? (_Environment = Container.Resolve<IEnvironmentService>()); }
-            set { _Environment = value; }
         }
 
         /// <summary>
@@ -89,26 +65,5 @@ namespace FenomPlus.Services
             get { return _LogCat ?? (_LogCat = Container.Resolve<ILogCatService>()); }
             set { _LogCat = value; }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected INavigationService _Navigation;
-        public INavigationService Navigation
-        {
-            get { return _Navigation ?? (_Navigation = Container.Resolve<INavigationService>()); }
-            set { _Navigation = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected IStatusService _Status;
-        public IStatusService Status
-        {
-            get { return _Status ?? (_Status = Container.Resolve<IStatusService>()); }
-            set { _Status = value; }
-        }
-
     }
 }

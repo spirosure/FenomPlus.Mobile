@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
 using Xamarin.Forms;
@@ -107,6 +105,14 @@ namespace FenomPlus.ViewModels
                 errorHeight = value;
                 OnPropertyChanged("ErrorHeight");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

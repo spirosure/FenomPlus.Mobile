@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using FenomPlus.Database.Repository;
 using FenomPlus.Database.Repository.Interfaces;
 using FenomPlus.Interfaces;
@@ -11,6 +12,9 @@ namespace FenomPlus.Services
     {
         public static string DBName = "database.db";
 
+        /// <summary>
+        /// 
+        /// </summary>
         private ILiteDatabase _db;
         public ILiteDatabase DB
         {
@@ -20,7 +24,7 @@ namespace FenomPlus.Services
                 {
                     var dbSettings = new EngineSettings()
                     {
-                        Filename = Services.DatabaseAccess.DatabasePath(DBName),
+                        Filename = DatabasePath(DBName),
                         Password = "passwordhere"
                     };
                     var dbEngine = new LiteEngine(dbSettings);
@@ -28,6 +32,18 @@ namespace FenomPlus.Services
                 }
                 return _db;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbFile"></param>
+        /// <returns></returns>
+        public string DatabasePath(string dbFile)
+        {
+            var path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), dbFile);
+            Console.WriteLine("DB:" + path);
+            return path;
         }
 
         public DatabaseService(IAppServices services) : base(services)

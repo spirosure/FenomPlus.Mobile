@@ -1,5 +1,5 @@
 ﻿using FenomPlus.Database.Tables;
-using FenomPlus.SDK.Core.Models.Characteristic;
+using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.Models
 {

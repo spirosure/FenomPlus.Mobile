@@ -40,6 +40,15 @@ namespace FenomPlus.Views
         {
             Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void NewGlobalData()
+        {
+            base.NewGlobalData();
+            model.NewGlobalData();
+        }
     }
 }
 

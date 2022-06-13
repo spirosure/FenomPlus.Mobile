@@ -17,34 +17,24 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             TestTime = 10;
-            TestSeconds = TestTime * (1000 / App.ReadBreathData);
+            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
             Stop = false;
 
-            Device.StartTimer(TimeSpan.FromMilliseconds(App.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
             {
                 TestSeconds--;
-                TestTime = TestSeconds / (1000 / App.ReadBreathData);
+                TestTime = TestSeconds / (1000 / Cache.ReadBreathData);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
-                    Device.BeginInvokeOnMainThread(async () =>
+                    BleHub.StopTest();
+                    if (Cache._BreathManeuver.NOScore <= 0)
                     {
-                        App.TestResult = 0;
-
-                        if (App.BleDevice != null)
-                        {
-                            App.TestResult = App.BleDevice.ReadNOScoreFeature().Result;
-
-                            // TODO: send stop to ble here
-                            _ = App.BleDevice?.StopMesurementFeature();
-                        }
-
-                        // depending on result
-                        if(App.TestResult <= 0) {
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlPassView)}"), false);
-                        } else {
-                            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlFailView)}"), false);
-                        }
-                    });
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlPassView)}"), false);
+                    }
+                    else
+                    {
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlFailView)}"), false);
+                    }
                 }
 
                 return (TestSeconds > 0) && (Stop == false);
@@ -74,5 +64,13 @@ namespace FenomPlus.ViewModels
 
         private bool Stop;
         private int TestSeconds;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnStandartTest(object sender, EventArgs e)
         {
-            App.TestType = TestTypeEnum.Standard;
+            Cache.TestType = TestTypeEnum.Standard;
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=Standard"), false);
         }
 
@@ -80,7 +80,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnShortTest(object sender, EventArgs e)
         {
-            App.TestType = TestTypeEnum.Short;
+            Cache.TestType = TestTypeEnum.Short;
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=short"), false);
         }
 
@@ -91,13 +91,6 @@ namespace FenomPlus.Views
         {
             base.OnAppearing();
             model.OnAppearing();
-            if ((App.BleDevice == null) || (App.BleDevice.Connected == false))
-            {
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    //await Shell.Current.GoToAsync(new ShellNavigationState("DevicePowerOnView"), false);
-                });
-            }
         }
 
         /// <summary>
@@ -117,6 +110,15 @@ namespace FenomPlus.Views
         protected void Error_Clicked(System.Object sender, System.EventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected override void NewGlobalData()
+        {
+            base.NewGlobalData();
+            model.NewGlobalData();
         }
     }
 }

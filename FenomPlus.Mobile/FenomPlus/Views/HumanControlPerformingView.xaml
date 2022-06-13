@@ -18,7 +18,7 @@
         />
     </Shell.TitleView>
     <ContentPage.Content>
-        
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout VerticalOptions="CenterAndExpand"
                      HorizontalOptions="CenterAndExpand">
                 <Label Text="Performing Human Control test"
@@ -53,6 +53,6 @@
                     Clicked="OnCancel"
                         />
             </StackLayout>
-
+            </ScrollView>
     </ContentPage.Content>
 </views:BaseContentPage>

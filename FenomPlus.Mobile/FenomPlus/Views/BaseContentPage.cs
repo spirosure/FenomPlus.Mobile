@@ -10,9 +10,9 @@ namespace FenomPlus.Views
 {
     public class BaseContentPage : ContentPage, IBaseServices
     {
-        public IBleDevice BleDevice => App.BleDevice;
         public IAppServices Services => IOC.Services;
-        public IFenomHubSystemDiscovery FenomHub => App.FenomHubSystemDiscovery;
+        public ICacheService Cache => Services.Cache;
+        public IBleHubService BleHub => Services.BleHub;
 
         // repos here
         public IBreathManeuverErrorRepository ErrorsRepo => Services.Database.BreathManeuverErrorRepo;
@@ -22,8 +22,6 @@ namespace FenomPlus.Views
         public IQualityControlUsersRepository QCUsersRepo => Services.Database.QualityControlUsersRepo;
 
 
-        //protected T model;
-
         /// <summary>
         /// 
         /// </summary>
@@ -32,14 +30,27 @@ namespace FenomPlus.Views
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected virtual void NewGlobalData()
+        {
         }
     }
 }

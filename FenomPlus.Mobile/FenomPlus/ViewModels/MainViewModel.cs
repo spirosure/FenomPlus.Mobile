@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-
+﻿
 namespace FenomPlus.ViewModels
 {
     public class MainViewModel : BaseViewModel
@@ -24,6 +22,14 @@ namespace FenomPlus.ViewModels
         override public void OnDisappearing()
         {
             base.OnDisappearing();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
         }
     }
 }

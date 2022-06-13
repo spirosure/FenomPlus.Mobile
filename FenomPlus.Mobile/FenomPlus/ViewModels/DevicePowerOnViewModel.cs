@@ -19,11 +19,8 @@ namespace FenomPlus.ViewModels
         /// </summary>
         public void StopScan()
         {
-            FenomHub.StopScan();
-            if ((App.BleDevice != null) && (App.BleDevice.Connected == false))
-            {
-                App.BleDevice?.DisconnectAsync();
-            }
+            Services.BleHub.StopScan();
+            Services.BleHub.Disconnect();
         }
 
         /// <summary>
@@ -32,31 +29,27 @@ namespace FenomPlus.ViewModels
         public void StartScan()
         {
             // if scanning then stop the scan
-            _ = App.DisconnectDevice();
-            App.BleDevice = null;
+            _ = Services.BleHub.Disconnect();
+            
             //
-            Seconds = App.ScanSeconds;
+            Seconds = 30;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
-            _ = FenomHub.Scan(new TimeSpan(0, 0, 0, App.ScanSeconds), async (IBleDevice bleDevice) =>
-              {
-                  if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name) && (App.BleDevice == null))
-                  {
-                      await FenomHub.StopScan();
-                      Device.BeginInvokeOnMainThread(async () =>
-                      {
-                          var connected = await bleDevice.ConnectAsync();
-                          if (connected == true)
-                          {
-                              App.BleDevice = bleDevice;
-                              Stop = true;
-                              await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DeviceReadyView)}"), false);
-                          }
-                      });
-                  }
-              }, (IEnumerable<IBleDevice> bleDevices) =>
+            _ = BleHub.Scan(new TimeSpan(0, 0, 0, Seconds), async (IBleDevice bleDevice) =>
+            {
+                if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name))
+                {
+                    await BleHub.StopScan();
+                    var connected = await Services.BleHub.Connect(bleDevice);
+                    if (connected == true)
+                    {
+                        Stop = true;
+                        await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DeviceReadyView)}"), false);
+                    }
+                }
+            }, (IEnumerable<IBleDevice> bleDevices) =>
             {
 
-                });
+            });
         }
 
         /// <summary>
@@ -66,21 +59,9 @@ namespace FenomPlus.ViewModels
         private bool TimerCallback()
         {
             Seconds--;
-            /*
-            if(Seconds > 0) Seconds--;
-            if ((App.BleDevice != null) && (App.BleDevice.Connected))
-            {
-                // ok time to wait for connection and goto next page
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    await Shell.Current.GoToAsync(new ShellNavigationState("DeviceReadyView"), false);
-                });
-                return false;
-            }
-            */
             if (Seconds <= 0)
             {
-                _ = App.DisconnectDevice();
+                _ = Services.BleHub.Disconnect();
                 StopScan();
                 StartScan();
                 return false;
@@ -136,5 +117,12 @@ namespace FenomPlus.ViewModels
             StopScan();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

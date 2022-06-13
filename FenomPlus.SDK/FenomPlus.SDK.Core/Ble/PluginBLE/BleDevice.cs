@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 using FenomPlus.SDK.Core.Utils;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Exceptions;
-using FenomPlus.SDK.Core.Models.Command;
-using FenomPlus.SDK.Core.Models.Characteristic;
+using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.SDK.Core.Ble.PluginBLE
 {
-    internal class BleDevice : IBleDevice
+    internal partial class BleDevice : IBleDevice
     {
         // need Adapter
         private static readonly IBluetoothLE Ble = CrossBluetoothLE.Current;
@@ -57,11 +56,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns>bool for success or failure</returns>
         public async Task<bool> ConnectAsync()
         {
-            if(await MainThreadEX.EnsureMainThread())
-            {
-                return await ConnectAsync();
-            }
-
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "ConnectAsync");
@@ -125,11 +119,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<bool> DisconnectAsync()
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await DisconnectAsync();
-            }
-
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "DisconnectAsync");
@@ -162,11 +151,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IEnumerable<IGattCharacteristic>> GetCharacterasticsAync()
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await GetCharacterasticsAync();
-            }
-
             try
             {
                 PerformanceLogger.StartLog(typeof(BleDevice), "GetCharacterasticsAync");
@@ -192,10 +176,10 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     gattService.Add(service);
 
                     var characteristics = await service.GetCharacteristicsAsync();
-
                     foreach (var characteristic in characteristics)
                     {
-                        gattCharacteristics.Add(new GattCharacteristic(characteristic));
+                        IGattCharacteristic gattCharacteristic = new GattCharacteristic(characteristic);
+                        gattCharacteristics.Add(gattCharacteristic);
                     }
                 }
 
@@ -212,38 +196,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
         }
 
-        public Task<bool> EnsureConnected()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> UpdatedRssi()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IGattCharacteristic> GetCharacterasticsAync(Guid gattCharacteristicUuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IGattCharacteristic> GetCharacterasticsAync(string gattCharacteristicUuid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Guid Subscribe(IBleDevice subscriber, Action<IBleDevice, byte[], CommandPacket> callBack = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UnSubscribe(Guid token)
-        {
-            throw new NotImplementedException();
-        }
-
-        private byte breathFlow;
-
         /// <summary>
         /// 
         /// </summary>
@@ -251,23 +203,14 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         public async Task<IGattCharacteristic> FindCharacteristic(string uuid)
         {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await FindCharacteristic(uuid);
-            }
-
+            
             Guid guid = new Guid(uuid);
             IGattCharacteristic gatt = null;
-
-            // have we read it yet ?
-            //var gattService = GattServices as SynchronizedList<IService>;
-            //IService service = gattService[gattService.Count - 1];
-            //gatt = await service.GetCharacteristicAsync(guid);
 
             var gattCharacteristics = GattCharacteristics as SynchronizedList<IGattCharacteristic>;
             if(gattCharacteristics.Count <= 0)
             {
-                _ = GetCharacterasticsAync();
+                _ = await GetCharacterasticsAync();
                 gattCharacteristics = GattCharacteristics as SynchronizedList<IGattCharacteristic>;
             }
             foreach (IGattCharacteristic item in gattCharacteristics)
@@ -278,155 +221,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
 
             return gatt;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> StartMesurementFeature(BreathTestEnum breathTestEnum = BreathTestEnum.Start10Second)
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await StartMesurementFeature(breathTestEnum);
-            }
-
-            breathFlow = 0;
-            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
-            byte[] data = new byte[1];
-            data[0] = (byte)breathTestEnum;
-            await Characteristic.WriteAsync(data);
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> StopMesurementFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await StopMesurementFeature();
-            }
-
-            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathTestCharacteristic);
-            byte[] data = new byte[1];
-            data[0] = (byte)BreathTestEnum.Stop;
-            await Characteristic.WriteAsync(data);
-            return true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<float> ReadNOScoreFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadNOScoreFeature();
-            }
-
-
-            float measurement = 0f;
-            BreathManeuver breathManeuver = await ReadBreathManeuverFeature();
-            if(breathManeuver != null)
-            {
-                measurement = breathManeuver.NOScore;
-            }
-            return measurement;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<BreathManeuver> ReadBreathManeuverFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadBreathManeuverFeature();
-            }
-
-
-            BreathManeuver breathManeuver = null;
-            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.BreathManeuverCharacteristic);
-            var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length >= BreathManeuver.Min)) {
-                breathManeuver = BreathManeuver.Create(data);
-            }
-            return breathManeuver;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<Models.Characteristic.DeviceInfo> ReadDeviceInfoFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadDeviceInfoFeature();
-            }
-
-            Models.Characteristic.DeviceInfo deviceInfo = null;
-            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.DeviceInfoCharacteristic);
-            var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length >= Models.Characteristic.DeviceInfo.Min))
-            {
-                deviceInfo = Models.Characteristic.DeviceInfo.Create(data);
-            }
-            return deviceInfo;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<EnvironmentalInfo> ReadEnvironmentalInfoFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadEnvironmentalInfoFeature();
-            }
-
-
-            EnvironmentalInfo environmentalInfo = null;
-            IGattCharacteristic Characteristic = await FindCharacteristic(Constants.EnvironmentalInfoCharacteristic);
-            var data = await Characteristic.ReadAsync();
-            if ((data != null) && (data.Length >= EnvironmentalInfo.Min))
-            {
-                environmentalInfo = EnvironmentalInfo.Create(data);
-            }
-            return environmentalInfo;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<int> ReadBatteryLevelFeature()
-        {
-            if (await MainThreadEX.EnsureMainThread())
-            {
-                return await ReadBatteryLevelFeature();
-            }
-
-            int batteryLevel = 0;
-            EnvironmentalInfo environmentalInfo = await ReadEnvironmentalInfoFeature();
-            if ((environmentalInfo != null) && (environmentalInfo.BatteryLevel != 0))
-            {
-                batteryLevel = environmentalInfo.BatteryLevel;
-            } else {
-                // read old 
-                DeviceInfo deviceInfo = await ReadDeviceInfoFeature();
-                if (deviceInfo != null)
-                {
-                    batteryLevel = deviceInfo.BatteryLevel;
-                }
-            }
-            return batteryLevel;
         }
     }
 }

@@ -68,5 +68,13 @@ namespace FenomPlus.ViewModels
                 OnPropertyChanged("DataForGrid");
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        override public void NewGlobalData()
+        {
+            base.NewGlobalData();
+        }
     }
 }

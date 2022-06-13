@@ -1,5 +1,4 @@
-﻿using System;
-using FenomPlus.Interfaces;
+﻿using FenomPlus.Interfaces;
 using TinyIoC;
 
 namespace FenomPlus.Services
