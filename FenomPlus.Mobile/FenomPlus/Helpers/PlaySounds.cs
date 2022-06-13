@@ -157,28 +157,43 @@ namespace FenomPlus.Helpers
         /// </summary>
         public static void StopAll()
         {
-            high_0_10sec.Stop();
-            low_0_10sec.Stop();
-            mid_high_05sec.Stop();
-            mid_low_05sec.Stop();
-            mid_mid_05sec.Stop();
+            try
+            {
+                if (high_0_10sec != null)
+                {
+                    high_0_10sec.Stop();
+                    low_0_10sec.Stop();
+                    mid_high_05sec.Stop();
+                    mid_low_05sec.Stop();
+                    mid_mid_05sec.Stop();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         public static void StopLow()
         {
+            if(low_0_10sec != null)
             low_0_10sec.Stop();
         }
 
         public static void StopHigh()
         {
+            if(high_0_10sec != null)
             high_0_10sec.Stop();
         }
 
         public static void StopMid()
         {
-            mid_high_05sec.Stop();
-            mid_low_05sec.Stop();
-            mid_mid_05sec.Stop();
+            if (mid_high_05sec != null)
+            {
+                mid_high_05sec.Stop();
+                mid_low_05sec.Stop();
+                mid_mid_05sec.Stop();
+            }
         }
     }
 }
