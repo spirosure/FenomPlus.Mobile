@@ -131,7 +131,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     return true;
                 }
 
-                await Adapter.DisconnectDeviceAsync(Device);
+                Adapter.DisconnectDeviceAsync(Device);
                 return true;
             }
             catch (Exception ex)

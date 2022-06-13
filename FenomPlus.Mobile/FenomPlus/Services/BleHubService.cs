@@ -65,9 +65,13 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public async Task<bool> Connect(IBleDevice bleDevice)
         {
-            await Disconnect();
-            BleDevice = bleDevice;
-            return await bleDevice.ConnectAsync();
+            bool b = false;
+            if (BleDevice == null)
+            {
+                b = await bleDevice.ConnectAsync();
+                BleDevice = bleDevice;
+            }
+            return b;
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace FenomPlus.Services
         {
             if (IsConnected())
             {
-                await BleDevice.DisconnectAsync();
+                BleDevice.DisconnectAsync();
                 BleDevice = null;
             }
             return true;
