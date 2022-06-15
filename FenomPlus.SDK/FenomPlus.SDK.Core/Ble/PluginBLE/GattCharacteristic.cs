@@ -132,7 +132,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     throw new Exception("Characteristic cannot be written");
                 }
 
-                Characteristic.WriteType = CharacteristicWriteType.WithResponse;
+            //    Characteristic.WriteType = CharacteristicWriteType.WithResponse;
 
                 return await Characteristic.WriteAsync(value);
             }
