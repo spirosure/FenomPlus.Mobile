@@ -13,13 +13,19 @@ namespace FenomPlus.Interfaces
         bool GetDeviceSensorExpiringSoon(int days);
         bool GetDeviceBatteryLow(double voltage);
 
+        string SetDeviceSerialNumber(byte[] serialNumber);
         string DeviceSerialNumber { get; set; }
         TestTypeEnum TestType { get; set; }
         int ReadBreathData { get; set; }
                                          
-        EnvironmentalInfo _EnvironmentalInfo { get; set; }
-        BreathManeuver _BreathManeuver { get; set; }
-        DeviceInfo _DeviceInfo { get; set; }
-        DebugMsg _DebugMsg { get; set; }
+        EnvironmentalInfo _EnvironmentalInfo { get; }
+        BreathManeuver _BreathManeuver { get;  }
+        DeviceInfo _DeviceInfo { get;  }
+        DebugMsg _DebugMsg { get;  }
+
+        EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data);
+        BreathManeuver DecodeBreathManeuver(byte[] data);
+        DeviceInfo DecodeDeviceInfo(byte[] data);
+        DebugMsg DecodeDebugMsg(byte[] data);
     }
 }

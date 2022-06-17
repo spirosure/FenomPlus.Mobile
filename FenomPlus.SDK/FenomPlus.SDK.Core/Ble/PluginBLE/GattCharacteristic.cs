@@ -13,6 +13,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
     public class GattCharacteristic : IGattCharacteristic
     {
         private IAppServices Services => IOC.Services;
+        private ICacheService Cache => Services.Cache;
         private SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
         private Plugin.BLE.Abstractions.Contracts.ICharacteristic Characteristic { get; }
         public Guid Uuid => Characteristic.Id;
@@ -132,7 +133,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     throw new Exception("Characteristic cannot be written");
                 }
 
-            //    Characteristic.WriteType = CharacteristicWriteType.WithResponse;
+                Characteristic.WriteType = CharacteristicWriteType.WithResponse;
 
                 return await Characteristic.WriteAsync(value);
             }
@@ -221,7 +222,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             try
             {
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "DeviceInfoHandler");
-                IOC.Services.Cache._DeviceInfo.Decode(e.Characteristic.Value);
+                Cache.DecodeDeviceInfo(e.Characteristic.Value);
             }
             catch (Exception ex)
             {
@@ -245,7 +246,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             try
             {
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "EnvironmentalInfoHandler");
-                IOC.Services.Cache._EnvironmentalInfo.Decode(e.Characteristic.Value);
+                Cache.DecodeEnvironmentalInfo(e.Characteristic.Value);
             }
             catch (Exception ex)
             {
@@ -269,7 +270,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             try
             {
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "BreathManeuverHandler");
-                IOC.Services.Cache._BreathManeuver.Decode(e.Characteristic.Value);
+                Cache.DecodeBreathManeuver(e.Characteristic.Value);
             }
             catch (Exception ex)
             {
@@ -293,7 +294,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             try
             {
                 PerformanceLogger.StartLog(typeof(GattCharacteristic), "DebugMsgHandler");
-                Services.Cache._DebugMsg.Decode(e.Characteristic.Value);
+                Cache.DecodeDebugMsg(e.Characteristic.Value);
             }
             catch (Exception ex)
             {

@@ -34,10 +34,10 @@ namespace FenomPlus.Services
         public TestTypeEnum TestType { get; set; }
         public int ReadBreathData { get; set; }
 
-        public EnvironmentalInfo _EnvironmentalInfo { get; set; }
-        public BreathManeuver _BreathManeuver { get; set; }
-        public DeviceInfo _DeviceInfo { get; set; }
-        public DebugMsg _DebugMsg { get; set; }
+        public EnvironmentalInfo _EnvironmentalInfo { get; private set; }
+        public BreathManeuver _BreathManeuver { get; private set; }
+        public DeviceInfo _DeviceInfo { get; private set; }
+        public DebugMsg _DebugMsg { get; private set; }
 
         /// <summary>
         /// 
@@ -103,6 +103,79 @@ namespace FenomPlus.Services
             }
             return DeviceSerialNumber;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data)
+        {
+            _EnvironmentalInfo.Decode(data);
+
+            NotifyViews();
+            NotifyViewModels();
+            return _EnvironmentalInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public BreathManeuver DecodeBreathManeuver(byte[] data)
+        {
+            _BreathManeuver.Decode(data);
+
+            NotifyViews();
+            NotifyViewModels();
+            return _BreathManeuver;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public DeviceInfo DecodeDeviceInfo(byte[] data)
+        {
+            _DeviceInfo.Decode(data);
+
+            SetDeviceSerialNumber(_DeviceInfo.SerialNumber);
+
+            NotifyViews();
+            NotifyViewModels();
+            return _DeviceInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public DebugMsg DecodeDebugMsg(byte[] data)
+        {
+            _DebugMsg.Decode(data);
+            Services.DebugLogFile.Write(data);
+            NotifyViews();
+            NotifyViewModels();
+            return _DebugMsg;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void NotifyViews()
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void NotifyViewModels()
+        {
+        }
+
     }
 }
 

@@ -13,6 +13,7 @@ namespace FenomPlus.Services
                 Container.Register<IBleHubService, BleHubService>().AsSingleton();
                 Container.Register<ICacheService, CacheService>().AsSingleton();
                 Container.Register<IDatabaseService, DatabaseService>().AsSingleton();
+                Container.Register<IDebugLogFileService, DebugLogFileService>().AsSingleton();
                 Container.Register<ILogCatService, LogCatService>().AsSingleton();                
             }
             catch (Exception ex)
@@ -39,6 +40,9 @@ namespace FenomPlus.Services
             set { _BleHub = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         protected ICacheService _Cache;
         public ICacheService Cache
         {
@@ -54,6 +58,16 @@ namespace FenomPlus.Services
         {
             get { return _Database ?? (_Database = Container.Resolve<IDatabaseService>()); }
             set { _Database = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected IDebugLogFileService _DebugLogFile;
+        public IDebugLogFileService DebugLogFile
+        {
+            get { return _DebugLogFile ?? (_DebugLogFile = Container.Resolve<IDebugLogFileService>()); }
+            set { _DebugLogFile = value; }
         }
 
         /// <summary>

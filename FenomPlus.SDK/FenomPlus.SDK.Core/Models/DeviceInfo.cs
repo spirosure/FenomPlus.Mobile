@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using FenomPlus.Services;
 
 namespace FenomPlus.SDK.Core.Models
 {
