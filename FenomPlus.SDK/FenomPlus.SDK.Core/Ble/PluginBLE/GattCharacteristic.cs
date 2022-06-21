@@ -32,7 +32,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 {
                     PerformanceLogger.StartLog(typeof(GattCharacteristic), "GattCharacteristic");
 
-                    if (Uuid.Equals(Constants.DeviceInfoCharacteristic))
+                    if (Uuid.ToString().ToUpper() == Constants.DeviceInfoCharacteristic.ToUpper())
                     {
                         Characteristic.ValueUpdated += DeviceInfoHandler;
                         if (Characteristic.CanUpdate)
@@ -40,7 +40,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                             Characteristic.StartUpdatesAsync();
                         }
                     }
-                    else if (Uuid.Equals(Constants.EnvironmentalInfoCharacteristic))
+                    else if (Uuid.ToString().ToUpper() == Constants.EnvironmentalInfoCharacteristic.ToUpper())
                     {
                         Characteristic.ValueUpdated += EnvironmentalInfoHandler;
                         if (Characteristic.CanUpdate)
@@ -48,7 +48,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                             Characteristic.StartUpdatesAsync();
                         }
                     }
-                    else if (Uuid.Equals(Constants.BreathManeuverCharacteristic))
+                    else if (Uuid.ToString().ToUpper() == Constants.BreathManeuverCharacteristic.ToUpper())
                     {
                         Characteristic.ValueUpdated += BreathManeuverHandler;
                         if (Characteristic.CanUpdate)
@@ -56,7 +56,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                             Characteristic.StartUpdatesAsync();
                         }
                     }
-                    else if (Uuid.Equals(Constants.DebugMessageCharacteristic))
+                    else if (Uuid.ToString().ToUpper() == Constants.DebugMessageCharacteristic.ToUpper())
                     {
                         Characteristic.ValueUpdated += DebugMsgHandler;
                         if (Characteristic.CanUpdate)
@@ -133,7 +133,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     throw new Exception("Characteristic cannot be written");
                 }
 
-                Characteristic.WriteType = CharacteristicWriteType.WithResponse;
+                //Characteristic.WriteType = CharacteristicWriteType.WithResponse;
 
                 return await Characteristic.WriteAsync(value);
             }
