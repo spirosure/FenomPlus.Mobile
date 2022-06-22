@@ -159,7 +159,7 @@ namespace FenomPlus.Services
         public DebugMsg DecodeDebugMsg(byte[] data)
         {
             _DebugMsg.Decode(data);
-            DebugList.Add(BitConverter.ToString(data));
+            DebugList.Insert(0, BitConverter.ToString(data));
             Services.DebugLogFile.Write(data);
             NotifyViews();
             NotifyViewModels();
