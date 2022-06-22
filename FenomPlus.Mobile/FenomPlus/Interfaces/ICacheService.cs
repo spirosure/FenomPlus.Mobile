@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Helpers;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models;
 using Microsoft.Extensions.Logging;
@@ -17,7 +18,8 @@ namespace FenomPlus.Interfaces
         string DeviceSerialNumber { get; set; }
         TestTypeEnum TestType { get; set; }
         int ReadBreathData { get; set; }
-                                         
+
+        RangeObservableCollection<string> DebugList { get; set; }
         EnvironmentalInfo _EnvironmentalInfo { get; }
         BreathManeuver _BreathManeuver { get;  }
         DeviceInfo _DeviceInfo { get;  }

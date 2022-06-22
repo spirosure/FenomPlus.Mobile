@@ -53,6 +53,12 @@
                   Route="ViewRecentErrorsView"
                   IsVisible="true"/>
 
+    <ShellContent Title="View Debug"
+                  Icon="RecentErrorIcon"
+                  ContentTemplate="{DataTemplate pages:DebugDumpView}"
+                  Route="DebugDumpView"
+                  IsVisible="true"/>
+
     <ShellContent FlyoutItemIsVisible="False" Route="AnalysisView" ContentTemplate="{DataTemplate pages:AnalysisView}" />
     <ShellContent FlyoutItemIsVisible="False" Route="BleDevicePairingView" ContentTemplate="{DataTemplate pages:BleDevicePairingView}" />
     <ShellContent FlyoutItemIsVisible="False" Route="BreathManeuverFeedbackView" ContentTemplate="{DataTemplate pages:BreathManeuverFeedbackView}" />

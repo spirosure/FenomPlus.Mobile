@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FenomPlus.Helpers;
 using FenomPlus.Interfaces;
 using FenomPlus.Models;
 using FenomPlus.SDK.Core.Models;
@@ -22,12 +23,14 @@ namespace FenomPlus.Services
                     .AddFilter("FenomPlus", LogLevel.Debug);
             });
 
+            DebugList = new RangeObservableCollection<string>();
             _EnvironmentalInfo = new EnvironmentalInfo();
             _BreathManeuver = new BreathManeuver();
             _DeviceInfo = new DeviceInfo();
             _DebugMsg = new DebugMsg();
         }
 
+        public RangeObservableCollection<string> DebugList {get;set;}
         public ILoggerFactory Logger { get; set; }
 
         public string DeviceSerialNumber { get; set; }
@@ -156,6 +159,7 @@ namespace FenomPlus.Services
         public DebugMsg DecodeDebugMsg(byte[] data)
         {
             _DebugMsg.Decode(data);
+            DebugList.Add(BitConverter.ToString(data));
             Services.DebugLogFile.Write(data);
             NotifyViews();
             NotifyViewModels();
