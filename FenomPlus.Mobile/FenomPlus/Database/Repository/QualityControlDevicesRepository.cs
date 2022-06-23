@@ -1,4 +1,5 @@
-﻿using FenomPlus.Core.Database.Repository;
+﻿using System;
+using FenomPlus.Core.Database.Repository;
 using FenomPlus.Database.Adapters;
 using FenomPlus.Database.Repository.Interfaces;
 using FenomPlus.Database.Tables;
@@ -95,6 +96,31 @@ namespace FenomPlus.Database.Repository
         public QualityControlDevicesTb Update(QualityControlDevicesDataModel model)
         {
             return Update(model.Convert());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <returns></returns>
+        public QualityControlDevicesTb UpdateDateOrAdd(string serialNumber)
+        {
+            QualityControlDevicesTb device = FindDevice(serialNumber);
+            if (device == null)
+            {
+                device = new QualityControlDevicesTb()
+                {
+                    LastConnected = DateTime.Now,
+                    SerialNumber = serialNumber
+                };
+                Insert(device);
+            }
+            else
+            {
+                device.LastConnected = DateTime.Now;
+                Update(device);
+            }
+            return device;
         }
     }
 }

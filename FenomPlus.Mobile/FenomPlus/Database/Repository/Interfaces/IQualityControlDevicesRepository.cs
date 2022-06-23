@@ -19,5 +19,8 @@ namespace FenomPlus.Database.Repository.Interfaces
 
         // select
         QualityControlDevicesTb FindDevice(string serialNumber);
+
+        // update or add new device
+        QualityControlDevicesTb UpdateDateOrAdd(string serialNumber);
     }
 }

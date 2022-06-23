@@ -16,6 +16,7 @@ namespace FenomPlus.Services
         {
             ReadBreathData = 200;
             DeviceSerialNumber = "F150-1234567";
+            Firmware = "Firmware 1.12";
 
             Logger = LoggerFactory.Create(builder =>
             {
@@ -33,7 +34,10 @@ namespace FenomPlus.Services
         public RangeObservableCollection<string> DebugList {get;set;}
         public ILoggerFactory Logger { get; set; }
 
+        public int BatteryLevel { get; set; }
+        public string Firmware { get; set; }
         public string DeviceSerialNumber { get; set; }
+        public DateTime SensorExpireDate { get; set; }
         public TestTypeEnum TestType { get; set; }
         public int ReadBreathData { get; set; }
 
@@ -50,44 +54,24 @@ namespace FenomPlus.Services
             get { return CrossSettings.Current; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool GetDeviceExpiringSoon(int days)
+        public bool BatteryStatus
         {
-            // determine if confirmed yet 
-            if(days <= 60)
-            {
-
-            } else {
-                AppSettings.AddOrUpdateValue("DeviceExpiringSoon_key", false);              // set if below days
-                AppSettings.AddOrUpdateValue("DeviceExpiringSoonConfirmed_key", false);     // set if confirmed
-            }
-            return AppSettings.GetValueOrDefault("DeviceExpiringSoonConfirmed_key", false);
-            //  AppSettings.AddOrUpdateValue("DeviceExpiringSoon_key", value);
+            get { return AppSettings.GetValueOrDefault("DeviceBatteryConfirmed_key", false); }
+            set { AppSettings.AddOrUpdateValue("DeviceBatteryConfirmed_key", value); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="days"></param>
-        /// <returns></returns>
-        public bool GetDeviceSensorExpiringSoon(int days)
+        public bool DeviceSensorExpiring
         {
-            return AppSettings.GetValueOrDefault("DeviceSensorExpiringConfirmedSoon_key", false);
-            //  AppSettings.AddOrUpdateValue("DeviceSensorExpiringSoon_key", value);
+            get { return AppSettings.GetValueOrDefault("DeviceSensorExpiringConfirmed_key", false); }
+            set { AppSettings.AddOrUpdateValue("DeviceSensorExpiringConfirmed_key", value); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="voltage"></param>
-        /// <returns></returns>
-        public bool GetDeviceBatteryLow(double voltage)
+        public bool DeviceExpiring
         {
-            return AppSettings.GetValueOrDefault("DeviceBatteryConfirmedLow_key", false);
-            //  AppSettings.AddOrUpdateValue("DeviceBatteryLow_key", value);
+            get { return AppSettings.GetValueOrDefault("DeviceExpiringConfirmed_key", false); }
+            set { AppSettings.AddOrUpdateValue("DeviceExpiringConfirmed_key", value); }
         }
+
 
         /// <summary>
         /// 
@@ -97,24 +81,13 @@ namespace FenomPlus.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serialNumber"></param>
-        public string SetDeviceSerialNumber(byte[] serialNumber)
-        {
-            if ((serialNumber != null) && (serialNumber.Length > 0))
-            {
-                DeviceSerialNumber = Encoding.Default.GetString(serialNumber);
-            }
-            return DeviceSerialNumber;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         public EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data)
         {
             _EnvironmentalInfo.Decode(data);
+
+            BatteryLevel = _EnvironmentalInfo.BatteryLevel;
 
             NotifyViews();
             NotifyViewModels();
@@ -142,10 +115,29 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public DeviceInfo DecodeDeviceInfo(byte[] data)
         {
-            _DeviceInfo.Decode(data);
+            try
+            {
+                _DeviceInfo.Decode(data);
 
-            SetDeviceSerialNumber(_DeviceInfo.SerialNumber);
+                // setup serial number
+                if ((_DeviceInfo.SerialNumber != null) && (_DeviceInfo.SerialNumber.Length > 0))
+                {
+                    DeviceSerialNumber = Encoding.Default.GetString(_DeviceInfo.SerialNumber);
 
+                    // update the database
+                    Services.Database.QualityControlDevicesRepo.UpdateDateOrAdd(DeviceSerialNumber);
+                }
+
+                // setup firmware version
+                Firmware = string.Format("Firmware {0}.{1}.{2}", _DeviceInfo.MajorVersion, _DeviceInfo.MinorVersion, _DeviceInfo.BuildVersion);
+
+                // get SensorExpireDate
+                SensorExpireDate = new DateTime(_DeviceInfo.SensorExpDateYear, _DeviceInfo.SensorExpDateMonth, _DeviceInfo.SensorExpDateDay);
+            }
+            catch(Exception ex)
+            {
+                Console.Write(ex);
+            }
             NotifyViews();
             NotifyViewModels();
             return _DeviceInfo;

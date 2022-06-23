@@ -42,6 +42,13 @@ namespace FenomPlus.ViewModels
             set { SetProperty(ref deviceSerialNumber, value);  }
         }
 
+        private string firmware;
+        public string Firmware
+        {
+            get { return firmware; }
+            set { SetProperty(ref firmware, value); }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -82,6 +89,8 @@ namespace FenomPlus.ViewModels
         public BaseViewModel()
         {
             DeviceSerialNumber = Services.Cache.DeviceSerialNumber;
+            Firmware = Services.Cache.Firmware;
+
         }
 
         /// <summary>

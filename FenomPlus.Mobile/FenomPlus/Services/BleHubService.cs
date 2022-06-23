@@ -65,13 +65,9 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public async Task<bool> Connect(IBleDevice bleDevice)
         {
-            bool b = false;
-            if (BleDevice == null)
-            {
-                b = await bleDevice.ConnectAsync();
-                BleDevice = bleDevice;
-            }
-            return b;
+            await Disconnect();
+            BleDevice = bleDevice;
+            return await bleDevice.ConnectAsync();
         }
 
         /// <summary>
@@ -83,7 +79,7 @@ namespace FenomPlus.Services
         {
             if (IsConnected())
             {
-                BleDevice.DisconnectAsync();
+                await BleDevice.DisconnectAsync();
                 BleDevice = null;
             }
             return true;
@@ -127,5 +123,30 @@ namespace FenomPlus.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> RequestDeviceInfo()
+        {
+            if (IsConnected())
+            {
+                return await BleDevice.DEVICEINFO();
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> RequestEnvironmentalInfo()
+        {
+            if (IsConnected())
+            {
+                return await BleDevice.ENVIROMENTALINFO();
+            }
+            return false;
+        }
     }
 }

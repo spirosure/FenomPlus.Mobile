@@ -22,7 +22,14 @@
                 <Label Text="Negative Control Test" Style="{StaticResource Header}" />
                 <Label Text="Fail" Style="{StaticResource Important}" />
                 <Label Text="Seconds" Style="{StaticResource EmCaption}"/>
-                <Label Text="Device F150-23de121ww" Style="{StaticResource EmCaption}" />
+                <Label Style="{StaticResource EmCaption}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Device " />
+                            <Span Text="{Binding DeviceSerialNumber}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
                 <Label Text="F150 device is experiencin technical issues." Style="{StaticResource EmCaption}" />
                 <Label Style="{StaticResource Description}">
                     <Label.FormattedText>

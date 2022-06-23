@@ -5,8 +5,8 @@ namespace FenomPlus.Models
 {
     public class DeviceStatus : BaseModel
     {
-        public const int BatteryDeviceLow = 1;
-        public const int BatteryDeviceWarning = 6;
+        public const int BatteryDeviceLow = 3;
+        public const int BatteryDeviceWarning = 20;
         public const int BatteryDeviceFull = 100;
         private SensorStatus batteryDevice;
         public SensorStatus BatteryDevice {
@@ -60,41 +60,15 @@ namespace FenomPlus.Models
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DeviceStatus()
         {
             BatteryDevice = new SensorStatus();
             DeviceExpiration = new SensorStatus();
             SensoryExpiration = new SensorStatus();
             QualityControlExpiration = new SensorStatus();
-
-            int x = 2; // for testing only
-
-            // full
-            if (x == 0)
-            {
-                BatteryDevice.RawValue = BatteryDeviceFull;
-                DeviceExpiration.RawValue = DeviceExpirationFull;
-                SensoryExpiration.RawValue = SensoryExpirationFull;
-                QualityControlExpiration.RawValue = QualityControlExpirationFull;
-            }
-
-            // Warning
-            if (x == 1)
-            {
-                BatteryDevice.RawValue = BatteryDeviceWarning;
-                DeviceExpiration.RawValue = DeviceExpirationWarning;
-                SensoryExpiration.RawValue = SensoryExpirationWarning;
-                QualityControlExpiration.RawValue = QualityControlExpirationWarning;
-            }
-
-            // low
-            if (x == 2)
-            {
-                BatteryDevice.RawValue = BatteryDeviceLow;
-                DeviceExpiration.RawValue = DeviceExpirationLow;
-                SensoryExpiration.RawValue = SensoryExpirationLow;
-                QualityControlExpiration.RawValue = QualityControlExpirationLow;
-            }
 
             UpdateBatteryDevice(BatteryDevice.RawValue);
             UpdateDeviceExpiration(DeviceExpiration.RawValue);
@@ -105,7 +79,7 @@ namespace FenomPlus.Models
         /// <summary>
         /// 
         /// </summary>
-        public void UpdateBatteryDevice(int value)
+        public SensorStatus UpdateBatteryDevice(int value)
         {
             BatteryDevice.Title = "Battery Device";
             BatteryDevice.Value = string.Format("{0}%", value);
@@ -114,71 +88,77 @@ namespace FenomPlus.Models
             
             if (value <= BatteryDeviceLow) {
                 // low
-                BatteryDevice.Image = "BatteryLow";
+                BatteryDevice.ImageName = "BatteryLow";
                 BatteryDevice.Description = "No tests remaining";
                 BatteryDevice.Color = Color.Red;
             } else if (value <= BatteryDeviceWarning) {
                 // Warning
-                BatteryDevice.Image = "BatteryWarning";
+                BatteryDevice.ImageName = "BatteryWarning";
                 BatteryDevice.Color = Color.Orange;
             } else {
                 // full
-                BatteryDevice.Image = "BatteryFull";
+                BatteryDevice.ImageName = "BatteryFull";
                 BatteryDevice.Color = Color.Green;
             }
+            BatteryDevice.Image = BatteryDevice.ImageName;
             OnPropertyChanged("BatteryDevice");
+            return BatteryDevice;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
-        public void UpdateDeviceExpiration(int value)
+        public SensorStatus UpdateDeviceExpiration(int value)
         {
             DeviceExpiration.Title = "Device Expiration";
             DeviceExpiration.Description = "Remaining";
             if (value <= DeviceExpirationLow) {
                 // low
-                DeviceExpiration.Image = "DeviceLow";
+                DeviceExpiration.ImageName = "DeviceLow";
                 DeviceExpiration.Color = Color.Red;
             } else if (value <= DeviceExpirationWarning) {
                 // Warning
-                DeviceExpiration.Image = "DeviceWarning";
+                DeviceExpiration.ImageName = "DeviceWarning";
                 DeviceExpiration.Color = Color.Orange;
             } else {
                 // full
-                DeviceExpiration.Image = "DeviceFull";
+                DeviceExpiration.ImageName = "DeviceFull";
                 DeviceExpiration.Color = Color.Green;
             }
+            DeviceExpiration.Image = DeviceExpiration.ImageName;
             DeviceExpiration.Value = string.Format("{0}", (int)((value < 365) ? value : value / 365));
             DeviceExpiration.Type = (value < 365) ? ((value != 1) ? "DAYS" : "DAY") : "YEARS";
             OnPropertyChanged("DeviceExpiration");
+            return deviceExpiration;
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
-        public void UpdateSensoryExpiration(int value)
+        public SensorStatus UpdateSensoryExpiration(int value)
         {
             SensoryExpiration.Title = "Sensory Expiration";
             SensoryExpiration.Description = "Remaining";
             if (value <= SensoryExpirationLow) {
                 // low
-                SensoryExpiration.Image = "SensorLow";
+                SensoryExpiration.ImageName = "SensorLow";
                 SensoryExpiration.Color = Color.Red;
             } else if (value <= SensoryExpirationWarning) {
                 // Warning
-                SensoryExpiration.Image = "SensorWarning";
+                SensoryExpiration.ImageName = "SensorWarning";
                 SensoryExpiration.Color = Color.Orange;
             } else {
                 // full
-                SensoryExpiration.Image = "SensorFull";
+                SensoryExpiration.ImageName = "SensorFull";
                 SensoryExpiration.Color = Color.Green;
             }
+            SensoryExpiration.Image = SensoryExpiration.ImageName;
             SensoryExpiration.Type = (value < 365) ? ((value != 1) ? "DAYS" : "DAY") : "YEARS";
             SensoryExpiration.Value = string.Format("{0}", (int)((value < 365) ? value : value / 365));
             OnPropertyChanged("SensoryExpiration");
+            return SensoryExpiration;
         }
 
 
@@ -186,26 +166,28 @@ namespace FenomPlus.Models
         /// 
         /// </summary>
         /// <param name="value"></param>
-        public void UpdateQualityControlExpiration(int value)
+        public SensorStatus UpdateQualityControlExpiration(int value)
         {
             QualityControlExpiration.Title = "Quality Control Expiration";
             QualityControlExpiration.Description = "Remaining";
             if (value <= QualityControlExpirationLow) {
                 // low
-                QualityControlExpiration.Image = "QualityControlAlert";
+                QualityControlExpiration.ImageName = "QualityControlAlert";
                 QualityControlExpiration.Color = Color.Red;
             } else if (value <= QualityControlExpirationWarning) {
                 // Warning
-                QualityControlExpiration.Image = "QualityControlWarning";
+                QualityControlExpiration.ImageName = "QualityControlWarning";
                 QualityControlExpiration.Color = Color.Orange;
             } else {
                 // full
-                QualityControlExpiration.Image = "QualityControlFull";
+                QualityControlExpiration.ImageName = "QualityControlFull";
                 QualityControlExpiration.Color = Color.Green;
             }
+            QualityControlExpiration.Image = QualityControlExpiration.ImageName;
             QualityControlExpiration.Type = (value < 365) ? ((value != 1) ? "DAYS" : "DAY") : "YEARS";
             QualityControlExpiration.Value = string.Format("{0}", (int)((value < 365) ? value : value / 365));
             OnPropertyChanged("QualityControlExpiration");
+            return qualityControlExpiration;
         }
     }
 }

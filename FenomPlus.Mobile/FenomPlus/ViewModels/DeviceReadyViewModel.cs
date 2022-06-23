@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -52,6 +53,10 @@ namespace FenomPlus.ViewModels
         {
             if (Stop == false)
             {
+                Services.BleHub.RequestDeviceInfo();
+                Task.Delay(1000);
+                Services.BleHub.RequestEnvironmentalInfo();
+                Task.Delay(1000);
                 Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
             }
             return false;

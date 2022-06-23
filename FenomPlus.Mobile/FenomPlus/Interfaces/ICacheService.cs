@@ -10,12 +10,15 @@ namespace FenomPlus.Interfaces
     {
         ILoggerFactory Logger { get; set; }
         string QCUsername { get; set; }
-        bool GetDeviceExpiringSoon(int days);
-        bool GetDeviceSensorExpiringSoon(int days);
-        bool GetDeviceBatteryLow(double voltage);
 
-        string SetDeviceSerialNumber(byte[] serialNumber);
+        bool DeviceExpiring { get; set; }
+        bool DeviceSensorExpiring { get; set; }
+        bool BatteryStatus { get; set; }
+
+        int BatteryLevel { get; set; }
+        DateTime SensorExpireDate { get; set; }
         string DeviceSerialNumber { get; set; }
+        string Firmware { get; set; }
         TestTypeEnum TestType { get; set; }
         int ReadBreathData { get; set; }
 

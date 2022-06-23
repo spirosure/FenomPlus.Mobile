@@ -40,6 +40,7 @@
     <None Remove="Syncfusion.Licensing" />
     <None Remove="Models\DB\" />
     <None Remove="Models\Grid\" />
+    <None Remove="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
@@ -51,6 +52,7 @@
     <Folder Include="Helpers\" />
     <Folder Include="Models\DBModel\" />
     <Folder Include="Models\GridDataModel\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="AppShell.xaml" />

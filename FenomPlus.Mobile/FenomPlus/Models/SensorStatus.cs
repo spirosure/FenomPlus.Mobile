@@ -27,6 +27,17 @@ namespace FenomPlus.Models
             }
         }
 
+        private string imageName;
+        public string ImageName
+        {
+            get => imageName;
+            set
+            {
+                imageName = value;
+                OnPropertyChanged("ImageName");
+            }
+        }
+
         private string value;
         public string Value
         {

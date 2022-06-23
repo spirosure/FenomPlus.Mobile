@@ -20,7 +20,7 @@ namespace FenomPlus.ViewModels
         public void StopScan()
         {
             Services.BleHub.StopScan();
-         //   Services.BleHub.Disconnect();
+            Services.BleHub.Disconnect();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace FenomPlus.ViewModels
         public void StartScan()
         {
             // if scanning then stop the scan
-         //   _ = Services.BleHub.Disconnect();
+            _ = Services.BleHub.Disconnect();
             
             //
             Seconds = 30;
@@ -79,7 +79,8 @@ namespace FenomPlus.ViewModels
             set
             {
                 seconds = value;
-                Message = string.Format("Device is Ready in {0} Seconds", seconds);
+                //Message = string.Format("Device is Ready in {0} Seconds", seconds);
+                Message = string.Format("Scanning for Device {0} Seconds", seconds);
                 OnPropertyChanged("Seconds");
             }
         }

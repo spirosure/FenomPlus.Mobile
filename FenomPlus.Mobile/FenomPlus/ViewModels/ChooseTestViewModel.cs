@@ -1,6 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using FenomPlus.Enums;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -12,36 +15,34 @@ namespace FenomPlus.ViewModels
         public ChooseTestViewModel()
         {
             DeviceStatus = new DeviceStatus();
-            ErrorList = new RangeObservableCollection<Alert>();
-            /*
-            ErrorList.Add(new Alert()
-            {
-                Id = 1,
-                Description = "Fenom Plus has 6% charge with 2 tests remaining. Please connect your device to the charging port.",
-                Image = "BatteryWarning",
-                Title = "Device Battery Low"
-            });
-            ErrorList.Add(new Alert()
-            {
-                Id = 2,
-                Description = "Fenom Plus sensor will expire in 60 days. For information on ordering a replacement sensor and how to replace your sensor, please view online FAQ.",
-                Image = "SensorWarning",
-                Title = "Device Sensor Expiring Soon"
-            });
-            ErrorList.Add(new Alert()
-            {
-                Id = 3,
-                Description = "Fenom Plus Device will expire in 60 days. For information on ordering a replacement device, please view online FAQ.",
-                Image = "DeviceWarning",
-                Title = "Device Expiring Soon"
-            });
-            */
-            UpdateErrorList();
 
+            ErrorList = new RangeObservableCollection<Alert>();
+            
+            Cache.BatteryStatus = false;
+            Cache.DeviceSensorExpiring = false;
+            Cache.DeviceExpiring = false;
+
+            RefreshErrorList();
             DismissCommand = new Command<Alert>((model) => {
                 foreach(Alert alert in ErrorList)
                 {
                     if (model.Id != alert.Id) continue;
+
+                    if(model.Id == (int)AlertEnum.Battery)
+                    {
+                        Cache.BatteryStatus = true;
+                    }
+
+                    if (model.Id == (int)AlertEnum.DeviceSensor)
+                    {
+                        Cache.DeviceSensorExpiring = true;
+                    }
+
+                    if (model.Id == (int)AlertEnum.Device)
+                    {
+                        Cache.DeviceExpiring = true;
+                    }
+
                     ErrorList.Remove(alert);
                     break;
                 }
@@ -52,9 +53,79 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
+        public void RefreshErrorList()
+        {
+            ErrorList.Clear();
+
+            int BatteryLevel = Cache.BatteryLevel;
+            SensorStatus _BatterySensor = DeviceStatus.UpdateBatteryDevice(BatteryLevel);
+
+            if (Cache.BatteryStatus == false)
+            {
+                if (BatteryLevel <= 10)
+                {
+                    int TestsRemaining = BatteryLevel / 3;
+                    ErrorList.Add(new Alert()
+                    {
+                        Id = (int)AlertEnum.Battery,
+                        Description = string.Format("Fenom Plus has {0}% charge with {1} tests remaining. Please connect your device to the charging port.", BatteryLevel, TestsRemaining),
+                        Image = _BatterySensor.ImageName,
+                        Title = "Device Battery Low"
+                    });
+                }
+            }
+            else if (BatteryLevel > 10)
+            {
+                Cache.BatteryStatus = false;
+            }
+
+            int daysRemaining = (Cache.SensorExpireDate > DateTime.Now) ? (int)(Cache.SensorExpireDate - DateTime.Now).TotalDays : 0;
+
+            DeviceStatus.UpdateDeviceExpiration(daysRemaining);
+            DeviceStatus.UpdateSensoryExpiration(daysRemaining);
+            if (daysRemaining <= 60)
+            {
+                if (Cache.DeviceSensorExpiring == false)
+                {
+                    ErrorList.Add(new Alert()
+                    {
+                        Id = (int)AlertEnum.DeviceSensor,
+                        Description = string.Format("Fenom Plus sensor will expire in {0} days. For information on ordering a replacement sensor and how to replace your sensor, please view online FAQ.", daysRemaining),
+                        Image = "SensorWarning",
+                        Title = "Device Sensor Expiring Soon"
+                    });
+                }
+
+                if (Cache.DeviceExpiring == false)
+                {
+                    ErrorList.Add(new Alert()
+                    {
+                        Id = (int)AlertEnum.Device,
+                        Description = string.Format("Fenom Plus Device will expire in {0} days. For information on ordering a replacement device, please view online FAQ.", daysRemaining),
+                        Image = "DeviceWarning",
+                        Title = "Device Expiring Soon"
+                    });
+                }
+            }
+            else if (daysRemaining > 60)
+            {
+                Cache.DeviceSensorExpiring = false;
+                Cache.DeviceExpiring = false;
+            }
+
+            // calucalte quaility contro lexpiration here
+            DeviceStatus.UpdateQualityControlExpiration(0);
+
+            UpdateErrorList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         override public void OnAppearing()
         {
             base.OnAppearing();
+            RefreshErrorList();
         }
 
         /// <summary>

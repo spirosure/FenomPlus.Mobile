@@ -21,7 +21,14 @@
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                 <Label Text="Negative Control Test" Style="{StaticResource Header}" />
                 <Label Text="Pass" Style="{StaticResource Important}" />
-                <Label Text="Device F150-23de121ww" Style="{StaticResource EmCaption}" />
+                <Label Style="{StaticResource EmCaption}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Device " />
+                            <Span Text="{Binding DeviceSerialNumber}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
                 <Button Text="Next" Style="{StaticResource defaultButton}" Clicked="OnNext" />
                 <Button Text="Cancel" Style="{StaticResource transparentButton}" Clicked="OnCancel" />
             </StackLayout>
