@@ -118,6 +118,16 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
+        public async Task<bool> MESSAGE(MESSAGE message)
+        {
+            return await WRITEREQUEST(message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         private async Task<bool> WRITEREQUEST(MESSAGE message)
         {
             byte[] data = new byte[6];

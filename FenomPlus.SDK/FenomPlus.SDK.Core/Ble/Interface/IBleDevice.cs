@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FenomPlus.SDK.Core.Features;
 using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.SDK.Core.Ble.Interface
@@ -30,6 +31,7 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         Task<bool> TRAININGMODE();
         Task<bool> DEBUGMSG();
         Task<bool> DEBUGMANUEVERTYPE();
+        Task<bool> MESSAGE(MESSAGE message);
 
     }
 }

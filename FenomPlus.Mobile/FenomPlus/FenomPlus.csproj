@@ -18,6 +18,8 @@
     <PackageReference Include="Xam.Plugins.Settings" Version="4.1.0-beta" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="20.1.0.55" />
     <PackageReference Include="Syncfusion.Licensing" Version="20.1.0.55" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="20.1.0.55" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNumericTextBox" Version="20.1.0.55" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Microsoft.Extensions.Logging" />
@@ -41,6 +43,8 @@
     <None Remove="Models\DB\" />
     <None Remove="Models\Grid\" />
     <None Remove="Enums\" />
+    <None Remove="Syncfusion.Xamarin.SfComboBox" />
+    <None Remove="Syncfusion.Xamarin.SfNumericTextBox" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />

@@ -5,6 +5,7 @@ using FenomPlus.Interfaces;
 using FenomPlus.SDK.Abstractions;
 using FenomPlus.SDK.Core;
 using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.SDK.Core.Features;
 using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.Services
@@ -148,5 +149,21 @@ namespace FenomPlus.Services
             }
             return false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public async Task<bool> SendMessage(MESSAGE message)
+        {
+            if (IsConnected())
+            {
+                return await BleDevice.MESSAGE(message);
+            }
+            return false;
+        }
+
+
     }
 }

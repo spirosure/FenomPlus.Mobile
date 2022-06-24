@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FenomPlus.SDK.Abstractions;
 using FenomPlus.SDK.Core.Ble.Interface;
+using FenomPlus.SDK.Core.Features;
 using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.Interfaces
@@ -18,6 +19,7 @@ namespace FenomPlus.Interfaces
         Task<bool> StopTest();
         Task<bool> RequestDeviceInfo();
         Task<bool> RequestEnvironmentalInfo();
+        Task<bool> SendMessage(MESSAGE message);
 
         Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null);
         Task<bool> StopScan();

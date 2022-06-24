@@ -1,13 +1,19 @@
-﻿using FenomPlus.Helpers;
+﻿using System;
+using FenomPlus.Helpers;
+using FenomPlus.SDK.Core.Features;
 
 namespace FenomPlus.ViewModels
 {
     public class DebugDumpViewModel : BaseViewModel
     {
         public RangeObservableCollection<string> DebugList => Services.Cache.DebugList;
+        public RangeObservableCollection<string> MessageIdList = new RangeObservableCollection<string>();
+        public RangeObservableCollection<string> SubIdList = new RangeObservableCollection<string>();
 
         public DebugDumpViewModel()
         {
+            MessageIdList.AddRange(Enum.GetNames(typeof(ID_MESSAGE)));
+            SubIdList.AddRange(Enum.GetNames(typeof(ID_SUB)));
         }
 
         /// <summary>

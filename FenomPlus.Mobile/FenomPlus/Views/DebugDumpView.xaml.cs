@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using FenomPlus.SDK.Core.Features;
 using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
@@ -15,6 +16,8 @@ namespace FenomPlus.Views
             InitializeComponent();
             BindingContext = model = new DebugDumpViewModel();
             DebugListView.ItemsSource = model.DebugList;
+            MessageId.DataSource = model.MessageIdList;
+            SubId.DataSource = model.SubIdList;
         }
 
         /// <summary>
@@ -42,6 +45,32 @@ namespace FenomPlus.Views
         {
             base.NewGlobalData();
             model.NewGlobalData();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnClearDebug(System.Object sender, System.EventArgs e)
+        {
+            model.DebugList.Clear();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnSendClicked(System.Object sender, System.EventArgs e)
+        {
+            MESSAGE message = new MESSAGE()
+            {
+                IDMSG = (ushort)Math.Abs(MessageId.SelectedIndex),
+                IDSUB = (ushort)Math.Abs(SubId.SelectedIndex),
+                IDVAR = (ushort)Math.Abs(Convert.ToInt16(Var.Value))
+            };
+            Services.BleHub.SendMessage(message);
         }
     }
 }

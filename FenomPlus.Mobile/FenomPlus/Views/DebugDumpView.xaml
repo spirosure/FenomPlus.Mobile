@@ -3,6 +3,8 @@
     xmlns:views="clr-namespace:FenomPlus.Views"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:numeric="clr-namespace:Syncfusion.SfNumericTextBox.XForms;assembly=Syncfusion.SfNumericTextBox.XForms"
     x:Class="FenomPlus.Views.DebugDumpView"
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
@@ -16,14 +18,42 @@
                HorizontalOptions="StartAndExpand"
         />
     </Shell.TitleView>
+    <ContentPage.ToolbarItems> 
+        <ToolbarItem Icon="clear.png" Text="+ Clear Debug" Clicked="OnClearDebug"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <ListView
-                x:Name="DebugListView"
-                HorizontalOptions="FillAndExpand"
-                      VerticalOptions="FillAndExpand"
-                      >
-            </ListView>
-        </ScrollView>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical">
+            <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="20">
+                <combobox:SfComboBox x:Name="MessageId"
+                                     EnableAutoSize="True"
+                                     MultiSelectMode="None"
+                                     IsEditableMode="False"
+                                     SelectedIndex="0"
+                                     />
+                <combobox:SfComboBox x:Name="SubId"
+                                     EnableAutoSize="True"
+                                     MultiSelectMode="None"
+                                     IsEditableMode="False"
+                                     SelectedIndex="0"
+                                     />
+                <numeric:SfNumericTextBox x:Name="Var"
+                                          Minimum="0"
+                                          Maximum="65535"
+                                          MaximumNumberDecimalDigits="0"
+                                          WidthRequest="100"
+                                     />
+                <Button Text="Send"
+                        Style="{StaticResource defaultButton}"
+                        Clicked="OnSendClicked" />
+            </StackLayout>
+            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView
+                    x:Name="DebugListView"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                >
+                </ListView>
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </views:BaseContentPage>
