@@ -1,7 +1,7 @@
-﻿using System;
-using FenomPlus.Helpers;
+﻿using FenomPlus.Helpers;
 using FenomPlus.Models;
 using FenomPlus.Views;
+using System;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -59,29 +59,27 @@ namespace FenomPlus.ViewModels
             StartMeasure = false;
 
             GuageData = 0;
-            GuageSeconds = TestTime * (1000 / Cache.ReadBreathData);
+            Cache.BreathFlow = 0;
+            TestGuageSeconds = TestTime * (1000 / Cache.BreathFlowTimer);
+            GuageSeconds = TestGuageSeconds / (1000 / Cache.BreathFlowTimer);
             GuageStatus = "Start Blowing";
 
             // start timer
-            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.BreathFlowTimer), () =>
             {
-                // have we started the Measure yet?
-                if (StartMeasure == true)
-                {
-                    if ((Cache._BreathManeuver.TimeRemaining <= 0) && (Stop == false))
-                    {
-                        BleHub.StopTest();
-                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingView)}"), false);
-                    }
-                }
+                
 
-                GuageData = (float)(((float)Cache._BreathManeuver.BreathFlow) / 10);
+                GuageData = (float)(((float)Cache.BreathFlow) / 10);
                 if ((GuageData <= 0.0f) && (StartMeasure == false))
                 {
+                    // return contiune of below the time
+                    
                     GuageStatus = "Start Blowing";
                 }
                 else
                 {
+                    TestGuageSeconds--;
+                    GuageSeconds = TestGuageSeconds / (1000 / Cache.BreathFlowTimer);
                     StartMeasure = true;
                     if (GuageData < 2.8f)
                     {
@@ -96,10 +94,18 @@ namespace FenomPlus.ViewModels
                         GuageStatus = "Good Job!";
                     }
                 }
-                
-                // return contiune of below the time
-                GuageSeconds = Cache._BreathManeuver.TimeRemaining;
-                return (Cache._BreathManeuver.TimeRemaining > 0) && (Stop == false);
+
+                // have we started the Measure yet?
+                if (StartMeasure == true)
+                {
+                    if ((TestGuageSeconds <= 0) && (Stop == false))
+                    {
+                        BleHub.StopTest();
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StopExhalingView)}"), false);
+                    }
+                }
+
+                return (TestGuageSeconds > 0) && (Stop == false);
             });
         }
 
@@ -112,6 +118,8 @@ namespace FenomPlus.ViewModels
             Stop = true;
             PlaySounds.StopAll();
         }
+
+        private int TestGuageSeconds;
 
         /// <summary>
         /// 

@@ -37,7 +37,7 @@
                               IsStepfive="false"
                               IsStepsix="false"
                               IsStepseven="false"
-                              Value="{Binding TestTime}" />
+                              Value="{Binding GuageSeconds}" />
 
             <Label Text="{Binding GuageStatus}"
                        FontSize="16"

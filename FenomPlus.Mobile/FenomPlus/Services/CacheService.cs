@@ -14,9 +14,9 @@ namespace FenomPlus.Services
     {
         public CacheService(IAppServices services) : base(services)
         {
-            ReadBreathData = 200;
-            DeviceSerialNumber = "F150-1234567";
-            Firmware = "Firmware 1.12";
+            BreathFlowTimer = 50;
+            DeviceSerialNumber = "F150-??????";
+            Firmware = "Firmware ?.?.?";
 
             Logger = LoggerFactory.Create(builder =>
             {
@@ -39,7 +39,8 @@ namespace FenomPlus.Services
         public string DeviceSerialNumber { get; set; }
         public DateTime SensorExpireDate { get; set; }
         public TestTypeEnum TestType { get; set; }
-        public int ReadBreathData { get; set; }
+        public int BreathFlow { get; set; }
+        public int BreathFlowTimer { get; set; }
 
         public EnvironmentalInfo _EnvironmentalInfo { get; private set; }
         public BreathManeuver _BreathManeuver { get; private set; }
@@ -103,6 +104,8 @@ namespace FenomPlus.Services
         {
             _BreathManeuver.Decode(data);
 
+            BreathFlow = _BreathManeuver.BreathFlow;
+
             NotifyViews();
             NotifyViewModels();
             return _BreathManeuver;
@@ -122,7 +125,7 @@ namespace FenomPlus.Services
                 // setup serial number
                 if ((_DeviceInfo.SerialNumber != null) && (_DeviceInfo.SerialNumber.Length > 0))
                 {
-                    DeviceSerialNumber = Encoding.Default.GetString(_DeviceInfo.SerialNumber);
+                    DeviceSerialNumber = string.Format("F150-{0}",Encoding.Default.GetString(_DeviceInfo.SerialNumber));
 
                     // update the database
                     Services.Database.QualityControlDevicesRepo.UpdateDateOrAdd(DeviceSerialNumber);

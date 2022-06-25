@@ -17,17 +17,18 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             TestTime = 10;
-            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
+            TestSeconds = TestTime * (1000 / Cache.BreathFlowTimer);
+            Cache.BreathFlow = 0;
             Stop = false;
 
-            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.BreathFlowTimer), () =>
             {
                 TestSeconds--;
-                TestTime = TestSeconds / (1000 / Cache.ReadBreathData);
+                TestTime = TestSeconds / (1000 / Cache.BreathFlowTimer);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
                     BleHub.StopTest();
-                    if (Cache._BreathManeuver.NOScore <= 0)
+                    if (Cache.BreathFlow <= 0)
                     {
                         Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlPassView)}"), false);
                     }

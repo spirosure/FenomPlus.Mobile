@@ -49,9 +49,9 @@ namespace FenomPlus.ViewModels
             Stop = false;
 
             // start timer to read measure constally
-            Device.StartTimer(TimeSpan.FromMilliseconds(Services.Cache.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Services.Cache.BreathFlowTimer), () =>
             {
-                GuageData = (float)(((float)Cache._BreathManeuver.BreathFlow) / 10);
+                GuageData = (float)(((float)Cache.BreathFlow) / 10);
                 return !Stop;
             });
         }

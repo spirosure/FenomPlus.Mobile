@@ -34,6 +34,12 @@ namespace FenomPlus.ViewModels
             Stop = false;
             Seconds = 5;
             Device.StartTimer(TimeSpan.FromSeconds(Seconds), TimerCallback);
+
+            Services.BleHub.RequestDeviceInfo();
+            Task.Delay(1000);
+            Services.BleHub.RequestEnvironmentalInfo();
+            Task.Delay(1000);
+
         }
 
         /// <summary>
@@ -53,10 +59,6 @@ namespace FenomPlus.ViewModels
         {
             if (Stop == false)
             {
-                Services.BleHub.RequestDeviceInfo();
-                Task.Delay(1000);
-                Services.BleHub.RequestEnvironmentalInfo();
-                Task.Delay(1000);
                 Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(ChooseTestView)}"), false);
             }
             return false;

@@ -98,6 +98,8 @@ namespace FenomPlus.ViewModels
         /// </summary>
         virtual public void OnAppearing()
         {
+            DeviceSerialNumber = Services.Cache.DeviceSerialNumber;
+            Firmware = Services.Cache.Firmware;
         }
 
         /// <summary>

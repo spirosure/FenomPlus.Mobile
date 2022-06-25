@@ -20,7 +20,7 @@ namespace FenomPlus.ViewModels
         public void StopScan()
         {
             Services.BleHub.StopScan();
-            Services.BleHub.Disconnect();
+            //Services.BleHub.Disconnect();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace FenomPlus.ViewModels
         public void StartScan()
         {
             // if scanning then stop the scan
-            _ = Services.BleHub.Disconnect();
+            //_ = Services.BleHub.Disconnect();
             
             //
             Seconds = 30;

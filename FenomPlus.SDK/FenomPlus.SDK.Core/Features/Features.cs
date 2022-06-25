@@ -138,7 +138,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             data[4] = (byte)(message.IDVAR >> 8);
             data[5] = (byte)(message.IDVAR);
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.FeatureWriteCharacteristic);
-            await Characteristic.WriteAsync(data);
+            await Characteristic.WriteWithoutResponseAsync(data);
 
             return true;
         }

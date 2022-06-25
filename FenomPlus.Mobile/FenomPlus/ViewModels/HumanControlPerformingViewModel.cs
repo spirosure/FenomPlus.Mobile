@@ -1,5 +1,6 @@
 ﻿using System;
 using FenomPlus.Controls;
+using FenomPlus.Helpers;
 using FenomPlus.Models;
 using FenomPlus.Views;
 using Xamarin.Forms;
@@ -19,13 +20,34 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             TestTime = 10;
-            TestSeconds = TestTime * (1000 / Cache.ReadBreathData);
+            Cache.BreathFlow = 0;
+            TestSeconds = TestTime * (1000 / Cache.BreathFlowTimer);
             Stop = false;
 
-            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.ReadBreathData), () =>
+            Device.StartTimer(TimeSpan.FromMilliseconds(Cache.BreathFlowTimer), () =>
             {
                 TestSeconds--;
-                TestTime = TestSeconds / (1000 / Cache.ReadBreathData);
+                TestTime = TestSeconds / (1000 / Cache.BreathFlowTimer);
+
+                GuageData = (float)(((float)Cache.BreathFlow) / 10);
+                
+                    if (GuageData < 2.8f)
+                    {
+                        GuageStatus = "Exhale Harder";
+                    }
+                    else if (GuageData > 3.2f)
+                    {
+                        GuageStatus = "Exhale Softer";
+                    }
+                    else
+                    {
+                        GuageStatus = "Good Job!";
+                    }
+
+
+                // return contiune of below the time
+                GuageSeconds = TestSeconds / (1000 / Cache.BreathFlowTimer);
+
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
                     BleHub.StopTest();
@@ -34,14 +56,14 @@ namespace FenomPlus.ViewModels
                     {
                         DateTaken = DateTime.Now,
                         User = Services.Cache.QCUsername,
-                        TestResult = Cache._BreathManeuver.NOScore,
+                        TestResult = Cache.BreathFlow,
                         SerialNumber = this.DeviceSerialNumber,
                         QCStatus = "",
                         QCExpiration = "",
                     };
 
                     // depending on result
-                    if ((Cache._BreathManeuver.NOScore >= BreathGuage.LowGreen) && (Cache._BreathManeuver.NOScore <= BreathGuage.HighGreen))
+                    if ((GuageData >= BreathGuage.LowGreen) && (GuageData <= BreathGuage.HighGreen))
                     {
                         model.QCStatus = "Qualified";
                         QCRepo.Insert(model);
@@ -67,6 +89,7 @@ namespace FenomPlus.ViewModels
         {
             base.OnDisappearing();
             Stop = true;
+            PlaySounds.StopAll();
         }
 
 
@@ -83,6 +106,49 @@ namespace FenomPlus.ViewModels
 
         private bool Stop;
         private int TestSeconds;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private int guageSeconds;
+        public int GuageSeconds
+        {
+            get => guageSeconds;
+            set
+            {
+                guageSeconds = value;
+                OnPropertyChanged("GuageSeconds");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private float guageData;
+        public float GuageData
+        {
+            get => guageData;
+            set
+            {
+                guageData = value;
+                OnPropertyChanged("GuageData");
+                if (!Stop) PlaySounds.PlaySound(GuageData);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string guageStatus;
+        public string GuageStatus
+        {
+            get => guageStatus;
+            set
+            {
+                guageStatus = value;
+                OnPropertyChanged("GuageStatus");
+            }
+        }
 
         /// <summary>
         /// 

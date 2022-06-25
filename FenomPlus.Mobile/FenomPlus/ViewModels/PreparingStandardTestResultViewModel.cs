@@ -29,7 +29,7 @@ namespace FenomPlus.ViewModels
             {
                 TestType = "Short Test Result";
             }
-            Seconds = 28;
+            Seconds = 30;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
 
@@ -51,7 +51,7 @@ namespace FenomPlus.ViewModels
             Seconds--;
             if (Seconds <= 0)
             {
-                if ((Cache._BreathManeuver.NOScore <= 0) || (Cache._BreathManeuver.NOScore >= 10))
+                if ((Cache.BreathFlow <= 0) || (Cache.BreathFlow >= 10))
                 {
                     var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
                     ErrorsRepo.Insert(model);
