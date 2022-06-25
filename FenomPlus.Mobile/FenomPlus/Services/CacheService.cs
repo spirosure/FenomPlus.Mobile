@@ -42,10 +42,10 @@ namespace FenomPlus.Services
         public int BreathFlow { get; set; }
         public int BreathFlowTimer { get; set; }
 
-        public EnvironmentalInfo _EnvironmentalInfo { get; private set; }
-        public BreathManeuver _BreathManeuver { get; private set; }
-        public DeviceInfo _DeviceInfo { get; private set; }
-        public DebugMsg _DebugMsg { get; private set; }
+        public EnvironmentalInfo _EnvironmentalInfo { get; set; }
+        public BreathManeuver _BreathManeuver { get; set; }
+        public DeviceInfo _DeviceInfo { get; set; }
+        public DebugMsg _DebugMsg { get; set; }
 
         /// <summary>
         /// 
@@ -86,6 +86,10 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data)
         {
+            if(_EnvironmentalInfo == null)
+            {
+                _EnvironmentalInfo = new EnvironmentalInfo();
+            }
             _EnvironmentalInfo.Decode(data);
 
             BatteryLevel = _EnvironmentalInfo.BatteryLevel;
@@ -102,6 +106,11 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public BreathManeuver DecodeBreathManeuver(byte[] data)
         {
+            if (_BreathManeuver == null)
+            {
+                _BreathManeuver = new BreathManeuver();
+            }
+
             _BreathManeuver.Decode(data);
 
             BreathFlow = _BreathManeuver.BreathFlow;
@@ -120,6 +129,11 @@ namespace FenomPlus.Services
         {
             try
             {
+                if (_DeviceInfo == null)
+                {
+                    _DeviceInfo = new DeviceInfo();
+                }
+
                 _DeviceInfo.Decode(data);
 
                 // setup serial number
@@ -153,7 +167,14 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public DebugMsg DecodeDebugMsg(byte[] data)
         {
+            if (_DebugMsg == null)
+            {
+                _DebugMsg = new DebugMsg();
+            }
+
+
             _DebugMsg.Decode(data);
+
             DebugList.Insert(0, BitConverter.ToString(data));
             Services.DebugLogFile.Write(data);
             NotifyViews();

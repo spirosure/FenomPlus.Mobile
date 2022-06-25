@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.Views;
 using Xamarin.Forms;
@@ -10,6 +11,9 @@ namespace FenomPlus.ViewModels
     {
         private bool Stop;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public DevicePowerOnViewModel()
         {
         }
@@ -20,7 +24,6 @@ namespace FenomPlus.ViewModels
         public void StopScan()
         {
             Services.BleHub.StopScan();
-            //Services.BleHub.Disconnect();
         }
 
         /// <summary>
@@ -28,28 +31,56 @@ namespace FenomPlus.ViewModels
         /// </summary>
         public void StartScan()
         {
-            // if scanning then stop the scan
-            //_ = Services.BleHub.Disconnect();
-            
-            //
             Seconds = 30;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
             _ = BleHub.Scan(new TimeSpan(0, 0, 0, Seconds), async (IBleDevice bleDevice) =>
             {
-                if ((bleDevice != null) && !string.IsNullOrEmpty(bleDevice.Name))
-                {
-                    await BleHub.StopScan();
-                    var connected = await Services.BleHub.Connect(bleDevice);
-                    if (connected == true)
-                    {
-                        Stop = true;
-                        await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DeviceReadyView)}"), false);
-                    }
-                }
+                if ((bleDevice == null) || string.IsNullOrEmpty(bleDevice.Name)) return;
+                await BleHub.StopScan();
+                if (await Services.BleHub.Connect(bleDevice) == false) return;
+                await FoundDevice(bleDevice);
+
             }, (IEnumerable<IBleDevice> bleDevices) =>
             {
 
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bleDevice"></param>
+        public async Task FoundDevice(IBleDevice bleDevice)
+        {
+            Stop = true;
+            Cache._DeviceInfo = null;
+            await Services.BleHub.RequestDeviceInfo();
+            Device.StartTimer(TimeSpan.FromMilliseconds(200), DeviceInfoTimer);
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool DeviceInfoTimer()
+        {
+            if (Cache._DeviceInfo == null) return true;
+            Cache._EnvironmentalInfo = null;
+            Services.BleHub.RequestEnvironmentalInfo();
+            Device.StartTimer(TimeSpan.FromMilliseconds(200), EnvironmentalInfo);
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool EnvironmentalInfo()
+        {
+            if (Cache._EnvironmentalInfo == null) return true;
+            Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DeviceReadyView)}"), false);
+            return false;
         }
 
         /// <summary>
@@ -79,7 +110,6 @@ namespace FenomPlus.ViewModels
             set
             {
                 seconds = value;
-                //Message = string.Format("Device is Ready in {0} Seconds", seconds);
                 Message = string.Format("Scanning for Device {0} Seconds", seconds);
                 OnPropertyChanged("Seconds");
             }

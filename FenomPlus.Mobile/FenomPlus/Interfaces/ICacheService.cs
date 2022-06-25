@@ -24,10 +24,10 @@ namespace FenomPlus.Interfaces
         int BreathFlowTimer { get; set; }
 
         RangeObservableCollection<string> DebugList { get; set; }
-        EnvironmentalInfo _EnvironmentalInfo { get; }
-        BreathManeuver _BreathManeuver { get;  }
-        DeviceInfo _DeviceInfo { get;  }
-        DebugMsg _DebugMsg { get;  }
+        EnvironmentalInfo _EnvironmentalInfo { get; set; }
+        BreathManeuver _BreathManeuver { get; set; }
+        DeviceInfo _DeviceInfo { get; set; }
+        DebugMsg _DebugMsg { get; set; }
 
         EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data);
         BreathManeuver DecodeBreathManeuver(byte[] data);
