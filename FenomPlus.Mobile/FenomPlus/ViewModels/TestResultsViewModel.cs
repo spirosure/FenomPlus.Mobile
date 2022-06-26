@@ -23,7 +23,7 @@ namespace FenomPlus.ViewModels
                 TestType = "Short";
             }
 
-            TestResult = Cache._BreathManeuver.NOScore;
+            TestResult = Cache.NOScore;
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace FenomPlus.ViewModels
         /// <summary>
         /// 
         /// </summary>
-        private float testResult;
-        public float TestResult
+        private int testResult;
+        public int TestResult
         {
             get => testResult;
             set

@@ -12,8 +12,12 @@ namespace FenomPlus.Services
 {
     public class CacheService : BaseService, ICacheService
     {
+        private RingBuffer BreathBuffer;
+
         public CacheService(IAppServices services) : base(services)
         {
+            BreathBuffer = new RingBuffer(20, 100);
+
             BreathFlowTimer = 50;
             DeviceSerialNumber = "F150-??????";
             Firmware = "Firmware ?.?.?";
@@ -41,6 +45,7 @@ namespace FenomPlus.Services
         public TestTypeEnum TestType { get; set; }
         public int BreathFlow { get; set; }
         public int BreathFlowTimer { get; set; }
+        public int NOScore { get; set; }
 
         public EnvironmentalInfo _EnvironmentalInfo { get; set; }
         public BreathManeuver _BreathManeuver { get; set; }
@@ -113,7 +118,11 @@ namespace FenomPlus.Services
 
             _BreathManeuver.Decode(data);
 
-            BreathFlow = _BreathManeuver.BreathFlow;
+            // add new value and average it
+            BreathFlow = BreathBuffer.Add(_BreathManeuver.BreathFlow);
+
+            // get the noscores
+            NOScore = _BreathManeuver.NOScore;
 
             NotifyViews();
             NotifyViewModels();

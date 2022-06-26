@@ -48,10 +48,10 @@ namespace FenomPlus.ViewModels
         /// <returns></returns>
         private bool TimerCallback()
         {
-            Seconds--;
-            if (Seconds <= 0)
+            if (Seconds > 0) Seconds--;
+            if ((Cache.NOScore > 0) && (Seconds <= 0))
             {
-                if ((Cache.BreathFlow <= 0) || (Cache.BreathFlow >= 10))
+                if ((Cache.NOScore <= 0) || (Cache.NOScore >= 100))
                 {
                     var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
                     ErrorsRepo.Insert(model);
@@ -64,7 +64,7 @@ namespace FenomPlus.ViewModels
                     
                 Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
             }
-            return Seconds > 0;
+            return ((Cache.NOScore <= 0) || (Seconds > 0));
         }
 
         /// <summary>

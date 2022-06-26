@@ -22,6 +22,7 @@ namespace FenomPlus.Interfaces
         TestTypeEnum TestType { get; set; }
         int BreathFlow { get; set; }
         int BreathFlowTimer { get; set; }
+        int NOScore { get; set; }
 
         RangeObservableCollection<string> DebugList { get; set; }
         EnvironmentalInfo _EnvironmentalInfo { get; set; }
