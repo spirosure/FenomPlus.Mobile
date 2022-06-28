@@ -33,6 +33,9 @@ namespace FenomPlus.Services
             _BreathManeuver = new BreathManeuver();
             _DeviceInfo = new DeviceInfo();
             _DebugMsg = new DebugMsg();
+
+            // write path to debug
+            DebugList.Insert(0, Services.DebugLogFile.GetFilePath());
         }
 
         public RangeObservableCollection<string> DebugList {get;set;}

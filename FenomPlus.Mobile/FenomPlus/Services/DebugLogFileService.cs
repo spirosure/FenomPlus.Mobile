@@ -22,8 +22,8 @@ namespace FenomPlus.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="msg"></param>
-        public void Write(string msg)
+        /// <returns></returns>
+        public string GetFilePath()
         {
             string LocalFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Services.LogCat.Print(LocalFolder);
@@ -34,7 +34,17 @@ namespace FenomPlus.Services
 
             // Use Combine so that the correct file path slashes are used
             string filePath = Path.Combine(LocalFolder, FileName);
-            
+
+            return filePath;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg"></param>
+        public void Write(string msg)
+        {
+            string filePath = GetFilePath();
             File.AppendAllText(filePath, msg);
             File.AppendAllText(filePath, "\n");
         }
