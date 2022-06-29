@@ -188,7 +188,7 @@ namespace FenomPlus.Services
             _DebugMsg.Decode(data);
 
             DebugList.Insert(0, BitConverter.ToString(data));
-            Services.DebugLogFile.Write(data);
+            Services.DebugLogFile.Write(DateTime.Now, data);
             NotifyViews();
             NotifyViewModels();
             return _DebugMsg;

@@ -42,20 +42,21 @@ namespace FenomPlus.Services
         /// 
         /// </summary>
         /// <param name="msg"></param>
-        public void Write(string msg)
+        public void Write(DateTime dateTime, string msg)
         {
+            if (dateTime == null) dateTime = DateTime.Now;
             string filePath = GetFilePath();
-            File.AppendAllText(filePath, msg);
-            File.AppendAllText(filePath, "\n");
+            string content = string.Format("{0},{1}\n", dateTime.ToString("MM/dd/yyyy HH:mm:ss:ffff"), msg);
+            File.AppendAllText(filePath, content);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="msg"></param>
-        public void Write(byte[] msg)
+        public void Write(DateTime dateTime, byte[] msg)
         {
-            Write(BitConverter.ToString(msg));
+            Write(dateTime, BitConverter.ToString(msg));
         }
     }
 }

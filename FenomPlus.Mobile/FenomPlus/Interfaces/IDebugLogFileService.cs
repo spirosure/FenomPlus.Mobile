@@ -6,7 +6,7 @@ namespace FenomPlus.Interfaces
     public interface IDebugLogFileService
     {
         string GetFilePath();
-        void Write(string msg);
-        void Write(byte[] msg);
+        void Write(DateTime dateTime, string msg);
+        void Write(DateTime dateTime, byte[] msg);
     }
 }
