@@ -67,7 +67,7 @@
                                             <RowDefinition Height="30"/>
                                         </Grid.RowDefinitions>
 
-                                        <Label Text="{Binding DateTime}" Grid.Row="0"/>
+                                        <Label Text="{Binding FormatedDateTime}" Grid.Row="0"/>
                                         <Label Text="{Binding HexMsg}" Grid.Row="1"/>
                                         <Label Text="{Binding Msg}" Grid.Row="2"/>
                                     </Grid>

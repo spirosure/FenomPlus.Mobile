@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using FenomPlus.Models;
 using System.Text;
 using FenomPlus.Services;
+using System;
 
 namespace FenomPlus
 {
@@ -18,7 +19,6 @@ namespace FenomPlus
         {
             InitializeComponent();
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NjQwNDYxQDMyMzAyZTMxMmUzMGlPTklYM3hoQmpKc2F2bVlEUFBBS29YU1FGQTBWSTZyY2RJbkJBVm1pbEU9");
-
             MainPage = new MainView();
         }
 

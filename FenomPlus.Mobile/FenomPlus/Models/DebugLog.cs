@@ -6,6 +6,7 @@ namespace FenomPlus.Models
     public class DebugLog
     {
         public DateTime DateTime { get; set; }
+        public string FormatedDateTime { get { return DateTime.ToString("MM/dd/yyyy HH:mm:ss:ffff"); } }
         public string Msg { get; set; }
         public string HexMsg { get; set; }
         public byte[] RawMsg { get; set; }
