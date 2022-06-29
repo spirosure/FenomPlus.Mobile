@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using FenomPlus.Interfaces;
+using FenomPlus.Models;
 
 namespace FenomPlus.Services
 {
@@ -29,7 +30,7 @@ namespace FenomPlus.Services
             Services.LogCat.Print(LocalFolder);
 
             // make sure file
-            string FileName = string.Format("debug_{0}.txt", DateTime.Now.ToShortDateString().Replace("/", "").Replace(",", "").Replace(" ", ""));
+            string FileName = string.Format("debug_{0}.csv", DateTime.Now.ToShortDateString().Replace("/", "").Replace(",", "").Replace(" ", ""));
             Services.LogCat.Print(FileName);
 
             // Use Combine so that the correct file path slashes are used
@@ -57,6 +58,15 @@ namespace FenomPlus.Services
         public void Write(DateTime dateTime, byte[] msg)
         {
             Write(dateTime, BitConverter.ToString(msg));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="debugLog"></param>
+        public void Write(DebugLog debugLog)
+        {
+            Write(debugLog.DateTime, debugLog.RawMsg);
         }
     }
 }

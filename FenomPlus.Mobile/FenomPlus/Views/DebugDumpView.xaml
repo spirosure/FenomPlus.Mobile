@@ -51,7 +51,30 @@
                     x:Name="DebugListView"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="FillAndExpand"
+                    RowHeight="60"
+                    HasUnevenRows="true"
+                    SeparatorColor="Black"
+                    SeparatorVisibility="Default"
                 >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Padding="2">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="15" />
+                                            <RowDefinition Height="15"/>
+                                            <RowDefinition Height="30"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Text="{Binding DateTime}" Grid.Row="0"/>
+                                        <Label Text="{Binding HexMsg}" Grid.Row="1"/>
+                                        <Label Text="{Binding Msg}" Grid.Row="2"/>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
         </StackLayout>

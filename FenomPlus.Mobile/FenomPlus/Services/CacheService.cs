@@ -28,17 +28,18 @@ namespace FenomPlus.Services
                     .AddFilter("FenomPlus", LogLevel.Debug);
             });
 
-            DebugList = new RangeObservableCollection<string>();
+            DebugList = new RangeObservableCollection<DebugLog>();
             _EnvironmentalInfo = new EnvironmentalInfo();
             _BreathManeuver = new BreathManeuver();
             _DeviceInfo = new DeviceInfo();
             _DebugMsg = new DebugMsg();
 
             // write path to debug
-            DebugList.Insert(0, Services.DebugLogFile.GetFilePath());
+            DebugList.Insert(0, DebugLog.Create("App Starting"));
+            DebugList.Insert(0, DebugLog.Create(Services.DebugLogFile.GetFilePath()));
         }
 
-        public RangeObservableCollection<string> DebugList {get;set;}
+        public RangeObservableCollection<DebugLog> DebugList {get;set;}
         public ILoggerFactory Logger { get; set; }
 
         public int BatteryLevel { get; set; }
@@ -187,8 +188,10 @@ namespace FenomPlus.Services
 
             _DebugMsg.Decode(data);
 
-            DebugList.Insert(0, BitConverter.ToString(data));
-            Services.DebugLogFile.Write(DateTime.Now, data);
+            DebugLog debugLog = DebugLog.Create(data);
+
+            DebugList.Insert(0, debugLog);
+            Services.DebugLogFile.Write(debugLog);
             NotifyViews();
             NotifyViewModels();
             return _DebugMsg;
