@@ -13,6 +13,7 @@ namespace FenomPlus.ViewModels
         public IAppServices Services => IOC.Services;
         public IBleHubService BleHub => Services.BleHub;
         public ICacheService Cache => Services.Cache;
+        public IConfigService Config => Services.Config;
         
         // repos here
         public IBreathManeuverErrorRepository ErrorsRepo => Services.Database.BreathManeuverErrorRepo;

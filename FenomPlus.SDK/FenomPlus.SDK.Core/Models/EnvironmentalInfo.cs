@@ -31,14 +31,17 @@ namespace FenomPlus.SDK.Core.Models
         /// <returns></returns>
         public EnvironmentalInfo Decode(byte[] data)
         {
-            Data = data;
-            if ((data != null) && (data.Length >= Min))
+            try
             {
-                Temperature = Data[0];
-                Humidity = Data[1];
-                Pressure = Data[2];
-                BatteryLevel = Data[3];
-            }
+                Data = data;
+                if ((data != null) && (data.Length >= Min))
+                {
+                    Temperature = Data[0];
+                    Humidity = Data[1];
+                    Pressure = Data[2];
+                    BatteryLevel = Data[3];
+                }
+            } finally { }
             return this;
         }
 

@@ -44,6 +44,7 @@ namespace FenomPlus.ViewModels
         public override void OnAppearing()
         {
             base.OnAppearing();
+            Services.BleHub.IsConnected();
             if (Cache.TestType == TestTypeEnum.Standard)
             {
                 TestType = "Standard Test";
@@ -81,11 +82,11 @@ namespace FenomPlus.ViewModels
                     TestGuageSeconds--;
                     GuageSeconds = TestGuageSeconds / (1000 / Cache.BreathFlowTimer);
                     StartMeasure = true;
-                    if (GuageData < 2.8f)
+                    if (GuageData < Config.GaugeDataLow)
                     {
                         GuageStatus = "Exhale Harder";
                     }
-                    else if (GuageData > 3.2f)
+                    else if (GuageData > Config.GaugeDataHigh)
                     {
                         GuageStatus = "Exhale Softer";
                     }

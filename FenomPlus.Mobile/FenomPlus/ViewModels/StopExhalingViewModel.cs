@@ -20,7 +20,7 @@ namespace FenomPlus.ViewModels
         {
             base.OnAppearing();
             Stop = false;
-            Seconds = 3;
+            Seconds = Config.StopExhalingReadyWait;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
 

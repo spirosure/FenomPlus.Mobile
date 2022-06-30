@@ -28,11 +28,14 @@ namespace FenomPlus.SDK.Core.Models
         /// <returns></returns>
         public DebugMsg Decode(byte[] data)
         {
-            Data = data;
-            if ((data != null) && (data.Length >= Min))
+            try
             {
-                Message = BitConverter.ToString(data);
-            }
+                Data = data;
+                if ((data != null) && (data.Length >= Min))
+                {
+                    Message = BitConverter.ToString(data);
+                }
+            } finally { }
             return this;
         }
 

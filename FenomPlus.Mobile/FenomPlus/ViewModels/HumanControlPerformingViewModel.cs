@@ -30,20 +30,19 @@ namespace FenomPlus.ViewModels
                 TestTime = TestSeconds / (1000 / Cache.BreathFlowTimer);
 
                 GuageData = (float)(((float)Cache.BreathFlow) / 10);
-                
-                    if (GuageData < 2.8f)
-                    {
-                        GuageStatus = "Exhale Harder";
-                    }
-                    else if (GuageData > 3.2f)
-                    {
-                        GuageStatus = "Exhale Softer";
-                    }
-                    else
-                    {
-                        GuageStatus = "Good Job!";
-                    }
 
+                if (GuageData < Config.GaugeDataLow)
+                {
+                    GuageStatus = "Exhale Harder";
+                }
+                else if (GuageData > Config.GaugeDataHigh)
+                {
+                    GuageStatus = "Exhale Softer";
+                }
+                else
+                {
+                    GuageStatus = "Good Job!";
+                }
 
                 // return contiune of below the time
                 GuageSeconds = TestSeconds / (1000 / Cache.BreathFlowTimer);

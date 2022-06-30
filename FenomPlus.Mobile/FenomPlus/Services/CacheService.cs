@@ -16,9 +16,9 @@ namespace FenomPlus.Services
 
         public CacheService(IAppServices services) : base(services)
         {
-            BreathBuffer = new RingBuffer(20, 100);
+            BreathBuffer = new RingBuffer(Services.Config.RingBufferSample, Services.Config.RingBufferTimeout);
 
-            BreathFlowTimer = 50;
+            BreathFlowTimer = Services.Config.BreathFlowTimeout;
             DeviceSerialNumber = "F150-??????";
             Firmware = "Firmware ?.?.?";
 
@@ -95,16 +95,19 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public EnvironmentalInfo DecodeEnvironmentalInfo(byte[] data)
         {
-            if(_EnvironmentalInfo == null)
+            try
             {
-                _EnvironmentalInfo = new EnvironmentalInfo();
-            }
-            _EnvironmentalInfo.Decode(data);
+                if (_EnvironmentalInfo == null)
+                {
+                    _EnvironmentalInfo = new EnvironmentalInfo();
+                }
+                _EnvironmentalInfo.Decode(data);
 
-            BatteryLevel = _EnvironmentalInfo.BatteryLevel;
+                BatteryLevel = _EnvironmentalInfo.BatteryLevel;
 
-            NotifyViews();
-            NotifyViewModels();
+                NotifyViews();
+                NotifyViewModels();
+            } finally { }
             return _EnvironmentalInfo;
         }
 
@@ -115,21 +118,24 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public BreathManeuver DecodeBreathManeuver(byte[] data)
         {
-            if (_BreathManeuver == null)
+            try
             {
-                _BreathManeuver = new BreathManeuver();
-            }
+                if (_BreathManeuver == null)
+                {
+                    _BreathManeuver = new BreathManeuver();
+                }
 
-            _BreathManeuver.Decode(data);
+                _BreathManeuver.Decode(data);
 
-            // add new value and average it
-            BreathFlow = BreathBuffer.Add(_BreathManeuver.BreathFlow);
+                // add new value and average it
+                BreathFlow = BreathBuffer.Add(_BreathManeuver.BreathFlow);
 
-            // get the noscores
-            NOScore = _BreathManeuver.NOScore;
+                // get the noscores
+                NOScore = _BreathManeuver.NOScore;
 
-            NotifyViews();
-            NotifyViewModels();
+                NotifyViews();
+                NotifyViewModels();
+            } finally { }
             return _BreathManeuver;
         }
 
@@ -152,7 +158,7 @@ namespace FenomPlus.Services
                 // setup serial number
                 if ((_DeviceInfo.SerialNumber != null) && (_DeviceInfo.SerialNumber.Length > 0))
                 {
-                    DeviceSerialNumber = string.Format("F150-{0}",Encoding.Default.GetString(_DeviceInfo.SerialNumber));
+                    DeviceSerialNumber = string.Format("F150-{0}", Encoding.Default.GetString(_DeviceInfo.SerialNumber));
 
                     // update the database
                     Services.Database.QualityControlDevicesRepo.UpdateDateOrAdd(DeviceSerialNumber);
@@ -163,13 +169,10 @@ namespace FenomPlus.Services
 
                 // get SensorExpireDate
                 SensorExpireDate = new DateTime(_DeviceInfo.SensorExpDateYear, _DeviceInfo.SensorExpDateMonth, _DeviceInfo.SensorExpDateDay);
-            }
-            catch(Exception ex)
-            {
-                Console.Write(ex);
-            }
-            NotifyViews();
-            NotifyViewModels();
+
+                NotifyViews();
+                NotifyViewModels();
+            } finally { }
             return _DeviceInfo;
         }
 
@@ -180,20 +183,22 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public DebugMsg DecodeDebugMsg(byte[] data)
         {
-            if (_DebugMsg == null)
+            try
             {
-                _DebugMsg = new DebugMsg();
-            }
+                if (_DebugMsg == null)
+                {
+                    _DebugMsg = new DebugMsg();
+                }
 
+                _DebugMsg.Decode(data);
 
-            _DebugMsg.Decode(data);
+                DebugLog debugLog = DebugLog.Create(data);
 
-            DebugLog debugLog = DebugLog.Create(data);
-
-            DebugList.Insert(0, debugLog);
-            Services.DebugLogFile.Write(debugLog);
-            NotifyViews();
-            NotifyViewModels();
+                DebugList.Insert(0, debugLog);
+                Services.DebugLogFile.Write(debugLog);
+                NotifyViews();
+                NotifyViewModels();
+            } finally { }
             return _DebugMsg;
         }
 

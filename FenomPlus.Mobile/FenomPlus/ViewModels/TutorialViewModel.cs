@@ -46,6 +46,7 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
+            Services.BleHub.IsConnected();
             Stop = false;
 
             // start timer to read measure constally

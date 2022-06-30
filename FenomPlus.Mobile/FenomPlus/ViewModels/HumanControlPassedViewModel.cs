@@ -1,5 +1,4 @@
-﻿
-namespace FenomPlus.ViewModels
+﻿namespace FenomPlus.ViewModels
 {
     public class HumanControlPassedViewModel : BaseViewModel
     {

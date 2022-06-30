@@ -10,6 +10,7 @@ namespace FenomPlus.Services
         {
             try
             {
+                Container.Register<IConfigService, ConfigService>().AsSingleton();
                 Container.Register<IBleHubService, BleHubService>().AsSingleton();
                 Container.Register<ICacheService, CacheService>().AsSingleton();
                 Container.Register<IDatabaseService, DatabaseService>().AsSingleton();
@@ -38,6 +39,19 @@ namespace FenomPlus.Services
         {
             get { return _BleHub ?? (_BleHub = Container.Resolve<IBleHubService>()); }
             set { _BleHub = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+
+        ///
+        protected IConfigService _Config;
+        public IConfigService Config
+        {
+            get { return _Config ?? (_Config = Container.Resolve<IConfigService>()); }
+            set { _Config = value; }
         }
 
         /// <summary>

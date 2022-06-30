@@ -39,20 +39,23 @@ namespace FenomPlus.SDK.Core.Models
         /// <returns></returns>
         public DeviceInfo Decode(byte[] data)
         {
-            Data = data;
-            if ((data != null) && (data.Length >= Min))
+            try
             {
-                DeviceStatus = Data[0];
-                MajorVersion = Data[1];
-                MinorVersion = Data[2];
-                BuildVersion = Data[3];
-                SensorExpDateMonth = Data[4];
-                SensorExpDateDay = Data[5];
-                SensorExpDateYear = (short)((int)(((int)Data[6]) * 256 + (int)Data[7]));
-                int len = data.Length - 8;
-                SerialNumber = new byte[len];
-                Array.Copy(data, 8, SerialNumber, 0, len);
-            }
+                Data = data;
+                if ((data != null) && (data.Length >= Min))
+                {
+                    DeviceStatus = Data[0];
+                    MajorVersion = Data[1];
+                    MinorVersion = Data[2];
+                    BuildVersion = Data[3];
+                    SensorExpDateMonth = Data[4];
+                    SensorExpDateDay = Data[5];
+                    SensorExpDateYear = (short)((int)(((int)Data[6]) * 256 + (int)Data[7]));
+                    int len = data.Length - 8;
+                    SerialNumber = new byte[len];
+                    Array.Copy(data, 8, SerialNumber, 0, len);
+                }
+            } finally { }
             return this;
         }
     }

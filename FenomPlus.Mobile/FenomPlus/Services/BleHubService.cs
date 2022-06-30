@@ -7,6 +7,8 @@ using FenomPlus.SDK.Core;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.SDK.Core.Features;
 using FenomPlus.SDK.Core.Models;
+using FenomPlus.Views;
+using Xamarin.Forms;
 
 namespace FenomPlus.Services
 {
@@ -78,7 +80,7 @@ namespace FenomPlus.Services
         /// <returns></returns>
         public async Task<bool> Disconnect(IBleDevice bleDevice = null)
         {
-            if (IsConnected())
+            if (BleDevice.Connected == true)
             {
                 await BleDevice.DisconnectAsync();
                 BleDevice = null;
@@ -92,9 +94,26 @@ namespace FenomPlus.Services
         /// <param name="bleDevice"></param>
         /// <param name="completed"></param>
         /// <returns></returns>
-        public bool IsConnected()
+        public bool IsConnected(bool devicePowerOn = false)
         {
-            return (BleDevice != null) ? BleDevice.Connected : false;
+            // do we have a device
+            if(BleDevice != null)
+            {
+                // if disconnected try to re-conenct
+                if(BleDevice.Connected == false)
+                {
+                    // try to connect
+                    BleDevice.ConnectAsync();
+                }
+
+                // if still disconnect go back to power on screen
+                if(BleDevice.Connected == true)
+                {
+                    return BleDevice.Connected;
+                }
+            }
+            Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(DevicePowerOnView)}"), false);
+            return false;
         }
 
         /// <summary>

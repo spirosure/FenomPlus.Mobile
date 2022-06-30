@@ -3,6 +3,7 @@ namespace FenomPlus.Interfaces
 {
     public interface IAppServices
     {
+        IConfigService Config { get; }
         IBleHubService BleHub { get; }
         ICacheService Cache { get; }
         IDatabaseService Database { get; }

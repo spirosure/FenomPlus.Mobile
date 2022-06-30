@@ -62,7 +62,7 @@ namespace FenomPlus.ViewModels
 
             if (Cache.BatteryStatus == false)
             {
-                if (BatteryLevel <= 10)
+                if (BatteryLevel <= Config.BatteryLevelLow)
                 {
                     int TestsRemaining = BatteryLevel / 3;
                     ErrorList.Add(new Alert()
@@ -74,7 +74,7 @@ namespace FenomPlus.ViewModels
                     });
                 }
             }
-            else if (BatteryLevel > 10)
+            else if (BatteryLevel > Config.BatteryLevelLow)
             {
                 Cache.BatteryStatus = false;
             }
@@ -83,7 +83,7 @@ namespace FenomPlus.ViewModels
 
             DeviceStatus.UpdateDeviceExpiration(daysRemaining);
             DeviceStatus.UpdateSensoryExpiration(daysRemaining);
-            if (daysRemaining <= 60)
+            if (daysRemaining <= Config.DaysRemaining)
             {
                 if (Cache.DeviceSensorExpiring == false)
                 {
@@ -107,7 +107,7 @@ namespace FenomPlus.ViewModels
                     });
                 }
             }
-            else if (daysRemaining > 60)
+            else if (daysRemaining > Config.DaysRemaining)
             {
                 Cache.DeviceSensorExpiring = false;
                 Cache.DeviceExpiring = false;
@@ -125,6 +125,7 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
+            Services.BleHub.IsConnected();
             RefreshErrorList();
         }
 

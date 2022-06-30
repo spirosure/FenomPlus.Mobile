@@ -29,7 +29,7 @@ namespace FenomPlus.ViewModels
             {
                 TestType = "Short Test Result";
             }
-            Seconds = 30;
+            Seconds = Config.TestResultReadyWait;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
         }
 
