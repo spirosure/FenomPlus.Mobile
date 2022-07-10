@@ -11,7 +11,7 @@ namespace FenomPlus.Interfaces
     public interface IBleHubService
     {
         Task<bool> Connect(IBleDevice bleDevice);
-        Task<bool> Disconnect(IBleDevice bleDevice = null);
+        Task<bool> Disconnect();
 
         bool IsConnected(bool devicePowerOn=false);
 

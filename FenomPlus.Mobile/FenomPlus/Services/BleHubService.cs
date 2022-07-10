@@ -78,12 +78,15 @@ namespace FenomPlus.Services
         /// </summary>
         /// <param name="bleDevice"></param>
         /// <returns></returns>
-        public async Task<bool> Disconnect(IBleDevice bleDevice = null)
+        public async Task<bool> Disconnect()
         {
-            if (BleDevice.Connected == true)
+            if (BleDevice != null)
             {
-                await BleDevice.DisconnectAsync();
-                BleDevice = null;
+                if (BleDevice.Connected == true)
+                {
+                    await BleDevice.DisconnectAsync();
+                    BleDevice = null;
+                }
             }
             return true;
         }

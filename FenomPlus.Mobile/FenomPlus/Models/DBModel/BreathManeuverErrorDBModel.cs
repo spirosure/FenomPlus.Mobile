@@ -1,5 +1,7 @@
 ﻿using FenomPlus.Database.Tables;
 using FenomPlus.SDK.Core.Models;
+using FenomPlus.Services;
+using System;
 
 namespace FenomPlus.Models
 {
@@ -18,7 +20,12 @@ namespace FenomPlus.Models
         {
             return new BreathManeuverErrorDBModel()
             {
-            };
+                SerialNumber = IOC.Services.Cache.DeviceSerialNumber,
+                Software = IOC.Services.Cache.Firmware,
+                Firmware = IOC.Services.Cache.Firmware,
+                DateError = DateTime.Now.ToString(),
+                Humidity = IOC.Services.Cache._EnvironmentalInfo.Humidity.ToString()
+        };
         }
     }
 }

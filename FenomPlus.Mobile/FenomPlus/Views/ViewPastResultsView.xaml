@@ -53,8 +53,8 @@
                            AllowGroupExpandCollapse="True"
                 >
                 <sfgrid:SfDataGrid.Columns x:TypeArguments="sfgrid:Columns">
-                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="ID" IsHidden="True" />
-                    <sfgrid:GridTextColumn HeaderText="Date / Time" MappingName="Date_Time" Width="125" />
+                    <sfgrid:GridTextColumn HeaderText="ID" MappingName="Id" IsHidden="True" />
+                    <sfgrid:GridTextColumn HeaderText="Date / Time" MappingName="DateOfTest" Width="125" />
                     <sfgrid:GridTextColumn HeaderText="Device S/N" MappingName="SerialNumber" Width="125" />
                     <sfgrid:GridTextColumn HeaderText="Test"  MappingName="TestType" Width="125" />
                     <sfgrid:GridTextColumn HeaderText="QC Status"  MappingName="QCStatus" Width="125" />

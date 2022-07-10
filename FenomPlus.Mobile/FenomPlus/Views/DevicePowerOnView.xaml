@@ -7,7 +7,7 @@
     Title="{Binding Title}"
     Style="{StaticResource MainView}"
     Shell.NavBarIsVisible="False"
-    NavigationPage.HasBackButton="False"
+    NavigationPage.HasBackButton="True"
     NavigationPage.HasNavigationBar="False">
     <Shell.TitleView>
         <Image Source="TitleIcon"

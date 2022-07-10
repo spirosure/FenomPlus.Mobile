@@ -59,6 +59,7 @@ namespace FenomPlus.ViewModels
                 else
                 {
                     var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
+
                     ResultsRepo.Insert(model);
                 }
                     

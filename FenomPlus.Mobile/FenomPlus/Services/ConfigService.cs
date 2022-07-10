@@ -17,8 +17,8 @@ namespace FenomPlus.Services
 
         public ConfigService(IAppServices services) : base(services)
         {
-            RingBufferSample = 20;          // total samples
-            RingBufferTimeout = 100;        // mill-seconds
+            RingBufferSample = 10;          // total samples
+            RingBufferTimeout = 1000;        // mill-seconds
             BreathFlowTimeout = 50;         // mill-seconds
             GaugeDataLow = 2.8f;
             GaugeDataHigh = 3.2f;

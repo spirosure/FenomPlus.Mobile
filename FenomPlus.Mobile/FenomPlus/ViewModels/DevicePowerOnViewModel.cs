@@ -37,8 +37,11 @@ namespace FenomPlus.ViewModels
             {
                 if ((bleDevice == null) || string.IsNullOrEmpty(bleDevice.Name)) return;
                 await BleHub.StopScan();
-                if (await Services.BleHub.Connect(bleDevice) == false) return;
-                await FoundDevice(bleDevice);
+                Device.BeginInvokeOnMainThread(async () =>
+                {
+                    if (await Services.BleHub.Connect(bleDevice) == false) return;
+                    await FoundDevice(bleDevice);
+                });
 
             }, (IEnumerable<IBleDevice> bleDevices) =>
             {
@@ -134,6 +137,10 @@ namespace FenomPlus.ViewModels
         /// </summary>
         override public void OnAppearing()
         {
+            // clear database of all records
+            Services.Database.BreathManeuverErrorRepo.DeleteAll();
+            Services.Database.BreathManeuverResultRepo.DeleteAll();
+
             Stop = false;
             StopScan();
             StartScan();
