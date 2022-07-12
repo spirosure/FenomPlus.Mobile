@@ -59,8 +59,7 @@ namespace FenomPlus.Core.Database.Repository
             db = Services.Database.DB;
         }
 
-        public ILiteCollection<T> Collection => db.GetCollection<T>(_TblName);
-
+        /*
         /// <summary>
         /// Common Delete
         /// </summary>
@@ -109,7 +108,7 @@ namespace FenomPlus.Core.Database.Repository
         /// 
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
+        /// <returns></returns>       
         public T Insert(T model)
         {
             if (model != null)
@@ -161,5 +160,6 @@ namespace FenomPlus.Core.Database.Repository
             }
             return model;
         }
+        */
     }
 }

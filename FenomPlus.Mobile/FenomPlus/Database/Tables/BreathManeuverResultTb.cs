@@ -6,17 +6,17 @@ namespace FenomPlus.Database.Tables
     public class BreathManeuverResultTb : BaseTb<BreathManeuverResultTb>
     {
         // from sensor all info here
-        public short TestNumber { get; set; }
-        public byte Temperature { get; set; }
-        public byte Pressure { get; set; }
-        public byte BreathFlow { get; set; }
-        public short NOScore { get; set; }
-        public byte StatusCode { get; set; }
+        public int TestNumber { get; set; }
+        public int Temperature { get; set; }
+        public int Pressure { get; set; }
+        public int BreathFlow { get; set; }
+        public int NOScore { get; set; }
+        public int StatusCode { get; set; }
 
         // for grid display
         public string SerialNumber { get; set; }
         public string TestType { get; set; }
-        public DateTime DateOfTest { get; set; }
+        public string DateOfTest { get; set; }
         public string QCStatus { get; set; }
         public string TestResult { get; set; }
 

@@ -21,7 +21,7 @@ namespace FenomPlus.Models
             return new BreathManeuverResultDBModel()
             {
                 BreathFlow = input.BreathFlow,
-                DateOfTest = DateTime.Now,
+                DateOfTest = DateTime.Now.ToString(),
                 NOScore = input.NOScore,
                 Pressure = input.Pressure,
                 StatusCode = input.StatusCode,

@@ -16,6 +16,9 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         private static readonly IBluetoothLE Ble = CrossBluetoothLE.Current;
         private static readonly IAdapter Adapter = Ble.Adapter;
 
+        private List<IBleDevice> _bondeddevices = new List<IBleDevice>();
+        public IEnumerable<IBleDevice> BondedDevices { get { return _bondeddevices; } }
+
         private List<IBleDevice> _devices = new List<IBleDevice>();
         public IEnumerable<IBleDevice> Devices { get { return _devices; } }
 
@@ -174,7 +177,6 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             }
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -183,15 +185,14 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <param name="devicesFoundCallback"></param>
         /// <param name="scanTimeoutCallback"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<IBleDevice>> Scan(double scanTime, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null, Action scanTimeoutCallback = null)
+        public async Task<bool> Scan(double scanTime, bool scanBondedDevices, bool scanBleDevices, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null, Action scanTimeoutCallback = null)
         {
             try
             {
                 PerformanceLogger.StartLog(typeof(BleRadioService), "Scan");
-
                 if (IsScanning)
                 {
-                    return null;
+                    return false;
                 }
 
                 if (scanTime != 0)
@@ -199,42 +200,77 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                     Adapter.ScanTimeout = Convert.ToInt32(scanTime);
                 }
 
-                void deviceDiscovered(object sender, DeviceEventArgs e)
+                // scan for bonded devices here
+                if(scanBondedDevices == true)
                 {
-                    if (string.IsNullOrEmpty(e.Device?.Name))
-                    {
-                        //return;
-                    }
+                    _bondeddevices.Clear();
 
-                    try
+                    IReadOnlyList<IDevice> bondedDevices = Adapter.GetSystemConnectedOrPairedDevices(null);
+                    foreach (var device in bondedDevices)
                     {
-                        PerformanceLogger.StartLog(typeof(BleRadioService), "Scan.discoverEventHandler");
+                        if (string.IsNullOrEmpty(device?.Name))
+                        {
+                            //return;
+                        }
 
-                        // create ble device and push to caller
-                        BleDevice bleDevice = new BleDevice(e.Device);
-                        _devices.Add(bleDevice);
-                        deviceFoundCallback?.Invoke(bleDevice);
-                    }
-                    finally
-                    {
-                        PerformanceLogger.EndLog(typeof(BleRadioService), "Scan.discoverEventHandler");
+                        try
+                        {
+                            PerformanceLogger.StartLog(typeof(BleRadioService), "Scan.discoverEventHandler");
+                            BleDevice bleDevice = new BleDevice(device);
+                            _bondeddevices.Add(bleDevice);
+                            deviceFoundCallback?.Invoke(bleDevice);
+                        }
+                        finally
+                        {
+                            PerformanceLogger.EndLog(typeof(BleRadioService), "Scan.discoverEventHandler");
+                        }
                     }
                 }
 
-                Adapter.DeviceDiscovered += deviceDiscovered;
-                Adapter.ScanMode = ScanMode.Balanced;
 
-                await Adapter.StartScanningForDevicesAsync();
-                scanCompletedCallback?.Invoke(Devices);
+                // scan for ble devices
+                if (scanBleDevices == true)
+                {
+                    void deviceDiscovered(object sender, DeviceEventArgs e)
+                    {
+                        if (string.IsNullOrEmpty(e.Device?.Name))
+                        {
+                            //return;
+                        }
 
-                Adapter.DeviceDiscovered -= deviceDiscovered;
+                        try
+                        {
+                            PerformanceLogger.StartLog(typeof(BleRadioService), "Scan.discoverEventHandler");
 
-                return Devices;
+                            // create ble device and push to caller
+                            BleDevice bleDevice = new BleDevice(e.Device);
+                            _devices.Add(bleDevice);
+                            deviceFoundCallback?.Invoke(bleDevice);
+                        }
+                        finally
+                        {
+                            PerformanceLogger.EndLog(typeof(BleRadioService), "Scan.discoverEventHandler");
+                        }
+                    }
+
+                    _devices.Clear();
+
+                    Adapter.DeviceDiscovered += deviceDiscovered;
+                    Adapter.ScanMode = ScanMode.Balanced;
+
+                    await Adapter.StartScanningForDevicesAsync();
+                    scanCompletedCallback?.Invoke(Devices);
+
+                    Adapter.DeviceDiscovered -= deviceDiscovered;
+                }
+
+
+                return scanBleDevices || scanBondedDevices;
             }
             catch (Exception ex)
             {
                 _logger.LogException(ex);
-                return null;
+                return false;
             }
             finally
             {
@@ -318,7 +354,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<IBleDevice>> StopScan()
+        public async Task<bool> StopScan()
         {
             try
             {
@@ -329,16 +365,17 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
                 {
                     await Adapter.StopScanningForDevicesAsync();
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.LogException(ex);
+                return false;
             }
             finally
             {
                 PerformanceLogger.EndLog(typeof(BleRadioService), "StopScan");
             }
-            return Devices;
         }
 
         /// <summary>

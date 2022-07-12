@@ -21,7 +21,7 @@ namespace FenomPlus.Interfaces
         Task<bool> RequestEnvironmentalInfo();
         Task<bool> SendMessage(MESSAGE message);
 
-        Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null);
+        Task<IEnumerable<IFenomHubSystem>> Scan(TimeSpan scanTime = default, bool scanBondedDevices = true, bool scanBleDevices = true, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null);
         Task<bool> StopScan();
     }
 }

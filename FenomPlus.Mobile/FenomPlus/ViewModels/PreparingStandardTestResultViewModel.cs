@@ -51,17 +51,9 @@ namespace FenomPlus.ViewModels
             if (Seconds > 0) Seconds--;
             if ((Cache.NOScore > 0) && (Seconds <= 0))
             {
-                if ((Cache.NOScore <= 0) || (Cache.NOScore >= 100))
-                {
-                    var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
-                    ErrorsRepo.Insert(model);
-                }
-                else
-                {
-                    var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
+                var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
 
-                    ResultsRepo.Insert(model);
-                }
+                ResultsRepo.Insert(model);
                     
                 Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
             }

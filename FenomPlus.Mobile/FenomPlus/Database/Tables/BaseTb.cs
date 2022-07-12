@@ -4,16 +4,17 @@ using LiteDB;
 
 namespace FenomPlus.Database.Tables
 {
-    public class BaseTb<T> : IEqualityComparer<T>, IComparable<T> where T : BaseTb<T> , new()
+    public class BaseTb<T>// : IEqualityComparer<T>, IComparable<T> where T : BaseTb<T> , new()
     {
         public BsonValue _id { get; set; }
+        /*
         private string Id { get; set; }
 
         public BaseTb()
         {
             Id = Guid.NewGuid().ToString();
         }
-
+        
         // <summary>
         /// 
         /// </summary>
@@ -44,5 +45,6 @@ namespace FenomPlus.Database.Tables
         {
             return obj.Id.GetHashCode();
         }
+        */
     }
 }

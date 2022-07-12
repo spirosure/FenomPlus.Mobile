@@ -57,7 +57,7 @@ namespace FenomPlus.Views
                 QualityControlDeviceDBModel deviceDBModel = new Models.QualityControlDeviceDBModel()
                 {
                     SerialNumber = serialNumber,
-                    LastConnected = DateTime.Now
+                    LastConnected = DateTime.Now.ToString()
                 };
                 QualityControlDevicesTb record = QCDevicesRepo.Insert(deviceDBModel);
                 deviceDBModel = record.Convert();

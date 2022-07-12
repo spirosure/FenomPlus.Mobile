@@ -53,7 +53,7 @@ namespace FenomPlus.ViewModels
 
                     QualityControlDataModel model = new QualityControlDataModel()
                     {
-                        DateTaken = DateTime.Now,
+                        DateTaken = DateTime.Now.ToString(),
                         User = Services.Cache.QCUsername,
                         TestResult = Cache.BreathFlow,
                         SerialNumber = this.DeviceSerialNumber,

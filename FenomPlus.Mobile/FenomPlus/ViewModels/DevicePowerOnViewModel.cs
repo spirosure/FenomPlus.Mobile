@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FenomPlus.Models;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.Views;
 using Xamarin.Forms;
@@ -16,6 +17,7 @@ namespace FenomPlus.ViewModels
         /// </summary>
         public DevicePowerOnViewModel()
         {
+
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace FenomPlus.ViewModels
         {
             Seconds = 30;
             Device.StartTimer(TimeSpan.FromSeconds(1), TimerCallback);
-            _ = BleHub.Scan(new TimeSpan(0, 0, 0, Seconds), async (IBleDevice bleDevice) =>
+            _ = BleHub.Scan(new TimeSpan(0, 0, 0, Seconds), true, false, async (IBleDevice bleDevice) =>
             {
                 if ((bleDevice == null) || string.IsNullOrEmpty(bleDevice.Name)) return;
                 await BleHub.StopScan();
@@ -137,10 +139,6 @@ namespace FenomPlus.ViewModels
         /// </summary>
         override public void OnAppearing()
         {
-            // clear database of all records
-            Services.Database.BreathManeuverErrorRepo.DeleteAll();
-            Services.Database.BreathManeuverResultRepo.DeleteAll();
-
             Stop = false;
             StopScan();
             StartScan();

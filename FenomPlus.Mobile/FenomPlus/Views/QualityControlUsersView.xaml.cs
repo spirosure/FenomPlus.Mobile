@@ -70,7 +70,7 @@ namespace FenomPlus.Views
                 QualityControlUsersDBModel userDBModel = new Models.QualityControlUsersDBModel() {
                     User = userName,
                     QCStatus = "Conditional",
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now.ToString()
                 };
                 QualityControlUsersTb record = QCUsersRepo.Insert(userDBModel);
                 userDBModel = record.Convert();

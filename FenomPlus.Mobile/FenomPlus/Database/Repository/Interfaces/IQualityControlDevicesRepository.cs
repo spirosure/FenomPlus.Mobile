@@ -1,9 +1,10 @@
-﻿using FenomPlus.Database.Tables;
+﻿using System.Collections.Generic;
+using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Repository.Interfaces 
 {
-    public interface IQualityControlDevicesRepository : IGenericRepository<QualityControlDevicesTb>
+    public interface IQualityControlDevicesRepository // : IGenericRepository<QualityControlDevicesTb>
     {
         // inserts
         QualityControlDevicesTb Insert(QualityControlDeviceDBModel model);
@@ -22,5 +23,7 @@ namespace FenomPlus.Database.Repository.Interfaces
 
         // update or add new device
         QualityControlDevicesTb UpdateDateOrAdd(string serialNumber);
+
+        IEnumerable<QualityControlDevicesTb> SelectAll();
     }
 }

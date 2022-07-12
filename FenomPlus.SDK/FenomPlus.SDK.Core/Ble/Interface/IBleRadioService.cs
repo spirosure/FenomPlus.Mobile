@@ -10,8 +10,9 @@ namespace FenomPlus.SDK.Core.Ble.Interface
         bool IsScanning { get; }
 
         IEnumerable<IBleDevice> Devices { get; }
-        Task<IEnumerable<IBleDevice>> Scan(double scanTime, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null, Action scanTimeoutCallback = null);
-        Task<IEnumerable<IBleDevice>> StopScan();
+        IEnumerable<IBleDevice> BondedDevices { get; }
+        Task<bool> Scan(double scanTime, bool scanBondedDevices, bool scanBleDevices, Action<IBleDevice> deviceFoundCallback = null, Action<IEnumerable<IBleDevice>> scanCompletedCallback = null, Action scanTimeoutCallback = null);
+        Task<bool> StopScan();
 
         event EventHandler<DeviceEventArgs> DeviceAdvertised;
         event EventHandler<DeviceEventArgs> DeviceDiscovered;

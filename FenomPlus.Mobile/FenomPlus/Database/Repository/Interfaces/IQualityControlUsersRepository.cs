@@ -1,9 +1,10 @@
-﻿using FenomPlus.Database.Tables;
+﻿using System.Collections.Generic;
+using FenomPlus.Database.Tables;
 using FenomPlus.Models;
 
 namespace FenomPlus.Database.Repository.Interfaces
 {
-    public interface IQualityControlUsersRepository : IGenericRepository<QualityControlUsersTb>
+    public interface IQualityControlUsersRepository // : IGenericRepository<QualityControlUsersTb>
     {
         // inserts
         QualityControlUsersTb Insert(QualityControlUsersDBModel model);
@@ -19,5 +20,7 @@ namespace FenomPlus.Database.Repository.Interfaces
 
         // select
         QualityControlUsersTb FindUser(string user);
+
+        IEnumerable<QualityControlUsersTb> SelectAll();
     }
 }

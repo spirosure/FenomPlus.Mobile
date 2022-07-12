@@ -1,9 +1,10 @@
 ﻿using FenomPlus.Models;
 using FenomPlus.Database.Tables;
+using System.Collections.Generic;
 
 namespace FenomPlus.Database.Repository.Interfaces
 {
-    public interface IBreathManeuverErrorRepository : IGenericRepository<BreathManeuverErrorTb>
+    public interface IBreathManeuverErrorRepository // : IGenericRepository<BreathManeuverErrorTb>
     {
         // inserts
         BreathManeuverErrorTb Insert(BreathManeuverErrorDBModel model);
@@ -14,5 +15,6 @@ namespace FenomPlus.Database.Repository.Interfaces
         // updates
         BreathManeuverErrorTb Update(BreathManeuverErrorDBModel model);
 
+        IEnumerable<BreathManeuverErrorTb> SelectAll();
     }
 }
