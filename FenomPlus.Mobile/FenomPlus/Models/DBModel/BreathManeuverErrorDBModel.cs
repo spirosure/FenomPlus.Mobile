@@ -20,9 +20,11 @@ namespace FenomPlus.Models
         /// <returns></returns>
         public static BreathManeuverErrorDBModel Create(BreathManeuver input)
         {
+            int statusCode = (input.StatusCode >= ErrorCodesEnum.codes.Length) ? ErrorCodesEnum.codes.Length : input.StatusCode;
+
             return new BreathManeuverErrorDBModel()
             {
-                Description = ErrorCodesEnum.codes[input.StatusCode],
+                Description = ErrorCodesEnum.codes[statusCode],
                 SerialNumber = IOC.Services.Cache.DeviceSerialNumber,
                 Software = IOC.Services.Cache.Firmware,
                 Firmware = IOC.Services.Cache.Firmware,
@@ -32,3 +34,4 @@ namespace FenomPlus.Models
         }
     }
 }
+ 

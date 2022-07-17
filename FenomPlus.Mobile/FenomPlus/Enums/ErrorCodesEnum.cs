@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace FenomPlus.Enums
 {
     public class ErrorCodesEnum
@@ -16,7 +17,8 @@ namespace FenomPlus.Enums
             "Error: too dry (humidity < 20% relative humidity)",
             "Error: too humid (humidity > 90% relative humidity)",
             "Error: pressure low (atmospheric pressure < 760 hPa)",
-            "Error: pressure high (atmospheric pressure > 1100 hPa)"
+            "Error: pressure high (atmospheric pressure > 1100 hPa)",
+            "Error: Test Failed"
         };
     }
 }

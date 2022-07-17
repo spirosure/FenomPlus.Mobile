@@ -49,7 +49,7 @@ namespace FenomPlus.ViewModels
         private bool TimerCallback()
         {
             if (Seconds > 0) Seconds--;
-            if ((Cache.NOScore > 0) && (Seconds <= 0))
+            if (Seconds <= 0)
             {
                 var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
 

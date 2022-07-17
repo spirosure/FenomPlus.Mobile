@@ -4,6 +4,7 @@ using FenomPlus.Database.Adapters;
 using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models;
 using FenomPlus.ViewModels;
 using Xamarin.Forms;
 
@@ -61,6 +62,9 @@ namespace FenomPlus.Views
 
             // ok goto test, for now create random
             Services.Cache.QCUsername = userName;
+
+            // send QC model
+            await BleHub.StartTest(BreathTestEnum.QuailtyControl);
 
             //ok goto test now.
             await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(NegativeControlPerformView)}"), false);

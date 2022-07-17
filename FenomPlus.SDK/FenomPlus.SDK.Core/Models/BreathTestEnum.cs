@@ -7,6 +7,8 @@ namespace FenomPlus.SDK.Core.Models
         Stop = 0x00,
         Start6Second = 0x01,
         Start10Second = 0x02,
-        Start0ppb = 0x03
+        Start0ppb = 0x03,
+        Training = 0x04,
+        QuailtyControl = 0x05
     }
 }

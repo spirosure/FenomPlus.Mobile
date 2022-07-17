@@ -1,5 +1,6 @@
 ﻿using System;
 using FenomPlus.Helpers;
+using FenomPlus.SDK.Core.Models;
 using Xamarin.Forms;
 
 namespace FenomPlus.ViewModels
@@ -46,6 +47,7 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
+            BleHub.StartTest(BreathTestEnum.Training);
             Services.BleHub.IsConnected();
             Stop = false;
 
@@ -63,6 +65,7 @@ namespace FenomPlus.ViewModels
         override public void OnDisappearing()
         {
             base.OnDisappearing();
+            BleHub.StartTest(BreathTestEnum.Stop);
             Stop = true;
             PlaySounds.StopAll();
         }

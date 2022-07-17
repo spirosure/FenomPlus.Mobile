@@ -3,6 +3,7 @@ using FenomPlus.Database.Adapters;
 using FenomPlus.Database.Tables;
 using FenomPlus.Helpers;
 using FenomPlus.Models;
+using FenomPlus.SDK.Core.Models;
 
 namespace FenomPlus.ViewModels
 {
@@ -45,6 +46,8 @@ namespace FenomPlus.ViewModels
         override public void OnAppearing()
         {
             base.OnAppearing();
+            UpdateGrid();
+            BleHub.StartTest(BreathTestEnum.Stop);
         }
 
         /// <summary>
