@@ -1,4 +1,6 @@
 ﻿using System;
+using FenomPlus.Controls;
+using FenomPlus.Models;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -26,7 +28,32 @@ namespace FenomPlus.ViewModels
                 TestTime = TestSeconds / (1000 / Cache.BreathFlowTimer);
                 if ((TestSeconds <= 0) && (Stop == false))
                 {
-                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPerformingView)}"), false);
+                    QualityControlDataModel model = new QualityControlDataModel()
+                    {
+                        DateTaken = DateTime.Now.ToString(),
+                        User = Services.Cache.QCUsername,
+                        TestResult = Cache.BreathFlow,
+                        SerialNumber = this.DeviceSerialNumber,
+                        QCStatus = "",
+                        QCExpiration = "",
+                    };
+
+                    // depending on result
+                    if ((Cache.HumanControlResult >= BreathGuage.LowGreen) && (Cache.HumanControlResult <= BreathGuage.HighGreen))
+                    {
+                        model.QCStatus = "Qualified";
+                        QCRepo.Insert(model);
+                        // log passed here
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPassedView)}"), false);
+                    }
+                    else
+                    {
+                        model.QCStatus = "Disqualified";
+                        QCRepo.Insert(model);
+                        // log failed here
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlDisqualifiedView)}"), false);
+                    }
+
                 }
 
                 return (TestSeconds > 0) && (Stop == false);

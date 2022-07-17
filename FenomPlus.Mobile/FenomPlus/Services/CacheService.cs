@@ -50,6 +50,7 @@ namespace FenomPlus.Services
         public int BreathFlow { get; set; }
         public int BreathFlowTimer { get; set; }
         public int NOScore { get; set; }
+        public float HumanControlResult { get; set; }
 
         public EnvironmentalInfo _EnvironmentalInfo { get; set; }
         public BreathManeuver _BreathManeuver { get; set; }

@@ -32,7 +32,7 @@ namespace FenomPlus.Views
         /// <param name="e"></param>
         private async void OnNext(System.Object sender, System.EventArgs e)
         {
-            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPreparingView)}"), false);
+            await Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPerformingView)}"), false);
         }
 
         /// <summary>

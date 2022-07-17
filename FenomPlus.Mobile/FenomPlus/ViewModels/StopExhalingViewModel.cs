@@ -1,4 +1,5 @@
 ﻿using System;
+using FenomPlus.Models;
 using FenomPlus.Views;
 using Xamarin.Forms;
 
@@ -43,7 +44,24 @@ namespace FenomPlus.ViewModels
             if (Stop == true) seconds = 0;
             if ((Seconds <= 0) && (Stop == false))
             {
-                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultView)}"), false);
+                if (Cache._BreathManeuver.StatusCode != 0x00)
+                {
+                    var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
+                    ErrorsRepo.Insert(model);
+
+                    // redirect to take test
+                    if(Cache.TestType == TestTypeEnum.Standard)
+                    {
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=Standard"), false);
+                    } else
+                    {
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=short"), false);
+                    }
+                }
+                else
+                {
+                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(PreparingStandardTestResultView)}"), false);
+                }
             }
             return Seconds > 0;
         }

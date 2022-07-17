@@ -51,31 +51,8 @@ namespace FenomPlus.ViewModels
                 {
                     BleHub.StopTest();
 
-                    QualityControlDataModel model = new QualityControlDataModel()
-                    {
-                        DateTaken = DateTime.Now.ToString(),
-                        User = Services.Cache.QCUsername,
-                        TestResult = Cache.BreathFlow,
-                        SerialNumber = this.DeviceSerialNumber,
-                        QCStatus = "",
-                        QCExpiration = "",
-                    };
-
-                    // depending on result
-                    if ((GuageData >= BreathGuage.LowGreen) && (GuageData <= BreathGuage.HighGreen))
-                    {
-                        model.QCStatus = "Qualified";
-                        QCRepo.Insert(model);
-                        // log passed here
-                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPassedView)}"), false);
-                    }
-                    else
-                    {
-                        model.QCStatus = "Disqualified";
-                        QCRepo.Insert(model);
-                        // log failed here
-                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlDisqualifiedView)}"), false);
-                    }
+                    Cache.HumanControlResult = GuageData;
+                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(HumanControlPreparingView)}"), false);
                 }
                 return (TestSeconds > 0) && (Stop == false);
             });

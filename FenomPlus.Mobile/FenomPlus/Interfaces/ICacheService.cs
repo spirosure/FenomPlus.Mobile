@@ -24,6 +24,8 @@ namespace FenomPlus.Interfaces
         int BreathFlowTimer { get; set; }
         int NOScore { get; set; }
 
+        float HumanControlResult { get; set; }
+
         RangeObservableCollection<DebugLog> DebugList { get; set; }
         EnvironmentalInfo _EnvironmentalInfo { get; set; }
         BreathManeuver _BreathManeuver { get; set; }
