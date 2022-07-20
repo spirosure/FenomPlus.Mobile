@@ -68,7 +68,7 @@ namespace FenomPlus.Views
             {
                 IDMSG = (ushort)Math.Abs(MessageId.SelectedIndex),
                 IDSUB = (ushort)Math.Abs(SubId.SelectedIndex),
-                IDVAR = (ushort)Math.Abs(Convert.ToInt16(Var.Value))
+                IDVAR = (UInt64)Math.Abs(Convert.ToInt64(Var.Value))
             };
             Services.BleHub.SendMessage(message);
         }

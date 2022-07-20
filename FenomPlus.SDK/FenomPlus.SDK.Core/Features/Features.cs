@@ -131,11 +131,17 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
         /// <returns></returns>
         private async Task<bool> WRITEREQUEST(MESSAGE message)
         {
-            byte[] data = new byte[6];
+            byte[] data = new byte[2+2+8];
             data[0] = (byte)(message.IDMSG >> 8);
             data[1] = (byte)(message.IDMSG);
             data[2] = (byte)(message.IDSUB >> 8);
             data[3] = (byte)(message.IDSUB);
+            data[4] = (byte)(message.IDVAR >> 56);
+            data[4] = (byte)(message.IDVAR >> 48);
+            data[4] = (byte)(message.IDVAR >> 40);
+            data[4] = (byte)(message.IDVAR >> 32);
+            data[4] = (byte)(message.IDVAR >> 24);
+            data[4] = (byte)(message.IDVAR >> 16);
             data[4] = (byte)(message.IDVAR >> 8);
             data[5] = (byte)(message.IDVAR);
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.FeatureWriteCharacteristic);
