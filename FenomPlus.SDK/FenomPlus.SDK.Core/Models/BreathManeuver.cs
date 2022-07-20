@@ -7,13 +7,13 @@ namespace FenomPlus.SDK.Core.Models
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class BreathManeuver : BaseCharacteristic
     {
-        public static int Min = 13;
+        public static int Min = 14;
 
         public short TestNumber;
         public byte  TimeRemaining;
         public byte  Temperature;
         public byte  Pressure;
-        public byte  BreathFlow;
+        public short BreathFlow;
         public short NOScore;
         public byte  AnalysisTimeLeft;
         public byte  StatusCode;
@@ -48,13 +48,13 @@ namespace FenomPlus.SDK.Core.Models
                     TimeRemaining = Data[2];
                     Temperature = Data[3];
                     Pressure = Data[4];
-                    BreathFlow = Data[5];
-                    NOScore = (short)((int)(((int)Data[6]) * 256 + (int)Data[7]));
-                    AnalysisTimeLeft = Data[8];
-                    StatusCode = Data[9];
-                    BreathGaugePressure = Data[10];
-                    NOCounts = (short)((int)(((int)Data[11]) * 256 + (int)Data[12]));
-                    SampleMassFlow = Data[13];
+                    BreathFlow = (short)((int)(((int)Data[5]) * 256 + (int)Data[6]));
+                    NOScore = (short)((int)(((int)Data[7]) * 256 + (int)Data[8]));
+                    AnalysisTimeLeft = Data[9];
+                    StatusCode = Data[10];
+                    BreathGaugePressure = Data[11];
+                    NOCounts = (short)((int)(((int)Data[12]) * 256 + (int)Data[13]));
+                    SampleMassFlow = Data[14];
                 }
             } finally { }
             return this;

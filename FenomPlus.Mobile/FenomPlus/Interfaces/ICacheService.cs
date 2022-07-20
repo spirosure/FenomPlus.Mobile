@@ -20,7 +20,7 @@ namespace FenomPlus.Interfaces
         string DeviceSerialNumber { get; set; }
         string Firmware { get; set; }
         TestTypeEnum TestType { get; set; }
-        int BreathFlow { get; set; }
+        float BreathFlow { get; set; }
         int BreathFlowTimer { get; set; }
         int NOScore { get; set; }
 

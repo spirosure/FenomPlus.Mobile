@@ -47,10 +47,12 @@ namespace FenomPlus.Services
         public string DeviceSerialNumber { get; set; }
         public DateTime SensorExpireDate { get; set; }
         public TestTypeEnum TestType { get; set; }
-        public int BreathFlow { get; set; }
         public int BreathFlowTimer { get; set; }
         public int NOScore { get; set; }
         public float HumanControlResult { get; set; }
+
+        private float _BreathFlow { get; set; }
+        public float BreathFlow { get { return _BreathFlow; } set { _BreathFlow = value / 1000; } }
 
         public EnvironmentalInfo _EnvironmentalInfo { get; set; }
         public BreathManeuver _BreathManeuver { get; set; }

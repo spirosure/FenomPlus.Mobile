@@ -29,7 +29,7 @@ namespace FenomPlus.ViewModels
                 TestSeconds--;
                 TestTime = TestSeconds / (1000 / Cache.BreathFlowTimer);
 
-                GuageData = (float)(((float)Cache.BreathFlow) / 10);
+                GuageData = Cache.BreathFlow;
 
                 if (GuageData < Config.GaugeDataLow)
                 {

@@ -11,7 +11,7 @@ namespace FenomPlus.Helpers
         private int BufferTimeout;
         private int MaxBufferSize;
         private int BufferIndex;
-        private int[] Buffer;
+        private short[] Buffer;
         private SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace FenomPlus.Helpers
             BufferTimeout = timeout;
             BufferIndex = 0;
             MaxBufferSize = maxSize;
-            Buffer = new int[MaxBufferSize];
+            Buffer = new short[MaxBufferSize];
             TimeoutTimer = new Timer((state) => Add(0), null, BufferTimeout, BufferTimeout);
         }
 
@@ -33,7 +33,7 @@ namespace FenomPlus.Helpers
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        public int Add(int val)
+        public int Add(short val)
         {
             int totalValue = 0;
             _lock.WaitAsync();

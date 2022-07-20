@@ -6,6 +6,6 @@ namespace FenomPlus.SDK.Core.Features
     {
         public ushort IDMSG { get; set; }
         public ushort IDSUB { get; set; }
-        public ushort IDVAR { get; set; }
+        public UInt64 IDVAR { get; set; }
     }
 }

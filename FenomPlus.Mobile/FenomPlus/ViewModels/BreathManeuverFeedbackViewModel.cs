@@ -68,9 +68,7 @@ namespace FenomPlus.ViewModels
             // start timer
             Device.StartTimer(TimeSpan.FromMilliseconds(Cache.BreathFlowTimer), () =>
             {
-                
-
-                GuageData = (float)(((float)Cache.BreathFlow) / 10);
+                GuageData = Cache.BreathFlow;
                 if ((GuageData <= 0.0f) && (StartMeasure == false))
                 {
                     // return contiune of below the time

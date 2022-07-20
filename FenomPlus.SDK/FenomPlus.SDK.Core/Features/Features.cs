@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FenomPlus.SDK.Core.Ble.Interface;
 using FenomPlus.SDK.Core.Features;
 using FenomPlus.SDK.Core.Models;
@@ -47,7 +48,7 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             {
                 IDMSG = (ushort)ID_MESSAGE.ID_REQUEST_DATA,
                 IDSUB = (ushort)ID_SUB.ID_BREATHTEST,
-                IDVAR = (ushort)breathTestEnum
+                IDVAR = (UInt64)breathTestEnum
             };
             return await WRITEREQUEST(message);
         }

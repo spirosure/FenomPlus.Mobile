@@ -66,7 +66,7 @@ namespace FenomPlus.Services
         /// <param name="debugLog"></param>
         public void Write(DebugLog debugLog)
         {
-            Write(debugLog.DateTime, debugLog.RawMsg);
+            Write(debugLog.DateTime, debugLog.Msg);
         }
     }
 }
