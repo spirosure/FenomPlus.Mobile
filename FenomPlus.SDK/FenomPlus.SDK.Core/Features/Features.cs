@@ -137,13 +137,13 @@ namespace FenomPlus.SDK.Core.Ble.PluginBLE
             data[2] = (byte)(message.IDSUB >> 8);
             data[3] = (byte)(message.IDSUB);
             data[4] = (byte)(message.IDVAR >> 56);
-            data[4] = (byte)(message.IDVAR >> 48);
-            data[4] = (byte)(message.IDVAR >> 40);
-            data[4] = (byte)(message.IDVAR >> 32);
-            data[4] = (byte)(message.IDVAR >> 24);
-            data[4] = (byte)(message.IDVAR >> 16);
-            data[4] = (byte)(message.IDVAR >> 8);
-            data[5] = (byte)(message.IDVAR);
+            data[5] = (byte)(message.IDVAR >> 48);
+            data[6] = (byte)(message.IDVAR >> 40);
+            data[7] = (byte)(message.IDVAR >> 32);
+            data[8] = (byte)(message.IDVAR >> 24);
+            data[9] = (byte)(message.IDVAR >> 16);
+            data[10] = (byte)(message.IDVAR >> 8);
+            data[11] = (byte)(message.IDVAR);
             IGattCharacteristic Characteristic = await FindCharacteristic(Constants.FeatureWriteCharacteristic);
             if (Characteristic != null)
             {
