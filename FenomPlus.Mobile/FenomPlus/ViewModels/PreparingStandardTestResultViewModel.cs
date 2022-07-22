@@ -54,10 +54,28 @@ namespace FenomPlus.ViewModels
                 var model = BreathManeuverResultDBModel.Create(Cache._BreathManeuver);
 
                 ResultsRepo.Insert(model);
-                    
-                Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
+
+                if (Cache._BreathManeuver.StatusCode != 0x00)
+                {
+                    var errorModel = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
+                    ErrorsRepo.Insert(errorModel);
+
+                    // redirect to take test
+                    if (Cache.TestType == TestTypeEnum.Standard)
+                    {
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=Standard"), false);
+                    }
+                    else
+                    {
+                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=short"), false);
+                    }
+                }
+                else
+                {
+                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestResultsView)}"), false);
+                }
             }
-            return ((Cache.NOScore <= 0) || (Seconds > 0));
+            return (Seconds > 0);
         }
 
         /// <summary>
