@@ -49,14 +49,7 @@ namespace FenomPlus.ViewModels
                     var model = BreathManeuverErrorDBModel.Create(Cache._BreathManeuver);
                     ErrorsRepo.Insert(model);
 
-                    // redirect to take test
-                    if(Cache.TestType == TestTypeEnum.Standard)
-                    {
-                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=Standard"), false);
-                    } else
-                    {
-                        Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(StartTestView)}?test=short"), false);
-                    }
+                    Shell.Current.GoToAsync(new ShellNavigationState($"///{nameof(TestErrorView)}"), false);
                 }
                 else
                 {

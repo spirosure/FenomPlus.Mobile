@@ -1,4 +1,8 @@
 ﻿
+using FenomPlus.Models;
+using FenomPlus.Views;
+using Xamarin.Forms;
+
 namespace FenomPlus.ViewModels
 {
     public class TestFailedViewModel : BaseViewModel

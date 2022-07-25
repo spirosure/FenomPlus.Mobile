@@ -25,9 +25,19 @@
                 <Label Text="- Exhaling too soft" Style="{StaticResource Description}" />
                 <Label Text="- Exhaling at an unsteady rate that was not in range" Style="{StaticResource Description}"/>
                 <Label Text="- Failing to make a seal around the mouthpiece" Style="{StaticResource Description}"/>
-                <Button Text="Take New Test" Style="{StaticResource defaultButton}" Clicked="StartTest" />
-                <Button Text="Take Tutorial" Style="{StaticResource defaultButton}" Clicked="GoToTutorial" />
-                <Button Text="Cancel" Style="{StaticResource transparentButton}" Clicked="OnCancel" />
+
+                <Button Text="Take New Test"
+                    Style="{StaticResource defaultButton}"
+                    Clicked="StartTest"/>
+
+                <Button Text="Take Tutorial"
+                    Style="{StaticResource defaultButton}"
+                    Clicked="GoToTutorial"/>
+
+                <Button Text="Cancel"
+                    Style="{StaticResource transparentButton}"
+                    Clicked="OnCancel"/>
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -20,8 +20,9 @@
         <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
                 <Label Text="Test Error" Style="{StaticResource Header}"/>
-                <Label Text="E-001" Style="{StaticResource Important}"/>
-                <Label Text="Your breath was too hard. Remember to aim for the star!&#x0a; You can test again or follow the tutorial." Style="{StaticResource Notice}"/>
+                <Label Text="{Binding ErrorCode}" Style="{StaticResource Important}"/>
+                <Label Text="{Binding ErrorMessage}" Style="{StaticResource Notice}"/>
+                <Label Text="You can test again or follow the tutorial." Style="{StaticResource Notice}"/>
                 <Label Style="{StaticResource Notice}">
                     <Label.FormattedText>
                         <FormattedString>
@@ -30,9 +31,18 @@
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Button Text="Take New Test" Style="{StaticResource defaultButton}" Clicked="StartTest" />
-                <Button Text="Take Tutorial" Style="{StaticResource defaultButton}" Clicked="GoToTutorial" />
-                <Button Text="Cancel" Style="{StaticResource transparentButton}" Clicked="OnCancel" />
+
+                 <Button Text="Take New Test"
+                    Style="{StaticResource defaultButton}"
+                    Clicked="StartTest"/>
+
+                <Button Text="Take Tutorial"
+                    Style="{StaticResource defaultButton}"
+                    Clicked="GoToTutorial"/>
+
+                <Button Text="Cancel"
+                    Style="{StaticResource transparentButton}"
+                    Clicked="OnCancel"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
